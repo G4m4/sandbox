@@ -1,0 +1,20 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install libgtest-dev
+  - sudo apt-get install valgrind
+  - sudo apt-get install g++
+  - sudo apt-get install clang-3.4
+  - sudo apt-get install cmake
+before_script:
+  - export GTEST_ROOT=/usr/src/gtest
+script:
+  - mkdir build
+  - cd build
+  - cmake -DSANDBOX_HAS_GTEST=ON -DSANDBOX_ENABLE_SIMD=OFF ..
+  - make clean
+  - make
+  - valgrind --leak-check=full --track-origins=yes ./sandbox/tests/sandbox_tests
