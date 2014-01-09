@@ -144,7 +144,7 @@ function(set_target_mt _TARGET_NAME)
   endif(${COMPILER_IS_MSVC})
 endfunction(set_target_mt)
 
-option(sandbox_HAS_GTEST "Allowing to use GTest framework (should be present into environment variable GTEST_ROOT." OFF)
+option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (should be present into environment variable GTEST_ROOT." OFF)
 message(STATUS "GTest framework: ${sandbox_HAS_GTEST}")
 
 option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
