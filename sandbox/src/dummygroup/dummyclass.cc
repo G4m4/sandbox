@@ -19,6 +19,7 @@
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "sandbox/src/dummygroup/dummyclass.h"
+#include "sandbox/src/common.h"
 
 namespace sandbox {
 namespace dummygroup {
@@ -35,6 +36,7 @@ DummyClass::~DummyClass() {
 
 
 const char* DummyClass::DoSomething(void) {
+  ASSERT(data_ != nullptr);
   return &data_[0];
 }
 

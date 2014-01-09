@@ -35,7 +35,7 @@ template<typename Type> void IGNORE(const Type&) {}
 #if(_COMPILER_MSVC)
   #define ASSUME(_condition_) _assume((_condition_));
 #elif(_COMPILER_GCC)
-  #define ASSUME(_condition_) (if (!(_condition_)) __builtin_unreachable());
+  #define ASSUME(_condition_) if (!(_condition_)) __builtin_unreachable();
 #else
   #define ASSUME(_condition_)
 #endif  // _COMPILER_ ?
