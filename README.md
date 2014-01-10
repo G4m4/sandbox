@@ -14,6 +14,16 @@ The test checks dumb thing from the library.
 
 Please note that all this is not an attempt to waste a few kwatts in a dumb manner but hopefully a way to speed up new projects beginning.
 
+Fast project setup
+------------------
+
+Creating a project based on SandBox template is done through a Python script:
+
+    cd scripts
+    python create_project.py ../ YOUR_PROJECT_LOCATION YOUR_PROJECT_NAME
+
+Where YOUR_PROJET_LOCATION may be by instance "c:/dev" and YOUR_PROJECT_NAME something like "MyAwesomeProject"
+
 Structure
 ---------
 
