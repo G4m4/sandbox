@@ -30,5 +30,7 @@ int main(int argc, char **argv) {
 
   const char* kText(sandbox::dummygroup::DummyClass().DoSomething());
 
-  return printf("Done: %s", kText);
+  printf("Done: %s", kText);
+
+  return 0;
 }
