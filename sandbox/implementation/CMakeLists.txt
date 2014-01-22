@@ -1,4 +1,4 @@
-# @brief Sandbox implementation root cmake file
+# @brief SandBox implementation root cmake file
 
 include_directories(
   ${SANDBOX_INCLUDE_DIR}
