@@ -145,7 +145,7 @@ function(set_target_mt _TARGET_NAME)
 endfunction(set_target_mt)
 
 option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (should be present into environment variable GTEST_ROOT." OFF)
-message(STATUS "GTest framework: ${sandbox_HAS_GTEST}")
+message(STATUS "GTest framework: ${SANDBOX_HAS_GTEST}")
 
 option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
 message(STATUS "Simd instructions use: ${SANDBOX_ENABLE_SIMD}")
