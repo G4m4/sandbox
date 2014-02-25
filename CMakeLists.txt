@@ -68,7 +68,7 @@ endif()
 # @param _FLAGS                 flags to set
 function(add_compiler_flags _TARGET_NAME _FLAGS)
   set_property(TARGET ${_TARGET_NAME}
-               APPEND PROPERTY COMPILE_FLAGS ${_FLAGS}
+               APPEND_STRING PROPERTY COMPILE_FLAGS ${_FLAGS}
                )
 endfunction(add_compiler_flags)
 
