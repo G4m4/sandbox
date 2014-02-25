@@ -248,6 +248,8 @@ if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
       add_definitions(-D _VARIADIC_MAX=10)
     endif(MSVC)
 
+    # Not displaying gtest warnings
+    add_compiler_flags(gtest "-w")
     add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
   endif(EXISTS ${GTEST_DIR})
 endif (${SANDBOX_HAS_GTEST} STREQUAL "ON")
