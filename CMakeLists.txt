@@ -249,8 +249,8 @@ if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
     endif(MSVC)
 
     # Not displaying gtest warnings
-    add_compiler_flags(gtest "-w")
     add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
+    add_compiler_flags(gtest " -w")
   endif(EXISTS ${GTEST_DIR})
 endif (${SANDBOX_HAS_GTEST} STREQUAL "ON")
 
