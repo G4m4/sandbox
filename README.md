@@ -46,11 +46,10 @@ Tests
 -----
 
 Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
-All required Cmake variables are set up, the only thing to do is make the environment variable GTEST_ROOT point to GTest sources.
-On Linux, this can be done as follows:
-
-    sudo apt-get install libgtest-dev
-    export GTEST_ROOT=/usr/src/gtest
+All required Cmake variables are set up, and the GTest library is used as a submodule.
+In order to retrieve the library files, the following must be done from SandBox root folder:
+    git submodule init
+    git submodule update
 
 Build
 -----

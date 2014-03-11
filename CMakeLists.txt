@@ -144,7 +144,7 @@ function(set_target_mt _TARGET_NAME)
   endif(${COMPILER_IS_MSVC})
 endfunction(set_target_mt)
 
-option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (should be present into environment variable GTEST_ROOT." OFF)
+option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (GTest submodule should have been initialised and updated)." OFF)
 message(STATUS "GTest framework: ${SANDBOX_HAS_GTEST}")
 
 option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
@@ -233,7 +233,7 @@ endif (${SYSTEM_IS_MACOSX})
 # Google Test framework
 if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
   set(GTEST_DIR
-    $ENV{GTEST_ROOT}
+    ${CMAKE_CURRENT_SOURCE_FILE}/externals/gtest
   )
   set(GTEST_BUILD_DIR
     ${CMAKE_CURRENT_BINARY_DIR}/gtest
