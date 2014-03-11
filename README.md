@@ -46,8 +46,9 @@ Tests
 -----
 
 Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
-All required Cmake variables are set up, and the GTest library is used as a submodule.
-In order to retrieve the library files, the following must be done from SandBox root folder:
+
+All required Cmake variables are set up, and the GTest library is used as a submodule. In order to retrieve the library files, the following must be done from SandBox root folder:
+
     git submodule init
     git submodule update
 
