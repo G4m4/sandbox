@@ -30,15 +30,15 @@ Structure
 The directory hierarchy is as follows:
 - sandbox
   - implementation
-    main.cc
+    - main.cc
   - src
-    common.h
-    configuration.h
+    - common.h
+    - configuration.h
     - dummygroup
-      dummyclass.cc
-      dummyclass.h
+      - dummyclass.cc
+      - dummyclass.h
   - tests
-    main.cc
+    - main.cc
 
 The few lines of code there is strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
 
