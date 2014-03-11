@@ -233,7 +233,7 @@ endif (${SYSTEM_IS_MACOSX})
 # Google Test framework
 if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
   set(GTEST_DIR
-    ${CMAKE_CURRENT_SOURCE_FILE}/externals/gtest
+    ${CMAKE_CURRENT_SOURCE_DIR}/externals/gtest
   )
   set(GTEST_BUILD_DIR
     ${CMAKE_CURRENT_BINARY_DIR}/gtest
