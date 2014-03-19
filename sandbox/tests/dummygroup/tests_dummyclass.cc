@@ -1,4 +1,4 @@
-/// @file tests/dummygroup/dummyclass.cc
+/// @file tests_dummyclass.cc
 /// @brief SandBox Dummy Class
 /// @author gm
 /// @copyright gm 2014
