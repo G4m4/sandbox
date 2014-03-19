@@ -4,13 +4,13 @@ compiler:
   - gcc
 before_install:
   - sudo apt-get update
-  - sudo apt-get install libgtest-dev
   - sudo apt-get install valgrind
   - sudo apt-get install g++
   - sudo apt-get install clang-3.4
   - sudo apt-get install cmake
 before_script:
-  - export GTEST_ROOT=/usr/src/gtest
+  - git submodule init
+  - git submodule update
 script:
   - mkdir build
   - cd build
