@@ -246,26 +246,25 @@ if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
   # GTest path may be defined from an outside CMake file,
   # if this is used as an external library
   if(NOT EXISTS ${GTEST_DIR})
-  set(GTEST_DIR
-    ${CMAKE_CURRENT_SOURCE_DIR}/externals/gtest
-  )
-  set(GTEST_BUILD_DIR
-    ${CMAKE_CURRENT_BINARY_DIR}/gtest
-  )
-  set(GTEST_INCLUDE_DIRS
-    ${GTEST_DIR}/include
-  )
-  else(NOT EXISTS ${GTEST_DIR})
-    # MSVC-specific issues
-    if(MSVC)
-      # Known GTest/MSVC 2011 issue: VS2012 doesn't support correctly the tuples yet
-      add_definitions(-D _VARIADIC_MAX=10)
-    endif(MSVC)
-
-    # Not displaying gtest warnings
-    add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
-    add_compiler_flags(gtest " -w")
+    set(GTEST_DIR
+      ${CMAKE_CURRENT_SOURCE_DIR}/externals/gtest
+    )
+    set(GTEST_BUILD_DIR
+      ${CMAKE_CURRENT_BINARY_DIR}/gtest
+    )
+    set(GTEST_INCLUDE_DIRS
+      ${GTEST_DIR}/include
+    )
   endif(NOT EXISTS ${GTEST_DIR})
+  # MSVC-specific issues
+  if(MSVC)
+    # Known GTest/MSVC 2011 issue: VS2012 doesn't support correctly the tuples yet
+    add_definitions(-D _VARIADIC_MAX=10)
+  endif(MSVC)
+
+  # Not displaying gtest warnings
+  add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
+  add_compiler_flags(gtest " -w")
 endif (${SANDBOX_HAS_GTEST} STREQUAL "ON")
 
 add_subdirectory(sandbox)
