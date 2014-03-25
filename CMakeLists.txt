@@ -243,6 +243,9 @@ endif (${SYSTEM_IS_MACOSX})
 
 # Google Test framework
 if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
+  # GTest path may be defined from an outside CMake file,
+  # if this is used as an external library
+  if(NOT EXISTS ${GTEST_DIR})
   set(GTEST_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/externals/gtest
   )
@@ -252,7 +255,7 @@ if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
   set(GTEST_INCLUDE_DIRS
     ${GTEST_DIR}/include
   )
-  if(EXISTS ${GTEST_DIR})
+  else(NOT EXISTS ${GTEST_DIR})
     # MSVC-specific issues
     if(MSVC)
       # Known GTest/MSVC 2011 issue: VS2012 doesn't support correctly the tuples yet
@@ -262,7 +265,7 @@ if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
     # Not displaying gtest warnings
     add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
     add_compiler_flags(gtest " -w")
-  endif(EXISTS ${GTEST_DIR})
+  endif(NOT EXISTS ${GTEST_DIR})
 endif (${SANDBOX_HAS_GTEST} STREQUAL "ON")
 
 add_subdirectory(sandbox)
