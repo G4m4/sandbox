@@ -42,10 +42,10 @@ template<typename Type> void IGNORE(const Type&) {}
 
 /// @brief Asserts condition == true
 #if(_BUILD_CONFIGURATION_DEBUG)
-  static inline void ASSERT(const bool condition) {assert(condition);}
+  #define SANDBOX_ASSERT(_condition_) (assert((_condition_)))
 #else
   // Maps to "assume" in release configuration for better optimization
-  static inline void ASSERT(const bool condition) {ASSUME(condition);}
+  #define SANDBOX_ASSERT(_condition_) {::sandbox::ASSUME((_condition_));}
 #endif
 
 /// @brief Attribute for structures alignment

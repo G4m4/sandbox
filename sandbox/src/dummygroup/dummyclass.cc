@@ -36,7 +36,7 @@ DummyClass::~DummyClass() {
 
 
 const char* DummyClass::DoSomething(void) {
-  ASSERT(data_ != nullptr);
+  SANDBOX_ASSERT(data_ != nullptr);
   return &data_[0];
 }
 
