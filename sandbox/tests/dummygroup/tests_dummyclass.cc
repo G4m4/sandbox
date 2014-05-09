@@ -24,7 +24,7 @@
 
 #include "sandbox/src/dummygroup/dummyclass.h"
 
-// Using declarations for tested filter
+// Using declarations for tested class
 using sandbox::dummygroup::DummyClass;
 
 /// @brief Dummy test
