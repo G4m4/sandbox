@@ -24,6 +24,11 @@ Creating a project based on SandBox template is done through a Python script:
 
 Where YOUR_PROJET_LOCATION may be by instance "c:/dev" and YOUR_PROJECT_NAME something like "MyAwesomeProject"
 
+In order to use the various submodule, you have to add them manually:
+
+    git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
+    git submodule add git://github.com/julianstorer/JUCE.git externals/juce
+
 Structure
 ---------
 
@@ -47,10 +52,14 @@ Tests
 
 Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
 
-All required Cmake variables are set up, and the GTest library is used as a submodule. In order to retrieve the library files, the following must be done from SandBox root folder:
+All required Cmake variables are set up, and the GTest library is used as a submodule (see above).
 
-    git submodule init
-    git submodule update
+Vst Plugin
+-----
+
+A basic Vst plugin implementation is available, relying on [JUCE Framework](https://github.com/julianstorer/JUCE).
+
+All required Cmake variables are set up, and the JUCE library is used as a submodule (see above).
 
 Build
 -----
