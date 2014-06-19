@@ -1,20 +1,9 @@
 # @brief SandBox implementation root cmake file
 
-include_directories(
-  ${SANDBOX_INCLUDE_DIR}
-)
+add_subdirectory(common)
 
-# Sources
-set(SANDBOX_IMPLEMENTATION_SRC
-  main.cc
-)
+if (${SANDBOX_HAS_VST} STREQUAL "ON")
+  add_subdirectory(plugin)
+endif (${SANDBOX_HAS_VST} STREQUAL "ON")
 
-# Target
-add_executable(sandbox_implementation
-  ${SANDBOX_IMPLEMENTATION_SRC}
-)
-
-target_link_libraries(sandbox_implementation
-                      sandbox_lib)
-
-set_target_mt(sandbox_lib)
+add_subdirectory(standalone)
