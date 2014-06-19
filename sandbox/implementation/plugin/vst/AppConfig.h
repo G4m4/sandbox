@@ -183,7 +183,7 @@
  #define JucePlugin_ManufacturerCode       'GAMA'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             'CODE'
+ #define JucePlugin_PluginCode             'SAND'
 #endif
 #ifndef  JucePlugin_MaxNumInputChannels
  #define JucePlugin_MaxNumInputChannels    1

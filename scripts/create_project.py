@@ -62,9 +62,10 @@ def ScanFileAndRename(filepath, name, name_lower, name_upper):
     @param    name_lower        Lower-case version (may be different) of the created project
     @param    name_upper        Upper-case version (may be different) of the created project
     '''
+    name_short = name_upper[:4]
     current_file = open(filepath, 'r+')
     temp_renamed = string.replace(current_file.read(),
-                                  "SandBox", name).replace("sandbox", name_lower).replace("SANDBOX", name_upper)
+                                  "SandBox", name).replace("sandbox", name_lower).replace("SANDBOX", name_upper).replace("SAND", name_short)
     # Empty current file content and replace it
     current_file.seek(0)
     current_file.truncate()
