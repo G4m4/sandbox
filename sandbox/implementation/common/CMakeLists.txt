@@ -3,6 +3,7 @@
 file(GLOB
      SANDBOX_IMPLEMENTATION_SRC
      *.cc
+     *.cpp
 )
 
 # Expose variables to parent CMake files
