@@ -102,7 +102,7 @@ double SandBoxAudioProcessor::getTailLengthSeconds() const {
 }
 
 int SandBoxAudioProcessor::getNumPrograms() {
-  return 0;
+  return 1;
 }
 
 int SandBoxAudioProcessor::getCurrentProgram() {
