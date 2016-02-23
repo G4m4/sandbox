@@ -11,7 +11,7 @@ set(SANDBOX_INCLUDE_DIR
 
 # Default parameters
 
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
@@ -24,15 +24,15 @@ set(COMPILER_IS_GCC
     0)
 set(COMPILER_IS_MSVC
     0)
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(COMPILER_IS_CLANG
       1)
   message("Compiler detected as Clang")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+elseif (CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
   set(COMPILER_IS_GCC
       1)
   message("Compiler detected as gcc")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set(COMPILER_IS_MSVC
       1)
   message("Compiler detected as MSVC")
@@ -45,11 +45,11 @@ set(SYSTEM_IS_MACOSX
     0)
 set(SYSTEM_IS_LINUX
     0)
-if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
   set(SYSTEM_IS_WINDOWS
       1)
   message("System detected as Windows")
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+elseif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
   set(SYSTEM_IS_MACOSX
       1)
   message("System detected as Mac OS X")
@@ -63,7 +63,7 @@ endif()
 # Build configuration
 set(BUILD_IS_DEBUG
     0)
-if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
+if (CMAKE_BUILD_TYPE MATCHES "Debug")
   set(BUILD_IS_DEBUG
       1)
   message("Build configuration set to Debug")
@@ -192,7 +192,6 @@ if(${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
   add_definitions(-Wpointer-arith)
   add_definitions(-Wcast-qual)
   add_definitions(-Weffc++)
-  add_definitions(-ggdb)
 elseif(${COMPILER_IS_MSVC})
   add_definitions(-W4)
   # This disable useless msvc warnings about checked iterators
