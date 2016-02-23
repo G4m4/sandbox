@@ -157,6 +157,9 @@ function(set_target_mt _TARGET_NAME)
   endif(COMPILER_IS_MSVC)
 endfunction(set_target_mt)
 
+option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (GTest submodule should have been initialised and updated)." ON)
+message(STATUS "GTest framework: ${SANDBOX_HAS_GTEST}")
+
 option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
 message(STATUS "Simd instructions use: ${SANDBOX_ENABLE_SIMD}")
 
@@ -235,5 +238,35 @@ endif()
 if (SYSTEM_IS_MACOSX)
   add_definitions(-stdlib=libc++)
 endif (SYSTEM_IS_MACOSX)
+
+# Various includes
+
+
+# Google Test framework
+if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
+  # GTest path may be defined from an outside CMake file,
+  # if this is used as an external library
+  if(NOT EXISTS ${GTEST_DIR})
+    set(GTEST_DIR
+      ${CMAKE_CURRENT_SOURCE_DIR}/externals/gtest
+    )
+    set(GTEST_BUILD_DIR
+      ${CMAKE_CURRENT_BINARY_DIR}/gtest
+    )
+    set(GTEST_INCLUDE_DIRS
+      ${GTEST_DIR}/include
+    )
+  endif(NOT EXISTS ${GTEST_DIR})
+  # MSVC-specific issues
+  if(MSVC)
+    # Known GTest/MSVC 2011 issue: VS2012 doesn't support correctly the tuples yet
+    add_definitions(-D _VARIADIC_MAX=10)
+  endif(MSVC)
+
+  # Not displaying gtest warnings
+  add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
+  add_compiler_flags(gtest " -w")
+endif (${SANDBOX_HAS_GTEST} STREQUAL "ON")
+
 
 add_subdirectory(sandbox)
