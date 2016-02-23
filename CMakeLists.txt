@@ -155,14 +155,8 @@ function(set_target_mt _TARGET_NAME)
   endif(${COMPILER_IS_MSVC})
 endfunction(set_target_mt)
 
-option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (GTest submodule should have been initialised and updated)." OFF)
+option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (GTest submodule should have been initialised and updated)." ON)
 message(STATUS "GTest framework: ${SANDBOX_HAS_GTEST}")
-
-option(SANDBOX_HAS_JUCE "Allowing to use Juce framework (Juce submodule should have been initialised and updated)." OFF)
-message(STATUS "Juce framework: ${SANDBOX_HAS_JUCE}")
-
-option(SANDBOX_HAS_VST "Allowing to use VST SDK (should be present into environment variable VST_ROOT)." OFF)
-message(STATUS "VST framework: ${SANDBOX_HAS_VST}")
 
 option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
 message(STATUS "Simd instructions use: ${SANDBOX_ENABLE_SIMD}")
@@ -273,28 +267,5 @@ if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
   add_compiler_flags(gtest " -w")
 endif (${SANDBOX_HAS_GTEST} STREQUAL "ON")
 
-
-# JUCE
-set(JUCE_DIR
-  ${CMAKE_CURRENT_SOURCE_DIR}/externals/juce
-)
-set(JUCE_BUILD_DIR
-  ${CMAKE_CURRENT_BINARY_DIR}/juce
-)
-set(JUCE_INCLUDE_DIR
-  ${JUCE_DIR}
-)
-
-
-# VST SDK
-set(VST_DIR
-  $ENV{VST_ROOT}
-)
-set(VST_BUILD_DIR
-  ${CMAKE_CURRENT_BINARY_DIR}/vst
-)
-set(VST_INCLUDE_DIR
-  ${VST_DIR}
-)
 
 add_subdirectory(sandbox)
