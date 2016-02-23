@@ -4,13 +4,14 @@ SandBox
 SandBox is an empty structure for fast projects setup.
 
 It includes a basic directory structure, simple ready-mix Cmake files as well as basic git and Travis configurations.
-It creates 3 targets:
+
+Different configurations are available for different frameworks; each one of them resides in a different branch of this depot.
+
+The basic configuration on the master branch creates 2 targets:
 - sandbox_implementation (executable)
 - sandbox_lib (static lib)
-- sandbox_tests (executable: tests)
 
 At runtime, the executable instantiates a dummy class from sandbox_lib and prints stuff in the standard output.
-The test checks dumb thing from the library.
 
 Please note that all this is not an attempt to waste a few kwatts in a dumb manner but hopefully a way to speed up new projects beginning.
 
@@ -24,13 +25,14 @@ Creating a project based on SandBox template is done through a Python script:
 
 Where YOUR_PROJET_LOCATION may be by instance "c:/dev" and YOUR_PROJECT_NAME something like "MyAwesomeProject"
 
-In order to use the various submodule, you have to add them manually:
+A Travis configuration file is provided in order to be used with [Travis CI](https://travis-ci.org/).
 
-    git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
-    git submodule add git://github.com/julianstorer/JUCE.git externals/juce
+The build system is based on Cmake.
+Building is done with:
 
-Structure
----------
+    mkdir build && cd build
+    cmake ..
+    cmake --build .
 
 The directory hierarchy is as follows:
 - sandbox
@@ -42,40 +44,26 @@ The directory hierarchy is as follows:
     - dummygroup
       - dummyclass.cc
       - dummyclass.h
-  - tests
-    - main.cc
 
-The few lines of code there is strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
+The few lines of code there strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
 
-Tests
+Branch: GoogleTest
 -----
 
 Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
 
-All required Cmake variables are set up, and the GTest library is used as a submodule (see above).
+All required Cmake variables are set up, and the GTest library is used as a submodule; you have to add it manually:
 
-Vst Plugin
+  git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
+
+Branch: Vst Plugin
 -----
 
 A basic Vst plugin implementation is available, relying on [JUCE Framework](https://github.com/julianstorer/JUCE).
 
-All required Cmake variables are set up, and the JUCE library is used as a submodule (see above).
+All required Cmake variables are set up, and the JUCE library is used as a submodule; you have to add it manually:
 
-Build
------
-
-The build system is based on Cmake.
-It comes with two boolean (ON/OFF) options:
-- SANDBOX_HAS_GTEST to indicate that GTest framework can be used (see above)
-- SANDBOX_ENABLE_SIMD to allow use of SIMD instructions (for now SSE2 only) by setting the proper flags.
-
-A Travis configuration file is provided in order to be used with [Travis CI](https://travis-ci.org/).
-
-Building is done with:
-
-    mkdir build && cd build
-    cmake ..
-    cmake --build .
+  git submodule add git://github.com/julianstorer/JUCE.git externals/juce
 
 License
 ==================================
