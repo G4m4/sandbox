@@ -54,8 +54,8 @@ A basic Vst plugin implementation is available, relying on [JUCE Framework](http
 
 All required Cmake variables are set up, and the JUCE library is used as a submodule; you have to initialise it manually:
 
-  git submodule init
-  git submodule update
+    git submodule init
+    git submodule update
 
 You will also need the [Steinberg VST SDK](http://www.steinberg.net/en/company/developers.html) - and to set an environment variable VST_ROOT to it.
 
