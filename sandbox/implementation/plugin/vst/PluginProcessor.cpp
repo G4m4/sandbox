@@ -1,7 +1,7 @@
 /// @filename PluginProcessor.cpp
 /// @brief SandBox plugin processor (audio)
 /// @author gm
-/// @copyright gm 2013
+/// @copyright gm 2016
 ///
 /// This file is part of SandBox
 ///
@@ -29,6 +29,9 @@
 SandBoxAudioProcessor::SandBoxAudioProcessor()
 : process_time_(0.0),
   sandbox_() {
+  // Manually create one output bus
+  busArrangement.outputBuses.clear();
+  busArrangement.outputBuses.add(AudioProcessorBus(String("Output #") += String(1), AudioChannelSet::disabled()));
 }
 
 SandBoxAudioProcessor::~SandBoxAudioProcessor() {
@@ -59,24 +62,6 @@ const juce::String SandBoxAudioProcessor::getParameterText(int index) {
   return juce::String(sandbox_.DoSomething());
 }
 
-const juce::String SandBoxAudioProcessor::getInputChannelName(
-    int channelIndex) const {
-  return juce::String(channelIndex + 1);
-}
-
-const juce::String SandBoxAudioProcessor::getOutputChannelName(
-    int channelIndex) const {
-  return juce::String(channelIndex + 1);
-}
-
-bool SandBoxAudioProcessor::isInputChannelStereoPair(int index) const {
-  return true;
-}
-
-bool SandBoxAudioProcessor::isOutputChannelStereoPair(int index) const {
-  return true;
-}
-
 bool SandBoxAudioProcessor::acceptsMidi() const {
   #if JucePlugin_WantsMidiInput
   return true;
@@ -91,10 +76,6 @@ bool SandBoxAudioProcessor::producesMidi() const {
   #else
   return false;
   #endif
-}
-
-bool SandBoxAudioProcessor::silenceInProducesSilenceOut() const {
-  return false;
 }
 
 double SandBoxAudioProcessor::getTailLengthSeconds() const {
