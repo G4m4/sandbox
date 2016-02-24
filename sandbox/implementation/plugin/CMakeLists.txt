@@ -72,6 +72,7 @@ else()
     ${JUCE_INCLUDE_DIR}/modules/juce_gui_basics/juce_gui_basics.cpp
     ${JUCE_INCLUDE_DIR}/modules/juce_gui_extra/juce_gui_extra.cpp
     ${JUCE_INCLUDE_DIR}/modules/juce_audio_plugin_client/VST/juce_VST_Wrapper.cpp
+    ${JUCE_INCLUDE_DIR}/modules/juce_audio_plugin_client/VST3/juce_VST3_Wrapper.cpp
   )
 endif(${SYSTEM_IS_MACOSX})
 
