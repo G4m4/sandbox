@@ -47,23 +47,17 @@ The directory hierarchy is as follows:
 
 The few lines of code there strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
 
-Branch: GoogleTest
------
-
-Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
-
-All required Cmake variables are set up, and the GTest library is used as a submodule; you have to add it manually:
-
-  git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
-
-Branch: Vst Plugin
+You are on the Vst Plugin branch
 -----
 
 A basic Vst plugin implementation is available, relying on [JUCE Framework](https://github.com/julianstorer/JUCE).
 
-All required Cmake variables are set up, and the JUCE library is used as a submodule; you have to add it manually:
+All required Cmake variables are set up, and the JUCE library is used as a submodule; you have to initialise it manually:
 
-  git submodule add git://github.com/julianstorer/JUCE.git externals/juce
+  git submodule init
+  git submodule update
+
+You will also need the [Steinberg VST SDK](http://www.steinberg.net/en/company/developers.html) - and to set an environment variable VST_ROOT to it.
 
 License
 ==================================
