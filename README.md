@@ -1,10 +1,12 @@
 SandBox
 ==================================
 
-SandBox is an empty structure for fast projects setup.
+SandBox is an empty structure for fast projects setup - supported so far:
+- Basic (lib + executable)
+- GoogleTest
+- VST plugin
 
 It includes a basic directory structure, simple ready-mix Cmake files as well as basic git and Travis configurations.
-
 Different configurations are available for different frameworks; each one of them resides in a different branch of this depot.
 
 The basic configuration on the master branch creates 2 targets:
