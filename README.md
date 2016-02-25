@@ -77,6 +77,7 @@ A few helper libraries - [GLFW](http://www.glfw.org/) and [GLM](http://glm.g-tru
     git submodule update
 
 This implementation is using GLEW, whose CMake find script requires variables to be set - the easiest way to do it is probably to set them as environment variables:
+
     export GLEW_INCLUDE_DIR=PATH_TO_GLEW/include
     export GLEW_LIBRARY=PATH_TO_GLEW/lib
 
