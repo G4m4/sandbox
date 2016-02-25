@@ -32,5 +32,3 @@ add_executable(sandbox
 target_link_libraries(sandbox
                       sandbox_lib
 )
-
-set_target_mt(sandbox)

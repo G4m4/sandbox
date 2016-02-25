@@ -1,7 +1,7 @@
-/// @file dummyclass.h
-/// @brief Dummy class declaration
+/// @file context.h
+/// @brief Base context object to spawn windows
 /// @author gm
-/// @copyright gm 2014
+/// @copyright gm 2016
 ///
 /// This file is part of SandBox
 ///
@@ -18,28 +18,34 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
-#define SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
+#ifndef SANDBOX_CONTEXT_H_
+#define SANDBOX_CONTEXT_H_
 
 #include "sandbox/src/common.h"
 
+struct GLFWwindow;
+
 namespace sandbox {
-namespace dummygroup {
+namespace context {
 
-/// @brief Dummy class
-class DummyClass {
+/// @brief Context object, where everything lives at the moment
+class SANDBOX_API Context {
  public:
-  DummyClass();
-  ~DummyClass();
+  Context();
+  ~Context();
 
-  /// @brief Outputs an "Hello, world!" into a C-style string
-  const char* DoSomething(void);
+  bool Initialize();
+  void Terminate();
+
+  void Clear();
+  void Update();
+  bool ShouldClose();
 
  private:
-  static const char data_[14];  ///< Internal class data
+  GLFWwindow* window_;
 };
 
-}  // namespace dummygroup
+}  // namespace context
 }  // namespace sandbox
 
-#endif  // SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
+#endif  // SANDBOX_CONTEXT_H_

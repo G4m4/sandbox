@@ -59,6 +59,17 @@ template<typename Type> void IGNORE(const Type&) {}
   #define ALIGN
 #endif  // (_USE_SSE)
 
+/// @brief Export symbols
+#if (DLL_EXPORT)
+  #if (_COMPILER_MSVC)
+    #define SANDBOX_API __declspec(dllexport)
+  #else
+    #define SANDBOX_API __attribute__((visibility("default")))
+  #endif
+#else
+  #define SANDBOX_API
+#endif  // (DLL_EXPORT)
+
 }  // namespace sandbox
 
 #endif  // SANDBOX_SRC_COMMON_H_
