@@ -235,4 +235,18 @@ if (${SYSTEM_IS_MACOSX})
   add_definitions(-stdlib=libc++)
 endif (${SYSTEM_IS_MACOSX})
 
+
+# Various includes
+
+set(BULLET_INCLUDE_DIRS
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/bullet/src
+)
+set(BULLET_LIBRARIES
+  LinearMath
+  BulletCollision
+  BulletDynamics
+  BulletSoftBody
+)
+add_subdirectory(externals/bullet)
+
 add_subdirectory(sandbox)
