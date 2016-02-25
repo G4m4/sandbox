@@ -5,6 +5,7 @@ SandBox is an empty structure for fast projects setup - supported so far:
 - Basic (lib + executable)
 - GoogleTest
 - VST plugin
+- OpenGL
 
 It includes a basic directory structure, simple ready-mix Cmake files as well as basic git and Travis configurations.
 Different configurations are available for different frameworks; each one of them resides in a different branch of this depot.
@@ -56,7 +57,7 @@ Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
 
 All required Cmake variables are set up, and the GTest library is used as a submodule; you have to add it manually:
 
-  git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
+    git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
 
 Branch: Vst Plugin
 -----
@@ -65,7 +66,21 @@ A basic Vst plugin implementation is available, relying on [JUCE Framework](http
 
 All required Cmake variables are set up, and the JUCE library is used as a submodule; you have to add it manually:
 
-  git submodule add git://github.com/julianstorer/JUCE.git externals/juce
+    git submodule add git://github.com/julianstorer/JUCE.git externals/juce
+
+Branch: OpenGL
+-----
+
+A few helper libraries - [GLFW](http://www.glfw.org/) and [GLM](http://glm.g-truc.net/0.9.7/index.html) - are already set up as submodule:
+
+    git submodule init
+    git submodule update
+
+This implementation is using GLEW, whose CMake find script requires variables to be set - the easiest way to do it is probably to set them as environment variables:
+    export GLEW_INCLUDE_DIR=PATH_TO_GLEW/include
+    export GLEW_LIBRARY=PATH_TO_GLEW/lib
+
+Notice that the library this time is dynamic - this to demonstrate a proper decoupling: we want the main executable to be graphics API-agnostic, and not link with Glew for example.
 
 License
 ==================================
