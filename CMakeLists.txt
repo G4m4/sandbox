@@ -129,7 +129,7 @@ endfunction(add_release_linker_flags)
 #
 # @param _TARGETS      List of targets
 function(disable_warnings_list _TARGETS)
- if (${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+ if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
    set(FLAG
        "-w")
  else()
@@ -146,7 +146,7 @@ endfunction(disable_warnings_list)
 #
 # @param _TARGET_NAME           target name
 function(set_target_mt _TARGET_NAME)
-  if(${COMPILER_IS_MSVC})
+  if(COMPILER_IS_MSVC)
     # Cannot use "add_CONFIG_flags" function here due to variable scoping
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd"
         PARENT_SCOPE)
@@ -154,58 +154,58 @@ function(set_target_mt _TARGET_NAME)
         PARENT_SCOPE)
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /MT"
         PARENT_SCOPE)
-  endif(${COMPILER_IS_MSVC})
+  endif(COMPILER_IS_MSVC)
 endfunction(set_target_mt)
 
 option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
 message(STATUS "Simd instructions use: ${SANDBOX_ENABLE_SIMD}")
 
 # Project-wide various options
-if (${COMPILER_IS_MSVC})
+if (COMPILER_IS_MSVC)
   # Multithreaded build
   add_definitions("/MP")
-endif (${COMPILER_IS_MSVC})
+endif (COMPILER_IS_MSVC)
 
 # Project-wide options (SIMD, if enabled)
-if (${SANDBOX_ENABLE_SIMD} STREQUAL "ON")
-  if (${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+if (SANDBOX_ENABLE_SIMD)
+  if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
     add_definitions("-msse2")
   else()
     add_release_flags("/arch:SSE2")
-  endif (${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+  endif (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 else()
   add_definitions(-D_DISABLE_SIMD)
-endif (${SANDBOX_ENABLE_SIMD} STREQUAL "ON")
+endif (SANDBOX_ENABLE_SIMD)
 
 # Project-wide warning options
-if(${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_definitions(-pedantic)
   add_definitions(-Wall)
   add_definitions(-Wextra)
   add_definitions(-Wpointer-arith)
   add_definitions(-Wcast-qual)
   add_definitions(-Weffc++)
-elseif(${COMPILER_IS_MSVC})
+elseif(COMPILER_IS_MSVC)
   add_definitions(-W4)
   # This disable useless msvc warnings about checked iterators
   add_definitions(-D_SCL_SECURE_NO_WARNINGS)
-endif(${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 
 # Debug-only options
-if(${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_debug_flags("-ggdb")
-elseif(${COMPILER_IS_MSVC})
-endif(${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+elseif(COMPILER_IS_MSVC)
+endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 
 # Release-only options
-if(${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_release_flags("-Ofast")
   add_release_flags("-march=native")
   add_release_flags("-mfpmath=sse")
   add_release_flags("-Ofast")
   # More informations about vectorization
   add_release_flags("-ftree-vectorizer-verbose=10")
-elseif(${COMPILER_IS_MSVC})
+elseif(COMPILER_IS_MSVC)
   add_release_linker_flags("/LTCG")
   add_release_flags("/Ox")
   add_release_flags("/Ob2")
@@ -213,15 +213,15 @@ elseif(${COMPILER_IS_MSVC})
   add_release_flags("/Ot")
   add_release_flags("/GL")
   add_release_flags("/fp:fast")
-endif(${COMPILER_IS_GCC} OR ${COMPILER_IS_CLANG})
+endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 
 # C++11 related options:
 # If using Clang we have to add the flag "std=c++11"
 # if using gcc, the c++11 flag change depending on the version
 # Nothing special with msvc
-if (${COMPILER_IS_CLANG})
+if (COMPILER_IS_CLANG)
   add_definitions(-std=c++11)
-elseif (${COMPILER_IS_GCC})
+elseif (COMPILER_IS_GCC)
   execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion
                   OUTPUT_VARIABLE GCC_VERSION)
   if ((GCC_VERSION VERSION_LESS 4.6) OR (GCC_VERSION VERSION_EQUAL 4.6))
@@ -233,8 +233,8 @@ endif()
 
 # C++11 on Mac: we have to use libc++ as well, because the libstdc++ provided
 # with Macs is based on 4.2, with no C++11 support.
-if (${SYSTEM_IS_MACOSX})
+if (SYSTEM_IS_MACOSX)
   add_definitions(-stdlib=libc++)
-endif (${SYSTEM_IS_MACOSX})
+endif (SYSTEM_IS_MACOSX)
 
 add_subdirectory(sandbox)
