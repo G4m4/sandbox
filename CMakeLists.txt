@@ -244,7 +244,7 @@ endif (SYSTEM_IS_MACOSX)
 
 
 # Google Test framework
-if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
+if (SANDBOX_HAS_GTEST)
   # GTest path may be defined from an outside CMake file,
   # if this is used as an external library
   if(NOT EXISTS ${GTEST_DIR})
@@ -267,7 +267,7 @@ if (${SANDBOX_HAS_GTEST} STREQUAL "ON")
   # Not displaying gtest warnings
   add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
   add_compiler_flags(gtest " -w")
-endif (${SANDBOX_HAS_GTEST} STREQUAL "ON")
+endif (SANDBOX_HAS_GTEST)
 
 
 add_subdirectory(sandbox)
