@@ -30,4 +30,10 @@ add_library(sandbox_lib
   ${SANDBOX_HDR}
 )
 
+if (COMPILER_IS_GCC)
+  # Linking a static library with dynamic ones in the case of a plugin,
+  # position-independant code is required
+  add_compiler_flags(sandbox_lib "-fPIC")
+endif (COMPILER_IS_GCC)
+
 set_target_mt(sandbox_lib)
