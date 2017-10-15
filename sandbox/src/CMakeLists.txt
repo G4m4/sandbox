@@ -31,5 +31,3 @@ add_library(sandbox_lib
 )
 
 set_target_mt(sandbox_lib)
-
-add_compiler_flags(sandbox_lib "-Weffc++")
