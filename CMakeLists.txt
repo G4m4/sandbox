@@ -81,7 +81,7 @@ endif()
 # @param _FLAGS                 flags to set
 function(add_compiler_flags _TARGET_NAME _FLAGS)
   set_property(TARGET ${_TARGET_NAME}
-               APPEND_STRING PROPERTY COMPILE_FLAGS ${_FLAGS}
+               APPEND_STRING PROPERTY COMPILE_FLAGS " ${_FLAGS}"
                )
 endfunction(add_compiler_flags)
 
@@ -91,7 +91,7 @@ endfunction(add_compiler_flags)
 # @param _FLAGS                 flags to set
 function(add_linker_flags _TARGET_NAME _FLAGS)
   set_property(TARGET ${_TARGET_NAME}
-               APPEND PROPERTY LINK_FLAGS ${_FLAGS}
+               APPEND PROPERTY LINK_FLAGS " ${_FLAGS}"
                )
 endfunction(add_linker_flags)
 
@@ -137,7 +137,7 @@ function(disable_warnings_list _TARGETS)
        "/W0")
  endif()
  SET_SOURCE_FILES_PROPERTIES(${_TARGETS}
-                             PROPERTIES COMPILE_FLAGS ${FLAG}
+                             PROPERTIES COMPILE_FLAGS " ${_FLAG}"
                              )
 endfunction(disable_warnings_list)
 
