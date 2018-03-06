@@ -4,3 +4,9 @@
 [submodule "externals/juce"]
 	path = externals/juce
 	url = git://github.com/julianstorer/JUCE.git
+[submodule "externals/glfw"]
+	path = externals/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "externals/glm"]
+	path = externals/glm
+	url = https://github.com/g-truc/glm.git

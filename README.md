@@ -31,53 +31,17 @@ Where YOUR_PROJET_LOCATION may be by instance "c:/dev" and YOUR_PROJECT_NAME som
 A Travis configuration file is provided in order to be used with [Travis CI](https://travis-ci.org/).
 
 The build system is based on Cmake.
-Building is done with:
-
-    mkdir build && cd build
-    cmake ..
-    cmake --build .
-
-The directory hierarchy is as follows:
-- sandbox
-  - implementation
-    - main.cc
-  - src
-    - common.h
-    - configuration.h
-    - dummygroup
-      - dummyclass.cc
-      - dummyclass.h
 
 The few lines of code there strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
 
-Branch: GoogleTest
------
-
-Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
-
-All required Cmake variables are set up, and the GTest library is used as a submodule; you have to add it manually:
-
-    git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
-
-Branch: Vst Plugin
------
-
-A basic Vst plugin implementation is available, relying on [JUCE Framework](https://github.com/julianstorer/JUCE).
-
-All required Cmake variables are set up, and the JUCE library is used as a submodule; you have to add it manually:
-
-    git submodule add git://github.com/julianstorer/JUCE.git externals/juce
-
-Branch: OpenGL
+You are on the OpenGL branch
 -----
 
 A few helper libraries - [GLFW](http://www.glfw.org/) and [GLM](http://glm.g-truc.net/0.9.7/index.html) - are already set up as submodule:
-
     git submodule init
     git submodule update
 
 This implementation is using GLEW, whose CMake find script requires variables to be set - the easiest way to do it is probably to set them as environment variables:
-
     export GLEW_INCLUDE_DIR=PATH_TO_GLEW/include
     export GLEW_LIBRARY=PATH_TO_GLEW/lib
 

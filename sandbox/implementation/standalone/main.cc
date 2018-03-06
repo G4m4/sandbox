@@ -1,7 +1,7 @@
 /// @file implementation/main.cc
 /// @brief Implementation main entry point
 /// @author gm
-/// @copyright gm 2014
+/// @copyright gm 2016
 ///
 /// This file is part of SandBox
 ///
@@ -21,16 +21,24 @@
 #include <cstdio>
 
 #include "sandbox/src/common.h"
-#include "sandbox/src/dummygroup/dummyclass.h"
+#include "sandbox/src/context/context.h"
 
 /// @brief Main function, of course.
 int main(int argc, char **argv) {
   sandbox::IGNORE(argc);
   sandbox::IGNORE(argv);
 
-  const char* kText(sandbox::dummygroup::DummyClass().DoSomething());
+  sandbox::context::Context context;
+  context.Initialize();
 
-  printf("Done: %s", kText);
+  do {
+    context.Clear();
+    context.Update();
+  } while(!context.ShouldClose());
+
+  context.Terminate();
+
+  printf("Done.");
 
   return 0;
 }

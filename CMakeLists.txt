@@ -73,6 +73,18 @@ else()
   message("Build configuration set to Release")
 endif()
 
+# 32/64 bits?
+set(BUILD_64_BITS
+    0)
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(BUILD_64_BITS
+        1)
+    message("Build for 64 bits")
+else()
+    message("Build for 32 bits")
+endif()
+
+
 # Functions
 
 # @brief For the specified target, append compiler flags to the existing ones
@@ -235,5 +247,46 @@ endif()
 if (SYSTEM_IS_MACOSX)
   add_definitions(-stdlib=libc++)
 endif (SYSTEM_IS_MACOSX)
+
+# Various includes
+
+
+# The find script seems dodgy and requires to set those variables
+# Doing it here so it is as painless as possible
+if (${SYSTEM_IS_WINDOWS})
+  set(GLEW_INCLUDE_DIR $ENV{GLEW_INCLUDE_DIR})
+  if (${BUILD_64_BITS})
+    set(GLEW_LIBRARY $ENV{GLEW_LIBRARY}/Release/x64/glew32.lib)
+  endif (${BUILD_64_BITS})
+endif (${SYSTEM_IS_WINDOWS})
+
+find_package(GLEW REQUIRED)
+find_package(OpenGL REQUIRED)
+if (${SYSTEM_IS_LINUX})
+  find_package(Threads REQUIRED)
+  find_package(X11 REQUIRED)
+endif (${SYSTEM_IS_LINUX})
+
+# GLFW
+set(GLFW_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/glfw
+)
+set(GLFW_BUILD_DIR
+  ${CMAKE_CURRENT_BINARY_DIR}/glfw
+)
+set(GLFW_INCLUDE_DIRS
+  ${GLFW_DIR}/include
+)
+if(EXISTS ${GLFW_DIR})
+  add_subdirectory(${GLFW_DIR} ${GLFW_BUILD_DIR})
+  add_compiler_flags(glfw "-w")
+else(EXISTS ${GLFW_DIR})
+  message("GLFW directory not found")
+endif(EXISTS ${GLFW_DIR})
+
+# GLM
+find_path(GLM_INCLUDE_DIRS glm/
+  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/externals/glm
+)
 
 add_subdirectory(sandbox)
