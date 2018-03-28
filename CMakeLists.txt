@@ -267,26 +267,29 @@ if (${SYSTEM_IS_LINUX})
   find_package(X11 REQUIRED)
 endif (${SYSTEM_IS_LINUX})
 
-# GLFW
-set(GLFW_DIR
-  ${CMAKE_CURRENT_SOURCE_DIR}/externals/glfw
+# Vulkan
+set(VULKAN_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan
 )
-set(GLFW_BUILD_DIR
-  ${CMAKE_CURRENT_BINARY_DIR}/glfw
+set(VULKAN_BUILD_DIR
+  ${CMAKE_CURRENT_BINARY_DIR}/vulkan
 )
-set(GLFW_INCLUDE_DIRS
-  ${GLFW_DIR}/include
-)
-if(EXISTS ${GLFW_DIR})
-  add_subdirectory(${GLFW_DIR} ${GLFW_BUILD_DIR})
-  add_compiler_flags(glfw "-w")
-else(EXISTS ${GLFW_DIR})
-  message("GLFW directory not found")
-endif(EXISTS ${GLFW_DIR})
-
-# GLM
-find_path(GLM_INCLUDE_DIRS glm/
-  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/externals/glm
+set(VULKAN_DIR_INCLUDE_DIRS
+  ${VULKAN_DIR_DIR}/include
 )
 
+if(EXISTS ${VULKAN_DIR})
+  set(EXTERNAL_SOURCE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan/external")
+  add_subdirectory(${VULKAN_DIR} ${VULKAN_BUILD_DIR})
+  add_compiler_flags(loader-norm-dy "/w")
+  add_compiler_flags(asm_offset "/w")
+  add_compiler_flags(loader-opt-dy "/w")
+  add_compiler_flags(loader-norm-st "/w")
+  add_compiler_flags(loader-opt-st "/w")
+  add_compiler_flags(cube "/w")
+  add_compiler_flags(cubepp "/w")
+  add_compiler_flags(smoketest "/w")
+else(EXISTS ${VULKAN_DIR})
+  message("Vulkan directory not found")
+endif(EXISTS ${VULKAN_DIR})
 add_subdirectory(sandbox)
