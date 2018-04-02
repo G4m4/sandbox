@@ -39,7 +39,7 @@ install:
 before_script:
   - git submodule init
   - git submodule update
-  - if [ $TRAVIS_OS_NAME = linux ]; then sh externals/vulkan/update_external_sources.sh; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then ./externals/vulkan/update_external_sources.sh; fi
 script:
   - mkdir build
   - cd build
