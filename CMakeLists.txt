@@ -178,6 +178,48 @@ if (COMPILER_IS_MSVC)
   add_definitions("/MP")
 endif (COMPILER_IS_MSVC)
 
+# Various includes
+
+
+if (SYSTEM_IS_LINUX)
+#  find_package(Threads REQUIRED)
+  find_package(X11 REQUIRED)
+endif (SYSTEM_IS_LINUX)
+
+# Vulkan
+set(VULKAN_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan
+)
+set(VULKAN_BUILD_DIR
+  ${CMAKE_CURRENT_BINARY_DIR}/vulkan
+)
+set(VULKAN_DIR_INCLUDE_DIRS
+  ${VULKAN_DIR_DIR}/include
+)
+
+if(EXISTS ${VULKAN_DIR})
+  set(EXTERNAL_SOURCE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan/external")
+  add_subdirectory(${VULKAN_DIR} ${VULKAN_BUILD_DIR})
+if(COMPILER_IS_MSVC)
+  add_compiler_flags(asm_offset "/w")
+  add_compiler_flags(loader-norm-st "/w")
+  add_compiler_flags(loader-opt-st "/w")
+  add_compiler_flags(loader-norm-dy "/w")
+  add_compiler_flags(loader-opt-dy "/w")
+  add_compiler_flags(cube "/w")
+  add_compiler_flags(cubepp "/w")
+  add_compiler_flags(smoketest "/w")
+else()
+  add_compiler_flags(asm_offset "-w")
+  add_compiler_flags(cube "-w")
+  add_compiler_flags(cubepp "-w")
+  add_compiler_flags(smoketest "-w")
+endif(COMPILER_IS_MSVC)
+else(EXISTS ${VULKAN_DIR})
+  message("Vulkan directory not found")
+endif(EXISTS ${VULKAN_DIR})
+
+
 # Project-wide options (SIMD, if enabled)
 if (SANDBOX_ENABLE_SIMD)
   if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
@@ -248,48 +290,4 @@ if (SYSTEM_IS_MACOSX)
   add_definitions(-stdlib=libc++)
 endif (SYSTEM_IS_MACOSX)
 
-# Various includes
-
-
-# The find script seems dodgy and requires to set those variables
-# Doing it here so it is as painless as possible
-if (${SYSTEM_IS_WINDOWS})
-  set(GLEW_INCLUDE_DIR $ENV{GLEW_INCLUDE_DIR})
-  if (${BUILD_64_BITS})
-    set(GLEW_LIBRARY $ENV{GLEW_LIBRARY}/Release/x64/glew32.lib)
-  endif (${BUILD_64_BITS})
-endif (${SYSTEM_IS_WINDOWS})
-
-find_package(GLEW REQUIRED)
-find_package(OpenGL REQUIRED)
-if (${SYSTEM_IS_LINUX})
-  find_package(Threads REQUIRED)
-  find_package(X11 REQUIRED)
-endif (${SYSTEM_IS_LINUX})
-
-# Vulkan
-set(VULKAN_DIR
-  ${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan
-)
-set(VULKAN_BUILD_DIR
-  ${CMAKE_CURRENT_BINARY_DIR}/vulkan
-)
-set(VULKAN_DIR_INCLUDE_DIRS
-  ${VULKAN_DIR_DIR}/include
-)
-
-if(EXISTS ${VULKAN_DIR})
-  set(EXTERNAL_SOURCE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan/external")
-  add_subdirectory(${VULKAN_DIR} ${VULKAN_BUILD_DIR})
-  add_compiler_flags(loader-norm-dy "/w")
-  add_compiler_flags(asm_offset "/w")
-  add_compiler_flags(loader-opt-dy "/w")
-  add_compiler_flags(loader-norm-st "/w")
-  add_compiler_flags(loader-opt-st "/w")
-  add_compiler_flags(cube "/w")
-  add_compiler_flags(cubepp "/w")
-  add_compiler_flags(smoketest "/w")
-else(EXISTS ${VULKAN_DIR})
-  message("Vulkan directory not found")
-endif(EXISTS ${VULKAN_DIR})
 add_subdirectory(sandbox)
