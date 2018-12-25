@@ -22,12 +22,49 @@
 
 #include "sandbox/src/context/context.h"
 
-// Include GLEW. Always include it before gl.h and glfw.h, since it's a bit magic.
-#include <GL/glew.h>
-// Include GLFW
+#define GLFW_INCLUDE_NONE
+#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
+
+template <typename T, std::size_t N>
+constexpr std::size_t countof(T const (&)[N])
+{
+  return N;
+}
+
+#define TEST_VK_RESULT( _call_ ) { VkResult result = _call_; \
+  if (result != VK_SUCCESS) {\
+  std::printf("Unsuccessful call '%s': %d", #_call_, result); \
+  }\
+}
+
+namespace {
+  constexpr const char * enabledExtensions[] = {"VK_KHR_SURFACE_EXTENSION_NAME",
+						//"VK_KHR_WIN32_SURFACE_EXTENSION_NAME",
+						"VK_KHR_SWAPCHAIN_EXTENSION_NAME",
+						// debug layers
+						"VK_EXT_DEBUG_REPORT_EXTENSION_NAME"};
+
+  constexpr const char * enabledLayers[] = {"VK_LAYER_LUNARG_standard_validation"};
+
+  void CreateInstance(VkInstance & instance) {
+    VkApplicationInfo appInfo = {};
+    appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+    appInfo.pApplicationName = "Sandbox";
+    appInfo.apiVersion = VK_MAKE_VERSION(1, 0, VK_HEADER_VERSION);
+
+    VkInstanceCreateInfo createInfo = {};
+    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+    createInfo.pApplicationInfo = &appInfo;
+    createInfo.enabledExtensionCount = countof(enabledExtensions);
+    createInfo.ppEnabledExtensionNames = &enabledExtensions[0];
+    createInfo.enabledLayerCount = countof(enabledLayers);
+    createInfo.ppEnabledLayerNames = &enabledLayers[0];
+    TEST_VK_RESULT( vkCreateInstance(&createInfo, NULL, &instance) );
+  }
+}
 
 namespace sandbox {
 namespace context {
@@ -48,28 +85,19 @@ bool Context::Initialize() {
     }
 
     // Create window
-    glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     window_ = glfwCreateWindow(640, 480, "SandBox Title", NULL, NULL);
     if (!window_) {
       return false;
     }
     glfwMakeContextCurrent(window_);
-    std::printf("GL version: %s\n", glGetString(GL_VERSION));
+    //std::printf("GL version: %s\n", glGetString(GL_VERSION));
 
     glfwSwapInterval(1);
-    glfwSetInputMode(window_, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetInputMode(window_, GLFW_STICKY_KEYS, GLFW_TRUE);
   }
-
-  glewExperimental = 1;  // This is required due to driver issues
-  if (glewInit() != GLEW_OK) {
-    return false;
-  }
-  glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
   return true;
 }
@@ -80,7 +108,6 @@ void Context::Terminate() {
 }
 
 void Context::Clear() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Context::Update() {

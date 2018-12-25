@@ -180,9 +180,8 @@ endif (COMPILER_IS_MSVC)
 
 # Various includes
 
-
 if (SYSTEM_IS_LINUX)
-#  find_package(Threads REQUIRED)
+  find_package(Threads REQUIRED)
   find_package(X11 REQUIRED)
 endif (SYSTEM_IS_LINUX)
 
@@ -194,7 +193,7 @@ set(VULKAN_BUILD_DIR
   ${CMAKE_CURRENT_BINARY_DIR}/vulkan
 )
 set(VULKAN_DIR_INCLUDE_DIRS
-  ${VULKAN_DIR_DIR}/include
+  ${VULKAN_DIR}/include
 )
 
 if(EXISTS ${VULKAN_DIR})
@@ -289,5 +288,27 @@ endif()
 if (SYSTEM_IS_MACOSX)
   add_definitions(-stdlib=libc++)
 endif (SYSTEM_IS_MACOSX)
+
+# GLFW
+set(GLFW_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/glfw
+)
+set(GLFW_BUILD_DIR
+  ${CMAKE_CURRENT_BINARY_DIR}/glfw
+)
+set(GLFW_INCLUDE_DIRS
+  ${GLFW_DIR}/include
+)
+if(EXISTS ${GLFW_DIR})
+  add_subdirectory(${GLFW_DIR} ${GLFW_BUILD_DIR})
+  add_compiler_flags(glfw "-w")
+else(EXISTS ${GLFW_DIR})
+  message("GLFW directory not found")
+endif(EXISTS ${GLFW_DIR})
+
+# GLM
+find_path(GLM_INCLUDE_DIRS glm/
+  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/externals/glm
+)
 
 add_subdirectory(sandbox)

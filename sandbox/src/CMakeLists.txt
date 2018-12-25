@@ -3,8 +3,8 @@
 include_directories(
   SYSTEM
   ${GLEW_INCLUDE_DIRS}
-  ${GLFW_INCLUDE_DIRS}
   ${GLM_INCLUDE_DIRS}
+  ${VULKAN_DIR_INCLUDE_DIRS}
 )
 
 include_directories(
@@ -43,15 +43,13 @@ add_compiler_flags(sandbox_lib "-DDLL_EXPORT")
 
 if (${SYSTEM_IS_WINDOWS})
 target_link_libraries(sandbox_lib
-                      ${OPENGL_LIBRARIES}
-                      ${GLEW_LIBRARIES}
                       glfw
                       ${GLFW_LIBRARIES}
+                      vulkan
 )
 elseif (${SYSTEM_IS_LINUX})
 target_link_libraries(sandbox_lib
-                      ${OPENGL_LIBRARIES}
-                      ${GLEW_LIBRARIES}
+                      vulkan
                       glfw
                       ${GLFW_LIBRARIES}
                       ${X11_LIBRARIES}
