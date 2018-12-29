@@ -20,61 +20,24 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include "sandbox/src/context/context.h"
-
 #define GLFW_INCLUDE_NONE
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
 
-template <typename T, std::size_t N>
-constexpr std::size_t countof(T const (&)[N])
-{
-  return N;
-}
-
-#define TEST_VK_RESULT( _call_ ) { VkResult result = _call_; \
-  if (result != VK_SUCCESS) {\
-  std::printf("Unsuccessful call '%s': %d", #_call_, result); \
-  }\
-}
-
-namespace {
-  constexpr const char * enabledExtensions[] = {"VK_KHR_SURFACE_EXTENSION_NAME",
-						//"VK_KHR_WIN32_SURFACE_EXTENSION_NAME",
-						"VK_KHR_SWAPCHAIN_EXTENSION_NAME",
-						// debug layers
-						"VK_EXT_DEBUG_REPORT_EXTENSION_NAME"};
-
-  constexpr const char * enabledLayers[] = {"VK_LAYER_LUNARG_standard_validation"};
-
-  void CreateInstance(VkInstance & instance) {
-    VkApplicationInfo appInfo = {};
-    appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    appInfo.pApplicationName = "Sandbox";
-    appInfo.apiVersion = VK_MAKE_VERSION(1, 0, VK_HEADER_VERSION);
-
-    VkInstanceCreateInfo createInfo = {};
-    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-    createInfo.pApplicationInfo = &appInfo;
-    createInfo.enabledExtensionCount = countof(enabledExtensions);
-    createInfo.ppEnabledExtensionNames = &enabledExtensions[0];
-    createInfo.enabledLayerCount = countof(enabledLayers);
-    createInfo.ppEnabledLayerNames = &enabledLayers[0];
-    TEST_VK_RESULT( vkCreateInstance(&createInfo, NULL, &instance) );
-  }
-}
+#include "sandbox/src/context/context.h"
+#include "sandbox/src/context/context_vulkan.h"
 
 namespace sandbox {
 namespace context {
 
-Context::Context() {
+Context::Context() : window_(nullptr), context_impl_(new ContextVulkan()) {
   // Nothing to do here for now
 }
 
 Context::~Context() {
-  // Nothing to do here for now
+  delete context_impl_;
 }
 
 bool Context::Initialize() {
@@ -98,6 +61,7 @@ bool Context::Initialize() {
     glfwSwapInterval(1);
     glfwSetInputMode(window_, GLFW_STICKY_KEYS, GLFW_TRUE);
   }
+  context_impl_->Initialize();
 
   return true;
 }
@@ -105,6 +69,7 @@ bool Context::Initialize() {
 void Context::Terminate() {
   glfwDestroyWindow(window_);
   glfwTerminate();
+  context_impl_->Terminate();
 }
 
 void Context::Clear() {

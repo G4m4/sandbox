@@ -1,7 +1,7 @@
-/// @file context.h
-/// @brief Base context object to spawn windows
+/// @file context_vulkan.h
+/// @brief Base context object for Vulkan API
 /// @author gm
-/// @copyright gm 2016
+/// @copyright gm 2018
 ///
 /// This file is part of SandBox
 ///
@@ -18,23 +18,28 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SANDBOX_CONTEXT_H_
-#define SANDBOX_CONTEXT_H_
+#ifndef SANDBOX_CONTEXT_VULKAN_H_
+#define SANDBOX_CONTEXT_VULKAN_H_
+
+#define GLFW_INCLUDE_NONE
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
 
 #include "sandbox/src/common.h"
-
-struct GLFWwindow;
 
 namespace sandbox {
 namespace context {
 
-class ContextVulkan;
-
-/// @brief Context object, where everything lives at the moment
-class SANDBOX_API Context {
+/// @brief Context object, where the Vulkan instance lives at the moment
+class ContextVulkan {
  public:
-  Context();
-  ~Context();
+#if(_BUILD_CONFIGURATION_DEBUG)
+  static constexpr bool c_enableValidationLayers = true;
+#else
+  static constexpr bool c_enableValidationLayers = false;
+#endif // _BUILD_CONFIGURATION_
+  ContextVulkan();
+  ~ContextVulkan();
 
   bool Initialize();
   void Terminate();
@@ -44,11 +49,11 @@ class SANDBOX_API Context {
   bool ShouldClose();
 
  private:
-  GLFWwindow* window_;
-  ContextVulkan * context_impl_;
+  VkInstance instance_;
+  VkDebugUtilsMessengerEXT callback_;
 };
 
 }  // namespace context
 }  // namespace sandbox
 
-#endif  // SANDBOX_CONTEXT_H_
+#endif  // SANDBOX_CONTEXT_VULKAN_H_
