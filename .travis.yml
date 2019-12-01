@@ -34,7 +34,7 @@ before_install:
     - eval "${MATRIX_EVAL}"
 install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install cmake; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install valgrind; else HOMEBREW_NO_AUTO_UPDATE=1 brew install valgrind; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install valgrind; fi
 before_script:
   - git submodule init
   - git submodule update
@@ -44,4 +44,4 @@ script:
   - cmake -DSANDBOX_HAS_GTEST=OFF -DSANDBOX_ENABLE_SIMD=OFF ..
   - make clean
   - make
-  - valgrind --leak-check=full --track-origins=yes ./sandbox/implementation/standalone/sandbox
+  - if [ $TRAVIS_OS_NAME = linux ]; then valgrind --leak-check=full --track-origins=yes ./sandbox/implementation/standalone/sandbox; else ./sandbox/implementation/standalone/sandbox; fi
