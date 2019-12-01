@@ -54,7 +54,7 @@ Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
 
 All required Cmake variables are set up, and the GTest library is used as a submodule; you have to add it manually:
 
-  git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
+  git submodule add https://github.com/google/googletest.git externals/gtest
 
 
 License
