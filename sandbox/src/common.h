@@ -1,7 +1,7 @@
 /// @file common.h
 /// @brief SandBox common utilities header
 /// @author gm
-/// @copyright gm 2014
+/// @copyright gm 2019
 ///
 /// This file is part of SandBox
 ///
@@ -26,9 +26,6 @@
 #include "sandbox/src/configuration.h"
 
 namespace sandbox {
-
-/// @brief Ignore unused variables
-template<typename Type> void IGNORE(const Type&) {}
 
 /// @brief Assume that the following condition is always true
 /// (on some compilers, allows optimization)
