@@ -6,6 +6,7 @@ SandBox is an empty structure for fast projects setup - supported so far:
 - GoogleTest
 - VST plugin
 - OpenGL
+- Qt5
 
 It includes a basic directory structure, simple ready-mix Cmake files as well as basic git and Travis configurations.
 Different configurations are available for different frameworks; each one of them resides in a different branch of this depot.
@@ -82,6 +83,15 @@ This implementation is using GLEW, whose CMake find script requires variables to
     export GLEW_LIBRARY=PATH_TO_GLEW/lib
 
 Notice that the library this time is dynamic - this to demonstrate a proper decoupling: we want the main executable to be graphics API-agnostic, and not link with Glew for example.
+
+Branch: Qt5
+-----
+
+You will need [Qt](https://www.qt.io/download-open-source) installed on your dev machine. In order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
+
+cmake -DCMAKE_PREFIX_PATH="C:/Qt/5.9.1/msvc2015_64/lib/cmake" ../
+
+Where "C:/Qt/5.9.1/msvc2015_64/lib/cmake" gets to be replaced by your own.
 
 License
 ==================================
