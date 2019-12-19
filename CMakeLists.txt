@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(sandbox)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 # Paths definitions
 set(SANDBOX_INCLUDE_DIR
   ${CMAKE_CURRENT_SOURCE_DIR}
@@ -157,25 +159,11 @@ function(set_target_mt _TARGET_NAME)
   endif(COMPILER_IS_MSVC)
 endfunction(set_target_mt)
 
-option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
-message(STATUS "Simd instructions use: ${SANDBOX_ENABLE_SIMD}")
-
 # Project-wide various options
 if (COMPILER_IS_MSVC)
   # Multithreaded build
   add_definitions("/MP")
 endif (COMPILER_IS_MSVC)
-
-# Project-wide options (SIMD, if enabled)
-if (SANDBOX_ENABLE_SIMD)
-  if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
-    add_definitions("-msse2")
-  else()
-    add_release_flags("/arch:SSE2")
-  endif (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
-else()
-  add_definitions(-D_DISABLE_SIMD)
-endif (SANDBOX_ENABLE_SIMD)
 
 # Project-wide warning options
 if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
@@ -186,8 +174,12 @@ if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_definitions(-Wcast-qual)
 elseif(COMPILER_IS_MSVC)
   add_definitions(-W4)
+  # Hint WinNT headers about the architecture we're targetting
+  add_definitions(-D_AMD64_)
   # This disable useless msvc warnings about checked iterators
   add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+  # This disable useless msvc warnings about CRT functions
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 
 # Debug-only options
@@ -235,5 +227,11 @@ endif()
 if (SYSTEM_IS_MACOSX)
   add_definitions(-stdlib=libc++)
 endif (SYSTEM_IS_MACOSX)
+
+if (SYSTEM_IS_WINDOWS)
+  find_package(WindowsSDK REQUIRED)
+else()
+  find_package(Threads REQUIRED)
+endif (SYSTEM_IS_WINDOWS)
 
 add_subdirectory(sandbox)
