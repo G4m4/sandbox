@@ -24,10 +24,7 @@
 #include "sandbox/src/dummygroup/dummyclass.h"
 
 /// @brief Main function, of course.
-int main(int argc, char **argv) {
-  sandbox::IGNORE(argc);
-  sandbox::IGNORE(argv);
-
+int main(int /*argc*/, char ** /*argv*/) {
   const char* kText(sandbox::dummygroup::DummyClass().DoSomething());
 
   printf("Done: %s", kText);
