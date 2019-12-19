@@ -53,38 +53,15 @@ The directory hierarchy is as follows:
 
 The few lines of code there strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
 
-Branch: GoogleTest
+You are on the Qt branch
 -----
 
-Tests rely on [Google Test Framework](http://code.google.com/p/googletest/).
+You will need [Qt] (https://www.qt.io/download-open-source) installed on your dev machine.
+In order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
 
-All required Cmake variables are set up, and the GTest library is used as a submodule; you have to add it manually:
+    cmake -DCMAKE_PREFIX_PATH="C:/Qt/5.9.1/msvc2015_64/lib/cmake" ../
 
-    git submodule add https://chromium.googlesource.com/external/googletest.git externals/gtest
-
-Branch: Vst Plugin
------
-
-A basic Vst plugin implementation is available, relying on [JUCE Framework](https://github.com/julianstorer/JUCE).
-
-All required Cmake variables are set up, and the JUCE library is used as a submodule; you have to add it manually:
-
-    git submodule add git://github.com/julianstorer/JUCE.git externals/juce
-
-Branch: OpenGL
------
-
-A few helper libraries - [GLFW](http://www.glfw.org/) and [GLM](http://glm.g-truc.net/0.9.7/index.html) - are already set up as submodule:
-
-    git submodule init
-    git submodule update
-
-This implementation is using GLEW, whose CMake find script requires variables to be set - the easiest way to do it is probably to set them as environment variables:
-
-    export GLEW_INCLUDE_DIR=PATH_TO_GLEW/include
-    export GLEW_LIBRARY=PATH_TO_GLEW/lib
-
-Notice that the library this time is dynamic - this to demonstrate a proper decoupling: we want the main executable to be graphics API-agnostic, and not link with Glew for example.
+Where "C:/Qt/5.9.1/msvc2015_64/lib/cmake" gets to be replaced by your own.
 
 Branch: Qt5
 -----
