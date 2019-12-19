@@ -1,6 +1,8 @@
 SandBox
 ==================================
 
+[![Build Status](https://travis-ci.org/G4m4/sandbox.svg?branch=master)](https://travis-ci.org/G4m4/sandbox)
+
 SandBox is an empty structure for fast projects setup - supported so far:
 - Basic (lib + executable)
 - GoogleTest
@@ -89,7 +91,7 @@ Branch: Qt5
 
 You will need [Qt](https://www.qt.io/download-open-source) installed on your dev machine. In order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
 
-cmake -DCMAKE_PREFIX_PATH="C:/Qt/5.9.1/msvc2015_64/lib/cmake" ../
+    cmake -DCMAKE_PREFIX_PATH="C:/Qt/5.9.1/msvc2015_64/lib/cmake" ../
 
 Where "C:/Qt/5.9.1/msvc2015_64/lib/cmake" gets to be replaced by your own.
 
