@@ -72,7 +72,11 @@ target_link_libraries(sandbox_ui
   Qt5::Quick
 )
 
+if(COMPILER_IS_MSVC)
 # Compile time if warning disabled
 add_compiler_flags(sandbox_ui "-wd4127")
+else()
+add_compiler_flags(sandbox_ui "-Wno-cast-qual -Wno-class-memaccess")
+endif(COMPILER_IS_MSVC)
 
 set_target_mt(sandbox_ui)
