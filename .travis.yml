@@ -42,7 +42,7 @@ before_script:
 script:
   - mkdir build
   - cd build
-  - cmake -DSANDBOX_HAS_GTEST=OFF -DSANDBOX_ENABLE_SIMD=OFF ..
+  - cmake -DSANDBOX_HAS_GTEST=ON -DSANDBOX_ENABLE_SIMD=OFF ..
   - make clean
   - make
   - if [ $TRAVIS_OS_NAME = linux ]; then valgrind --leak-check=full --track-origins=yes ./sandbox/tests/sandbox_tests; else ./sandbox/tests/sandbox_tests; fi
