@@ -234,4 +234,10 @@ else()
   find_package(Threads REQUIRED)
 endif (SYSTEM_IS_WINDOWS)
 
+# Imgui integration:
+# We will reference files from whatever project will require it
+set(SANDBOX_EXTERNALS_IMGUI_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/imgui
+)
+
 add_subdirectory(sandbox)
