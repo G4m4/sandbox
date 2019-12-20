@@ -11,6 +11,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
 if(POLICY CMP0020)
+  # "Automatically link Qt executables to qtmain target on Windows"
   cmake_policy(SET CMP0020 NEW)
 endif()
 
