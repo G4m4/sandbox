@@ -57,14 +57,14 @@ The few lines of code there strictly follows [Google Style](http://google-styleg
 You are on the Imgui branch
 -----
 
-You will need [Qt] (https://www.qt.io/download-open-source) installed on your dev machine.
+You will need [Qt] (https://www.qt.io/download-open-source) installed on your dev machine, including QML module.
 On Debian-based distros:
 
-    sudo dnf install qt5-qtbase-devel.x86_64
+    sudo dnf install qt5-qtbase-devel.x86_64 qt5-qtdeclarative-devel.x86_64
 
 On Ubuntu-based distros:
 
-    sudo apt-get install qt5-default
+    sudo apt-get install qt5-default qtquick1-5-dev qtscript5-dev
 
 On some systems - typically Windows - in order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
 
