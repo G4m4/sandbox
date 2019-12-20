@@ -58,7 +58,15 @@ You are on the Imgui branch
 -----
 
 You will need [Qt] (https://www.qt.io/download-open-source) installed on your dev machine.
-In order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
+On Debian-based distros:
+
+    sudo dnf install qt5-qtbase-devel.x86_64
+
+On Ubuntu-based distros:
+
+    sudo apt-get install qt5-default
+
+On some systems - typically Windows - in order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
 
     cmake -DCMAKE_PREFIX_PATH="C:/Qt/5.9.1/msvc2015_64/lib/cmake" ../
 
