@@ -44,6 +44,5 @@ int main(int argc, char *argv[]) {
   viewer.setResizeMode(QQuickView::SizeRootObjectToView);
   viewer.resize(1280, 720);
   viewer.show();
-
   return a.exec();
 }
