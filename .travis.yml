@@ -39,14 +39,14 @@ before_install:
 install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install cmake; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install valgrind; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install qt5-default; else brew install qt5; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install qt5-default qtquick1-5-dev qtdeclarative5-dev; fi
 before_script:
   - git submodule init
   - git submodule update
 script:
   - mkdir build
   - cd build
-  - cmake ..
+  - if [ $TRAVIS_OS_NAME = linux ]; then cmake ..; else cmake -DCMAKE_PREFIX_PATH="/usr/local/opt/qt5" ..; fi
   - make clean
   - make
   - if [ $TRAVIS_OS_NAME = linux ]; then valgrind --leak-check=full --track-origins=yes ./sandbox/implementation/standalone/sandbox; else ./sandbox/implementation/standalone/sandbox; fi
