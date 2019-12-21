@@ -64,7 +64,7 @@ On Debian-based distros:
 
 On Ubuntu-based distros:
 
-    sudo apt-get install qt5-default qtquick1-5-dev qtscript5-dev
+    sudo apt-get install qt5-default qtquick1-5-dev qtdeclarative5-dev
 
 On some systems - typically Windows - in order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
 
