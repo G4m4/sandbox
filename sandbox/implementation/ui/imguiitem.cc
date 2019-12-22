@@ -31,6 +31,9 @@
 #include <QOpenGLFunctions>
 #include <QGuiApplication>
 
+namespace sandbox {
+namespace imgui {
+
 ImGuiRenderer::ImGuiRenderer() {
 }
 
@@ -532,3 +535,6 @@ void ImGuiItem::updateInput() {
     w->keyText.clear();
   }
 }
+
+} // namespace imgui
+} // namespace sandbox

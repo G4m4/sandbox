@@ -22,6 +22,9 @@
 
 #include "externals/imgui/imgui.h"
 
+namespace sandbox {
+namespace imgui {
+
 ///////////////////////////////////////////////////////////////////////////////
 // Based on alpqr implementation: https://github.com/alpqr/imgui-qtquick
 ///////////////////////////////////////////////////////////////////////////////
@@ -68,3 +71,6 @@ void Sandbox::frame() {
     ImGui::ShowDemoWindow(&show_demo_window);
   }
 }
+
+} // namespace imgui
+} // namespace sandbox

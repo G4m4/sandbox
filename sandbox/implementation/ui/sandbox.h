@@ -24,6 +24,9 @@
 #include <QScopedPointer>
 #include "sandbox/src/dummygroup/dummyclass.h"
 
+namespace sandbox {
+namespace imgui {
+
 class Sandbox
 {
 public:
@@ -35,5 +38,8 @@ private:
   bool show_another_window = false;
   QScopedPointer<sandbox::dummygroup::DummyClass> dummy_class_instance_;
 };
+
+} // namespace imgui
+} // namespace sandbox
 
 #endif // SANDBOX_SRC_IMPLEMENTATION_SANDBOX_H

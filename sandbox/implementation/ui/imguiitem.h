@@ -30,6 +30,10 @@ class QOpenGLTexture;
 class QOpenGLShaderProgram;
 class QOpenGLBuffer;
 class QOpenGLVertexArrayObject;
+
+namespace sandbox {
+namespace imgui {
+
 class ImGuiInputEventFilter;
 
 class ImGuiRenderer : public QSGRenderNode {
@@ -121,5 +125,8 @@ private:
   QObject *m_inputEventSource = nullptr;
   QObject m_dummy;
 };
+
+} // namespace imgui
+} // namespace sandbox
 
 #endif // SANDBOX_SRC_IMPLEMENTATION_IMGUIITEM_H

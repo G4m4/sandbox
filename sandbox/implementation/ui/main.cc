@@ -24,6 +24,9 @@
 #include <QGuiApplication>
 #include <QQuickView>
 
+using sandbox::imgui::ImGuiItem;
+using sandbox::imgui::Sandbox;
+
 int main(int argc, char *argv[]) {
   QGuiApplication a(argc, argv);
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
