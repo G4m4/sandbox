@@ -20,7 +20,7 @@
 
 #include "sandbox/implementation/ui/sandbox.h"
 
-#include "externals/imgui/imgui.h"
+#include <externals/imgui/imgui.h>
 
 namespace sandbox {
 namespace imgui {
