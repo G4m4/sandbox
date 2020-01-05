@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 2.8)
 
 project(sandbox)
 
+set(CMAKE_CXX_STANDARD  11)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # Paths definitions
 set(SANDBOX_INCLUDE_DIR
   ${CMAKE_CURRENT_SOURCE_DIR}
@@ -213,27 +216,5 @@ elseif(COMPILER_IS_MSVC)
   add_release_flags("/GL")
   add_release_flags("/fp:fast")
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
-
-# C++11 related options:
-# If using Clang we have to add the flag "std=c++11"
-# if using gcc, the c++11 flag change depending on the version
-# Nothing special with msvc
-if (COMPILER_IS_CLANG)
-  add_definitions(-std=c++11)
-elseif (COMPILER_IS_GCC)
-  execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion
-                  OUTPUT_VARIABLE GCC_VERSION)
-  if ((GCC_VERSION VERSION_LESS 4.6) OR (GCC_VERSION VERSION_EQUAL 4.6))
-    add_definitions(-std=c++0x)
-  else()
-    add_definitions(-std=c++11)
-  endif()
-endif()
-
-# C++11 on Mac: we have to use libc++ as well, because the libstdc++ provided
-# with Macs is based on 4.2, with no C++11 support.
-if (SYSTEM_IS_MACOSX)
-  add_definitions(-stdlib=libc++)
-endif (SYSTEM_IS_MACOSX)
 
 add_subdirectory(sandbox)
