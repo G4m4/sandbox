@@ -21,22 +21,28 @@
 #ifndef SANDBOX_SRC_IMPLEMENTATION_SANDBOX_H
 #define SANDBOX_SRC_IMPLEMENTATION_SANDBOX_H
 
-#include <QScopedPointer>
 #include "sandbox/src/dummygroup/dummyclass.h"
+#include <QScopedPointer>
+#include <memory>
+#include <vector>
 
 namespace sandbox {
 namespace imgui {
 
-class Sandbox
-{
+namespace nodegraph {
+struct CanvasState;
+}
+
+class Sandbox {
 public:
   Sandbox();
+  ~Sandbox();
   void frame();
 
 private:
-  bool show_demo_window = true;
-  bool show_another_window = false;
   QScopedPointer<sandbox::dummygroup::DummyClass> dummy_class_instance_;
+  std::vector<std::unique_ptr<struct MyNode>> nodes_;
+  std::unique_ptr<nodegraph::CanvasState> canvas_;
 };
 
 } // namespace imgui
