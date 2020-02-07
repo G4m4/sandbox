@@ -21,7 +21,6 @@
 #include "sandbox/implementation/ui/nodegraph.h"
 
 #include <cmath>
-#include <cstdio>
 #include <limits>
 
 namespace sandbox {
