@@ -88,8 +88,6 @@ struct MyNode {
     this->output_slots = output_slots;
   }
 
-  ~MyNode() { std::printf("delete MyNode\n"); }
-
   /// Deletes connection from this node.
   void DeleteConnection(const Connection &connection) {
     for (auto it = connections.begin(); it != connections.end(); ++it) {

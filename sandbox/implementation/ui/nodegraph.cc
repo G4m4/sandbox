@@ -142,7 +142,6 @@ CanvasState::CanvasState() noexcept {
 }
 
 CanvasState::~CanvasState() {
-  std::printf("delete CanvasState\n");
   delete _impl;
 }
 
