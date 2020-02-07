@@ -19,6 +19,27 @@ endif()
 
 find_package(Qt5 COMPONENTS Qml Quick REQUIRED)
 
+get_target_property(QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
+get_filename_component(QT_BIN_DIR "${QMAKE_EXECUTABLE}" DIRECTORY)
+if (SYSTEM_IS_WINDOWS)
+  set(DEPLOYQT_EXE_NAME windeployqt)
+elseif(SYSTEM_IS_MAC)
+  set(DEPLOYQT_EXE_NAME macdeployqt)
+endif()
+find_program(DEPLOYQT_EXECUTABLE ${DEPLOYQT_EXE_NAME} HINTS "${QT_BIN_DIR}")
+
+# @brief For the specified target, invoke the Qt binary deploy executable
+#
+# @param _TARGET_NAME           target name
+function(deployqt _TARGET_NAME)
+add_custom_command(
+  TARGET ${_TARGET_NAME}
+  POST_BUILD
+  COMMAND cd "${CMAKE_CURRENT_BINARY_DIR}"
+  COMMAND "${DEPLOYQT_EXECUTABLE}" --verbose 0 --no-compiler-runtime --no-translations --no-angle --no-opengl-sw --no-webkit2 --no-system-d3d-compiler --no-quick-import "$<$<CONFIG:Debug>:--debug>$<$<CONFIG:Release>:--release>" "$<TARGET_FILE:${_TARGET_NAME}>"
+)
+endfunction()
+
 include_directories(
   ${SANDBOX_INCLUDE_DIR}
 )
@@ -84,3 +105,5 @@ add_compiler_flags(sandbox_ui "-Wno-cast-qual -Wno-class-memaccess")
 endif(COMPILER_IS_MSVC)
 
 set_target_mt(sandbox_ui)
+
+deployqt(sandbox_ui)
