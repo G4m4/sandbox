@@ -22,7 +22,7 @@
 #define SANDBOX_SRC_IMPLEMENTATION_SANDBOX_H
 
 #include "sandbox/src/dummygroup/dummyclass.h"
-#include <QScopedPointer>
+
 #include <memory>
 #include <vector>
 
@@ -40,7 +40,7 @@ public:
   void frame();
 
 private:
-  QScopedPointer<sandbox::dummygroup::DummyClass> dummy_class_instance_;
+  std::unique_ptr<sandbox::dummygroup::DummyClass> dummy_class_instance_;
   std::vector<std::unique_ptr<struct MyNode>> nodes_;
   std::unique_ptr<nodegraph::CanvasState> canvas_;
 };
