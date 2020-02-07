@@ -21,6 +21,8 @@
 #ifndef SANDBOX_SRC_IMPLEMENTATION_NODEGRAPH_HELPER_H
 #define SANDBOX_SRC_IMPLEMENTATION_NODEGRAPH_HELPER_H
 
+#include <cstddef>
+
 struct ImVec2;
 
 namespace sandbox {
@@ -48,13 +50,13 @@ void EndNode();
 /// Renders input slot region. Kind is unique value whose sign is ignored.
 /// This function must always be called after BeginNode() and before
 /// OutputSlots(). When no input slots are rendered call InputSlots(nullptr, 0);
-void InputSlots(const SlotInfo *slots, size_t snum);
+void InputSlots(const SlotInfo *slots, std::size_t snum);
 /// Renders output slot region. Kind is unique value whose sign is ignored. This
 /// function must always be called after InputSlots() and function call is
 /// required (not optional). This function must always be called after
 /// InputSlots() and before EndNode(). When no input slots are rendered call
 /// OutputSlots(nullptr, 0);
-void OutputSlots(const SlotInfo *slots, size_t snum);
+void OutputSlots(const SlotInfo *slots, std::size_t snum);
 
 } // namespace node_helpers
 
