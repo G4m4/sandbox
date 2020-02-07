@@ -29,12 +29,16 @@ find_program(DEPLOYQT_EXECUTABLE ${DEPLOYQT_EXE_NAME} HINTS "${QT_BIN_DIR}")
 #
 # @param _TARGET_NAME           target name
 function(deployqt _TARGET_NAME)
-add_custom_command(
-  TARGET ${_TARGET_NAME}
-  POST_BUILD
-  COMMAND cd "${CMAKE_CURRENT_BINARY_DIR}"
-  COMMAND "${DEPLOYQT_EXECUTABLE}" --verbose 0 --no-compiler-runtime --no-translations --no-angle --no-opengl-sw --no-webkit2 --no-system-d3d-compiler --no-quick-import "$<$<CONFIG:Debug>:--debug>$<$<CONFIG:Release>:--release>" "$<TARGET_FILE:${_TARGET_NAME}>"
-)
+if (SYSTEM_IS_LINUX)
+else()
+  set(DEPLOYQT_EXE_NAME macdeployqt)
+  add_custom_command(
+    TARGET ${_TARGET_NAME}
+    POST_BUILD
+    COMMAND cd "${CMAKE_CURRENT_BINARY_DIR}"
+    COMMAND "${DEPLOYQT_EXECUTABLE}" --verbose 0 --no-compiler-runtime --no-translations --no-angle --no-opengl-sw --no-webkit2 --no-system-d3d-compiler --no-quick-import "$<$<CONFIG:Debug>:--debug>$<$<CONFIG:Release>:--release>" "$<TARGET_FILE:${_TARGET_NAME}>"
+  )
+endif()
 endfunction()
 
 include_directories(
