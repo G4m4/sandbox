@@ -24,6 +24,7 @@
 #include "sandbox/src/dummygroup/dummyclass.h"
 
 #include <memory>
+#include <string>
 #include <vector>
 
 namespace sandbox {
