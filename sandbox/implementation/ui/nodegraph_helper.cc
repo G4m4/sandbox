@@ -127,13 +127,13 @@ bool Slot(const char *title, int kind) {
   return false;
 }
 
-void InputSlots(const SlotInfo *slots, size_t snum) {
+void InputSlots(const SlotInfo *slots, std::size_t snum) {
   const auto &style = ImGui::GetStyle();
 
   // Render input slots
   ImGui::BeginGroup();
   {
-    for (int i = 0; i < snum; i++)
+    for (std::size_t i = 0; i < snum; i++)
       node_helpers::Slot(slots[i].title,
                          nodegraph::InputSlotKind(slots[i].kind));
   }
@@ -147,7 +147,7 @@ void InputSlots(const SlotInfo *slots, size_t snum) {
   ImGui::BeginGroup();
 }
 
-void OutputSlots(const SlotInfo *slots, size_t snum) {
+void OutputSlots(const SlotInfo *slots, std::size_t snum) {
   const auto &style = ImGui::GetStyle();
 
   // End region of node content
@@ -158,7 +158,7 @@ void OutputSlots(const SlotInfo *slots, size_t snum) {
                              ImGui::GetItemRectMin().y});
   ImGui::BeginGroup();
   {
-    for (int i = 0; i < snum; i++)
+    for (std::size_t i = 0; i < snum; i++)
       node_helpers::Slot(slots[i].title,
                          nodegraph::OutputSlotKind(slots[i].kind));
   }
