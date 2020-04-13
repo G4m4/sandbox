@@ -18,7 +18,6 @@
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 
 #include "sandbox/src/context/context.h"
 
@@ -26,7 +25,7 @@ namespace sandbox {
 namespace context {
 
 Context::Context()
-    : window_(std::make_unique<sf::Window>(sf::VideoMode(1024, 768), "Sandbox")),
+    : window_(std::make_unique<sf::RenderWindow>(sf::VideoMode(1024, 768), "Sandbox")),
       should_close_(false) {}
 
 Context::~Context() {}
@@ -35,6 +34,10 @@ bool Context::Initialize() { return true; }
 
 void Context::Terminate() { window_->close(); }
 
+void Context::Clear() {
+  window_->clear();
+}
+
 void Context::Update() {
   sf::Event event;
   while (window_->pollEvent(event)) {
@@ -42,9 +45,11 @@ void Context::Update() {
       should_close_ = true;
     }
   }
+
+  window_->display();
 }
 
-bool Context::ShouldClose() { return should_close_; }
+bool Context::ShouldClose() const { return should_close_; }
 
 } // namespace context
 } // namespace sandbox

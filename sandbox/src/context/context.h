@@ -26,7 +26,7 @@
 #include "sandbox/src/common.h"
 
 namespace sf {
-  class Window;
+  class RenderWindow;
 }
 
 namespace sandbox {
@@ -41,11 +41,12 @@ class Context {
   bool Initialize();
   void Terminate();
 
+  void Clear();
   void Update();
-  bool ShouldClose();
+  bool ShouldClose() const;
 
  private:
-  std::unique_ptr<sf::Window> window_;
+  std::unique_ptr<sf::RenderWindow> window_;
   bool should_close_;
 };
 

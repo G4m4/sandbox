@@ -29,6 +29,7 @@ int main(int /*argc*/, char ** /*argv*/) {
 
   mainContext.Initialize();
   while (!mainContext.ShouldClose()) {
+    mainContext.Clear();
     mainContext.Update();
   }
   mainContext.Terminate();
