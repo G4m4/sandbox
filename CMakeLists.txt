@@ -1,7 +1,8 @@
 # @brief Required for building SandBox
 
 cmake_minimum_required(VERSION 2.8)
-cmake_policy(SET CMP0048 NEW)
+cmake_policy(SET CMP0048 NEW) # Project-relative versions
+cmake_policy(SET CMP0072 NEW) # Favor GLVND OpenGL library
 
 project(sandbox)
 
