@@ -10,6 +10,7 @@ SandBox is an empty structure for fast projects setup - supported so far:
 - OpenGL
 - Qt5
 - Imgui
+- SFML
 
 It includes a basic directory structure, simple ready-mix Cmake files as well as basic git and Travis configurations.
 Different configurations are available for different frameworks; each one of them resides in a different branch of this depot.
@@ -120,6 +121,22 @@ On some systems - typically Windows - in order to keep the build system agnostic
     cmake -DCMAKE_PREFIX_PATH="C:/Qt/5.12.6/msvc2017_64/lib/cmake" ../
 
 Imgui is already set up as a submodule:
+
+    git submodule init
+    git submodule update
+
+Branch: SFML
+------
+
+You will need [SFML](https://www.sfml-dev.org) dependencies installed on your dev machine. On Debian-based distros:
+
+  sudo dnf install systemd-devel.x86_64 openal-soft-devel.x86_64 libvorbis-devel.x86_64 flac-devel.x86_64
+
+On Ubuntu-based distros:
+
+  sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev
+
+SFML is already set up as a submodule:
 
     git submodule init
     git submodule update
