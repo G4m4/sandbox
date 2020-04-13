@@ -16,12 +16,6 @@ add_subdirectory(context)
 add_subdirectory(geometry)
 
 # Imgui-related files
-set (SANDBOX_EXTERNALS_IMGUI_SRC
-  ${SANDBOX_EXTERNALS_IMGUI_DIR}/imgui.cpp
-  ${SANDBOX_EXTERNALS_IMGUI_DIR}/imgui_demo.cpp
-  ${SANDBOX_EXTERNALS_IMGUI_DIR}/imgui_draw.cpp
-  ${SANDBOX_EXTERNALS_IMGUI_DIR}/imgui_widgets.cpp
-)
 set (SANDBOX_EXTERNALS_IMGUI_HDR
   ${SANDBOX_EXTERNALS_IMGUI_DIR}/imconfig.h
   ${SANDBOX_EXTERNALS_IMGUI_DIR}/imgui.h
@@ -29,9 +23,6 @@ set (SANDBOX_EXTERNALS_IMGUI_HDR
 source_group("imgui" FILES ${SANDBOX_EXTERNALS_IMGUI_SRC} ${SANDBOX_EXTERNALS_IMGUI_HDR})
 
 # Imgui-SFML
-set (SANDBOX_EXTERNALS_IMGUISFML_SRC
-  ${SANDBOX_EXTERNALS_IMGUISFML_DIR}/imgui-SFML.cpp
-)
 set (SANDBOX_EXTERNALS_IMGUISFML_HDR
   ${SANDBOX_EXTERNALS_IMGUISFML_DIR}/imconfig-SFML.h
   ${SANDBOX_EXTERNALS_IMGUISFML_DIR}/imgui-SFML.h
@@ -52,8 +43,6 @@ source_group("geometry"
 
 # Sources
 set(SANDBOX_SRC
-  ${SANDBOX_EXTERNALS_IMGUI_SRC}
-  ${SANDBOX_EXTERNALS_IMGUISFML_SRC}
   ${SANDBOX_CONTEXT_SRC}
   ${SANDBOX_GEOMETRY_SRC}
 )
@@ -71,11 +60,6 @@ add_library(sandbox_lib
   STATIC # Required as SFML sets the global BUILD_SHARED_LIBS
   ${SANDBOX_SRC}
   ${SANDBOX_HDR}
-)
-
-target_compile_definitions(sandbox_lib
-  PUBLIC
-    IMGUI_USER_CONFIG="imconfig-SFML.h"
 )
 
 set_target_mt(sandbox_lib)

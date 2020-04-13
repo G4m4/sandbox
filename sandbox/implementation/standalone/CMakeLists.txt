@@ -31,14 +31,19 @@ add_executable(sandbox
 
 target_link_libraries(sandbox
                       sandbox_lib
-                      ${OPENGL_LIBRARIES}
-                      sfml-graphics
-                      sfml-system
-                      sfml-window
+                      ImGui-SFML
 )
 
+# Copy over sfml dlls
 sfml_copy_library(sfml-graphics sandbox)
 sfml_copy_library(sfml-system sandbox)
 sfml_copy_library(sfml-window sandbox)
+
+# Also copy ImGui-SFML dll - no fancy name so directly invoke the custom command here
+add_custom_command(
+        TARGET sandbox POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${IMGUISFML_LIB_DIR}/ImGui-SFML.dll
+                ${CMAKE_CURRENT_BINARY_DIR}/)
 
 set_target_mt(sandbox)
