@@ -31,16 +31,12 @@ Context::Context()
 
 Context::~Context() {}
 
-bool Context::Initialize() { return true; }
-
-void Context::Terminate() { window_->close(); }
-
-void Context::Clear() {
-  window_->clear();
+void Context::Initialize() {
+  window_->setVerticalSyncEnabled(true);
 }
 
-void Context::Draw(const geometry::ShapeConvex & shape) {
-  shape.Draw(*window_);
+void Context::Terminate() {
+  window_->close();
 }
 
 void Context::Update() {
@@ -51,7 +47,19 @@ void Context::Update() {
     }
   }
 
+void Context::Clear() {
+  window_->clear();
+}
+
+void Context::Render() {
+}
+
+void Context::Display() {
   window_->display();
+}
+
+void Context::Draw(const geometry::ShapeConvex & shape) {
+  shape.Draw(*window_);
 }
 
 bool Context::ShouldClose() const { return should_close_; }

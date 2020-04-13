@@ -41,10 +41,13 @@ int main(int /*argc*/, char ** /*argv*/) {
   const auto initial_time = std::chrono::steady_clock::now();
 
   main_context.Initialize();
+  main_context.Draw(shape);
   while (!main_context.ShouldClose()) {
-    main_context.Clear();
-    main_context.Draw(shape);
     main_context.Update();
+
+    main_context.Clear();
+    main_context.Render();
+    main_context.Display();
 
     const auto time_now = std::chrono::steady_clock::now();
     const auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(

@@ -43,12 +43,16 @@ class Context {
   Context();
   ~Context();
 
-  bool Initialize();
+  void Initialize();
   void Terminate();
 
-  void Clear();
-  void Draw(const geometry::ShapeConvex & shape);
   void Update();
+
+  void Clear();
+  void Render();
+  void Display();
+
+  void Draw(const geometry::ShapeConvex & shape);
   bool ShouldClose() const;
 
  private:
