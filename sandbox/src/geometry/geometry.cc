@@ -37,7 +37,7 @@ ShapeConvex::~ShapeConvex() {}
 void ShapeConvex::Set(std::vector<std::pair<float, float>> vertices) {
   const auto pointsCount = vertices.size();
   shape_->setPointCount(pointsCount);
-  for (int i = 0; i < pointsCount; ++i) {
+  for (std::size_t i = 0; i < pointsCount; ++i) {
     shape_->setPoint(i, sf::Vector2f(vertices[i].first, vertices[i].second));
   }
 }
