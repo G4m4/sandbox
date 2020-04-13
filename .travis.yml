@@ -44,4 +44,3 @@ script:
   - cmake -DSANDBOX_ENABLE_SIMD=OFF ..
   - make clean
   - make
-  - ./sandbox/implementation/standalone/sandbox
