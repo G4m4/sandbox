@@ -56,6 +56,8 @@ class Context {
   bool ShouldClose() const;
 
  private:
+  void CreateImGuiWidgets(sf::RenderWindow & window);
+
   std::unique_ptr<sf::RenderWindow> window_;
   bool should_close_;
 };

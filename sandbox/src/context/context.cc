@@ -56,16 +56,7 @@ void Context::Update() {
 
   ImGui::SFML::Update(*window_, deltaClock.restart());
 
-  ImGui::Begin("Imgui");
-    char windowTitle[255] = { 0 };
-    if (ImGui::InputText("input", windowTitle, 255)) {
-      window_->setTitle(windowTitle);
-    }
-    if (ImGui::Button("Update window size")) {
-      const sf::Vector2u new_window_size( (unsigned)2 * window_->getSize() );
-      window_->setSize(new_window_size);
-    }
-  ImGui::End();
+  CreateImGuiWidgets(*window_);
 }
 
 void Context::Clear() {
@@ -86,5 +77,17 @@ void Context::Draw(const geometry::ShapeConvex & shape) {
 
 bool Context::ShouldClose() const { return should_close_; }
 
+void Context::CreateImGuiWidgets(sf::RenderWindow & window) {
+  ImGui::Begin("Imgui");
+    char windowTitle[255] = { 0 };
+    if (ImGui::InputText("input", windowTitle, 255)) {
+      window.setTitle(windowTitle);
+    }
+    if (ImGui::Button("Update window size")) {
+      const sf::Vector2u new_window_size((unsigned)2 * window.getSize());
+      window.setSize(new_window_size);
+    }
+  ImGui::End();
+}
 } // namespace context
 } // namespace sandbox
