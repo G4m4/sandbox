@@ -59,7 +59,7 @@ You are on the SFML branch
 
 You will need [SFML](https://www.sfml-dev.org) dependencies installed on your dev machine. On Debian-based distros:
 
-	sudo dnf install systemd-devel.x86_64 openal-soft-devel.x86_64 libvorbis-devel.x86_64 flac-devel.x86_64
+	sudo dnf install freetype-devel.x86_64 systemd-devel.x86_64 openal-soft-devel.x86_64 libvorbis-devel.x86_64 flac-devel.x86_64
 
 On Ubuntu-based distros:
 
