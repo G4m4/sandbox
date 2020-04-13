@@ -31,10 +31,12 @@ add_executable(sandbox
 
 target_link_libraries(sandbox
                       sandbox_lib
+                      sfml-graphics
                       sfml-system
                       sfml-window
 )
 
+sfml_copy_library(sfml-graphics sandbox)
 sfml_copy_library(sfml-system sandbox)
 sfml_copy_library(sfml-window sandbox)
 
