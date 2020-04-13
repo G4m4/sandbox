@@ -34,7 +34,6 @@ before_install:
     - eval "${MATRIX_EVAL}"
 install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install cmake; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install valgrind; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev; fi
 before_script:
   - git submodule init
@@ -45,4 +44,4 @@ script:
   - cmake -DSANDBOX_ENABLE_SIMD=OFF ..
   - make clean
   - make
-  - if [ $TRAVIS_OS_NAME = linux ]; then valgrind --leak-check=full --track-origins=yes ./sandbox/implementation/standalone/sandbox; else ./sandbox/implementation/standalone/sandbox; fi
+  - ./sandbox/implementation/standalone/sandbox
