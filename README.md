@@ -1,7 +1,7 @@
 SandBox
 ==================================
 
-[![Build Status](https://travis-ci.org/G4m4/sandbox.svg?branch=master)](https://travis-ci.org/G4m4/sandbox)
+[![Build Status](https://travis-ci.org/G4m4/sandbox.svg?branch=sfml)](https://travis-ci.org/G4m4/sandbox)
 
 SandBox is an empty structure for fast projects setup - supported so far:
 - Basic (lib + executable)
