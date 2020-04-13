@@ -1,4 +1,4 @@
-/// @file context.cc
+/// @file geometry.cc
 /// @author gm
 /// @copyright gm 2020
 ///
@@ -17,44 +17,32 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cstdlib>
+
 #include <SFML/Graphics.hpp>
 
-#include "sandbox/src/context/context.h"
 #include "sandbox/src/geometry/geometry.h"
 
 namespace sandbox {
-namespace context {
+namespace geometry {
 
-Context::Context()
-    : window_(std::make_unique<sf::RenderWindow>(sf::VideoMode(1024, 768), "Sandbox")),
-      should_close_(false) {}
-
-Context::~Context() {}
-
-bool Context::Initialize() { return true; }
-
-void Context::Terminate() { window_->close(); }
-
-void Context::Clear() {
-  window_->clear();
+ShapeConvex::ShapeConvex() : shape_(std::make_unique<sf::ConvexShape>()) {
+  const sf::Color randomColor(std::rand() % 256, std::rand() % 256,
+                              std::rand() % 256);
+  shape_->setFillColor(randomColor);
 }
 
-void Context::Draw(const geometry::ShapeConvex & shape) {
-  shape.Draw(*window_);
-}
+ShapeConvex::~ShapeConvex() {}
 
-void Context::Update() {
-  sf::Event event;
-  while (window_->pollEvent(event)) {
-    if (event.type == sf::Event::Closed) {
-      should_close_ = true;
-    }
+void ShapeConvex::Set(std::vector<std::pair<float, float>> vertices) {
+  const auto pointsCount = vertices.size();
+  shape_->setPointCount(pointsCount);
+  for (int i = 0; i < pointsCount; ++i) {
+    shape_->setPoint(i, sf::Vector2f(vertices[i].first, vertices[i].second));
   }
-
-  window_->display();
 }
 
-bool Context::ShouldClose() const { return should_close_; }
+void ShapeConvex::Draw(sf::RenderWindow &window) const { window.draw(*shape_); }
 
-} // namespace context
+} // namespace geometry
 } // namespace sandbox

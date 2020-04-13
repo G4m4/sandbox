@@ -1,5 +1,5 @@
-/// @file context.h
-/// @brief Base context object to spawn windows
+/// @file geometry.h
+/// @brief Various geometry stuff
 /// @author gm
 /// @copyright gm 2020
 ///
@@ -18,45 +18,37 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SANDBOX_CONTEXT_H_
-#define SANDBOX_CONTEXT_H_
+#ifndef SANDBOX_GEOMETRY_H_
+#define SANDBOX_GEOMETRY_H_
 
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "sandbox/src/common.h"
 
 namespace sf {
-  class RenderWindow;
-}
+class ConvexShape;
+class RenderWindow;
+} // namespace sf
 
 namespace sandbox {
-
 namespace geometry {
-class ShapeConvex;
-}
 
-namespace context {
+/// @brief A convex shape to be drawn
+class ShapeConvex {
+public:
+  ShapeConvex();
+  ~ShapeConvex();
 
-/// @brief Context object, where everything lives at the moment
-class Context {
- public:
-  Context();
-  ~Context();
+  void Set(std::vector<std::pair<float, float>> vertices);
+  void Draw(sf::RenderWindow &window) const;
 
-  bool Initialize();
-  void Terminate();
-
-  void Clear();
-  void Draw(const geometry::ShapeConvex & shape);
-  void Update();
-  bool ShouldClose() const;
-
- private:
-  std::unique_ptr<sf::RenderWindow> window_;
-  bool should_close_;
+private:
+  std::unique_ptr<sf::ConvexShape> shape_;
 };
 
-}  // namespace context
-}  // namespace sandbox
+} // namespace geometry
+} // namespace sandbox
 
-#endif  // SANDBOX_CONTEXT_H_
+#endif // SANDBOX_GEOMETRY_H_

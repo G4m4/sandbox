@@ -21,15 +21,26 @@
 #include <cstdio>
 
 #include "sandbox/src/common.h"
+
 #include "sandbox/src/context/context.h"
+#include "sandbox/src/geometry/geometry.h"
 
 /// @brief Main function, of course.
 int main(int /*argc*/, char ** /*argv*/) {
   sandbox::context::Context mainContext;
+  sandbox::geometry::ShapeConvex shape;
+  shape.Set({{3.0f, 5.0f},
+             {10.0f, 10.0f},
+             {50.0f, 15.0f},
+             {250.0f, 50.0f},
+             {350.0f, 125.0f},
+             {50.0f, 150.0f},
+             {20.0f, 65.0f}});
 
   mainContext.Initialize();
   while (!mainContext.ShouldClose()) {
     mainContext.Clear();
+    mainContext.Draw(shape);
     mainContext.Update();
   }
   mainContext.Terminate();

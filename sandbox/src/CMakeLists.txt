@@ -11,6 +11,7 @@ include_directories(
 
 # Retrieve source files from subdirectories
 add_subdirectory(context)
+add_subdirectory(geometry)
 
 # Group sources
 source_group("context"
@@ -18,15 +19,22 @@ source_group("context"
   ${SANDBOX_CONTEXT_SRC}
   ${SANDBOX_CONTEXT_HDR}
 )
+source_group("geometry"
+  FILES
+  ${SANDBOX_GEOMETRY_SRC}
+  ${SANDBOX_GEOMETRY_HDR}
+)
 
 # Sources
 set(SANDBOX_SRC
   ${SANDBOX_CONTEXT_SRC}
+  ${SANDBOX_GEOMETRY_SRC}
 )
 set(SANDBOX_HDR
   configuration.h
   common.h
   ${SANDBOX_CONTEXT_HDR}
+  ${SANDBOX_GEOMETRY_HDR}
 )
 
 # Target
