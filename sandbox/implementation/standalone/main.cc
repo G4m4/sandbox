@@ -27,7 +27,7 @@
 
 /// @brief Main function, of course.
 int main(int /*argc*/, char ** /*argv*/) {
-  sandbox::context::Context mainContext;
+  sandbox::context::Context main_context;
   sandbox::geometry::ShapeConvex shape;
   shape.Set({{3.0f, 5.0f},
              {10.0f, 10.0f},
@@ -37,13 +37,13 @@ int main(int /*argc*/, char ** /*argv*/) {
              {50.0f, 150.0f},
              {20.0f, 65.0f}});
 
-  mainContext.Initialize();
-  while (!mainContext.ShouldClose()) {
-    mainContext.Clear();
-    mainContext.Draw(shape);
-    mainContext.Update();
+  main_context.Initialize();
+  while (!main_context.ShouldClose()) {
+    main_context.Clear();
+    main_context.Draw(shape);
+    main_context.Update();
   }
-  mainContext.Terminate();
+  main_context.Terminate();
 
   return 0;
 }
