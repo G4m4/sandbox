@@ -40,10 +40,12 @@ sfml_copy_library(sfml-system sandbox)
 sfml_copy_library(sfml-window sandbox)
 
 # Also copy ImGui-SFML dll - no fancy name so directly invoke the custom command here
+if(SYSTEM_IS_WINDOWS)
 add_custom_command(
         TARGET sandbox POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
                 ${IMGUISFML_LIB_DIR}/ImGui-SFML.dll
                 ${CMAKE_CURRENT_BINARY_DIR}/)
+endif(SYSTEM_IS_WINDOWS)
 
 set_target_mt(sandbox)
