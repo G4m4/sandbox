@@ -19,6 +19,7 @@
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstdio>
+#include <chrono>
 
 #include "sandbox/src/common.h"
 
@@ -37,11 +38,21 @@ int main(int /*argc*/, char ** /*argv*/) {
              {50.0f, 150.0f},
              {20.0f, 65.0f}});
 
+  const auto initial_time = std::chrono::steady_clock::now();
+
   main_context.Initialize();
   while (!main_context.ShouldClose()) {
     main_context.Clear();
     main_context.Draw(shape);
     main_context.Update();
+
+    const auto time_now = std::chrono::steady_clock::now();
+    const auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(
+                                  time_now - initial_time)
+                                  .count();
+    if (elapsed_time > 2) {
+      break;
+    }
   }
   main_context.Terminate();
 
