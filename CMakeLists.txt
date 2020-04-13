@@ -130,10 +130,10 @@ function(add_release_linker_flags _FLAGS)
       PARENT_SCOPE)
 endfunction(add_release_linker_flags)
 
-# @brief For the given list of targets, disable all warnings
+# @brief For the given list of files, disable all warnings
 #
-# @param _TARGETS      List of targets
-function(disable_warnings_list _TARGETS)
+# @param _TARGETS      List of files
+function(disable_warnings_files _TARGETS)
  if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
    set(FLAG
        "-w")
@@ -142,9 +142,23 @@ function(disable_warnings_list _TARGETS)
        "/W0")
  endif()
  SET_SOURCE_FILES_PROPERTIES(${_TARGETS}
-                             PROPERTIES COMPILE_FLAGS " ${_FLAG}"
+                             PROPERTIES COMPILE_FLAGS " ${FLAG}"
                              )
-endfunction(disable_warnings_list)
+endfunction(disable_warnings_files)
+
+# @brief For the given target, disable all warnings
+#
+# @param _TARGET      target name
+function(disable_warnings_target _TARGET)
+ if (COMPILER_IS_CLANG)
+   set(FLAG
+       "-Wno-everything")
+ elseif(COMPILER_IS_GCC OR COMPILER_IS_MSVC)
+   set(FLAG
+       "-w")
+ endif()
+ add_compiler_flags(${_TARGET} ${FLAG})
+endfunction(disable_warnings_target)
 
 # @brief (MSVC only) Set one specific target to use MT runtime library,
 # or MTd in debug configuration
@@ -236,19 +250,9 @@ set(SFML_LIB_DIR
 )
 add_subdirectory(${SANDBOX_EXTERNALS_SFML_DIR} ${SFML_BUILD_DIR})
 
-if(COMPILER_IS_MSVC)
-add_compiler_flags(sfml-graphics " -w")
-add_compiler_flags(sfml-system " -w")
-add_compiler_flags(sfml-window " -w")
-elseif(COMPILER_IS_GCC)
-add_compiler_flags(sfml-graphics " -w")
-add_compiler_flags(sfml-system " -w")
-add_compiler_flags(sfml-window " -w")
-elseif(COMPILER_IS_CLANG)
-add_compiler_flags(sfml-graphics " -Wno-everything")
-add_compiler_flags(sfml-system " -Wno-everything")
-add_compiler_flags(sfml-window " -Wno-everything")
-endif(COMPILER_IS_MSVC)
+disable_warnings_target(sfml-graphics)
+disable_warnings_target(sfml-system)
+disable_warnings_target(sfml-window)
 
 # Copy a SFML library into the target build directory
 function(sfml_copy_library _LIB_NAME _TARGET_NAME)
@@ -302,6 +306,8 @@ set(IMGUISFML_LIB_DIR
 set(IMGUI_DIR ${SANDBOX_EXTERNALS_IMGUI_DIR} )
 set(IMGUI_SFML_FIND_SFML OFF CACHE STRING "" FORCE)
 add_subdirectory(${SANDBOX_EXTERNALS_IMGUISFML_DIR} ${IMGUISFML_BUILD_DIR})
+
+disable_warnings_target(ImGui-SFML)
 
 
 add_subdirectory(sandbox)
