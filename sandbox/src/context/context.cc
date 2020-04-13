@@ -17,6 +17,8 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <imgui.h>
+#include <imgui-SFML.h>
 #include <SFML/Graphics.hpp>
 
 #include "sandbox/src/context/context.h"
@@ -26,32 +28,52 @@ namespace sandbox {
 namespace context {
 
 Context::Context()
-    : window_(std::make_unique<sf::RenderWindow>(sf::VideoMode(1024, 768), "Sandbox")),
+    : window_(std::make_unique<sf::RenderWindow>(sf::VideoMode(800, 600), "Sandbox")),
       should_close_(false) {}
 
 Context::~Context() {}
 
 void Context::Initialize() {
   window_->setVerticalSyncEnabled(true);
+  ImGui::SFML::Init(*window_);
 }
 
 void Context::Terminate() {
   window_->close();
+  ImGui::SFML::Shutdown();
 }
 
 void Context::Update() {
+  sf::Clock deltaClock;
+
   sf::Event event;
   while (window_->pollEvent(event)) {
+    ImGui::SFML::ProcessEvent(event);
     if (event.type == sf::Event::Closed) {
       should_close_ = true;
     }
   }
+
+  ImGui::SFML::Update(*window_, deltaClock.restart());
+
+  ImGui::Begin("Imgui");
+    char windowTitle[255] = { 0 };
+    if (ImGui::InputText("input", windowTitle, 255)) {
+      window_->setTitle(windowTitle);
+    }
+    if (ImGui::Button("Update window size")) {
+      const sf::Vector2u new_window_size( (unsigned)2 * window_->getSize() );
+      window_->setSize(new_window_size);
+    }
+  ImGui::End();
+}
 
 void Context::Clear() {
   window_->clear();
 }
 
 void Context::Render() {
+  ImGui::SFML::Render(*window_);
 }
 
 void Context::Display() {

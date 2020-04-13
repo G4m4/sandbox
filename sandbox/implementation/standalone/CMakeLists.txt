@@ -31,6 +31,7 @@ add_executable(sandbox
 
 target_link_libraries(sandbox
                       sandbox_lib
+                      ${OPENGL_LIBRARIES}
                       sfml-graphics
                       sfml-system
                       sfml-window

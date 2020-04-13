@@ -1,6 +1,7 @@
 # @brief Required for building SandBox
 
 cmake_minimum_required(VERSION 2.8)
+cmake_policy(SET CMP0048 NEW)
 
 project(sandbox)
 
@@ -272,5 +273,29 @@ if(SYSTEM_IS_WINDOWS)
 endif(SYSTEM_IS_WINDOWS)
 
 endfunction(sfml_copy_library)
+
+
+# Imgui integration:
+
+# We will reference files from whatever project will require it
+set(SANDBOX_EXTERNALS_IMGUI_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/imgui
+)
+set(SANDBOX_IMGUI_INCLUDE_DIR
+  ${SANDBOX_EXTERNALS_IMGUI_DIR}
+)
+
+# imgui-SFML binding:
+set(SANDBOX_EXTERNALS_IMGUISFML_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/imgui-sfml
+)
+set(SANDBOX_IMGUISFML_INCLUDE_DIR
+  ${SANDBOX_EXTERNALS_IMGUISFML_DIR}
+)
+set(IMGUI_SFML_FIND_SFML OFF)
+set(IMGUI_DIR ${SANDBOX_EXTERNALS_IMGUI_DIR})
+add_subdirectory(${SANDBOX_EXTERNALS_IMGUISFML_DIR})
+
+find_package(OpenGL REQUIRED)
 
 add_subdirectory(sandbox)

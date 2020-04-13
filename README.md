@@ -65,7 +65,9 @@ On Ubuntu-based distros:
 
 	sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev
 
-SFML is already set up as a submodule:
+We also rely on [Dear Imgui](https://github.com/ocornut/imgui) as a debug UI, using the [imgui-SFML](https://github.com/eliasdaler/imgui-sfml) binding.
+
+SFML, imgui and imgui-SFML are already set up as submodules:
 
     git submodule init
     git submodule update
