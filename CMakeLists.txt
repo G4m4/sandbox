@@ -217,7 +217,9 @@ elseif(COMPILER_IS_MSVC)
   add_release_flags("/fp:fast")
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 
+
 # SFML integration:
+
 set(SANDBOX_EXTERNALS_SFML_DIR
   ${CMAKE_CURRENT_SOURCE_DIR}/externals/SFML
 )
@@ -232,6 +234,15 @@ set(SFML_LIB_DIR
 )
 add_subdirectory(${SANDBOX_EXTERNALS_SFML_DIR} ${SFML_BUILD_DIR})
 
+if(COMPILER_IS_MSVC)
+add_compiler_flags(sfml-graphics " -w")
+add_compiler_flags(sfml-system " -w")
+add_compiler_flags(sfml-window " -w")
+else()
+add_compiler_flags(sfml-graphics " -Wno-everything")
+add_compiler_flags(sfml-system " -Wno-everything")
+add_compiler_flags(sfml-window " -Wno-everything")
+endif(COMPILER_IS_MSVC)
 
 # Copy a SFML library into the target build directory
 function(sfml_copy_library _LIB_NAME _TARGET_NAME)
