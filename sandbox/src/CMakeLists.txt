@@ -1,31 +1,37 @@
 # @brief SandBox main source folder cmake file
 
 include_directories(
+  SYSTEM
+  ${SANDBOX_SFML_INCLUDE_DIR}
+)
+
+include_directories(
   ${SANDBOX_INCLUDE_DIR}
 )
 
 # Retrieve source files from subdirectories
-add_subdirectory(dummygroup)
+add_subdirectory(context)
 
 # Group sources
-source_group("dummygroup"
+source_group("context"
   FILES
-  ${SANDBOX_DUMMYGROUP_SRC}
-  ${SANDBOX_DUMMYGROUP_HDR}
+  ${SANDBOX_CONTEXT_SRC}
+  ${SANDBOX_CONTEXT_HDR}
 )
 
 # Sources
 set(SANDBOX_SRC
-  ${SANDBOX_DUMMYGROUP_SRC}
+  ${SANDBOX_CONTEXT_SRC}
 )
 set(SANDBOX_HDR
   configuration.h
   common.h
-  ${SANDBOX_DUMMYGROUP_HDR}
+  ${SANDBOX_CONTEXT_HDR}
 )
 
 # Target
 add_library(sandbox_lib
+  STATIC # Required as SFML sets the global BUILD_SHARED_LIBS
   ${SANDBOX_SRC}
   ${SANDBOX_HDR}
 )

@@ -217,4 +217,45 @@ elseif(COMPILER_IS_MSVC)
   add_release_flags("/fp:fast")
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 
+# SFML integration:
+set(SANDBOX_EXTERNALS_SFML_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/SFML
+)
+set(SANDBOX_SFML_INCLUDE_DIR
+  ${SANDBOX_EXTERNALS_SFML_DIR}/include
+)
+set(SFML_BUILD_DIR
+  ${CMAKE_CURRENT_BINARY_DIR}/SFML
+)
+set(SFML_LIB_DIR
+  ${SFML_BUILD_DIR}/lib/${CMAKE_BUILD_TYPE}
+)
+add_subdirectory(${SANDBOX_EXTERNALS_SFML_DIR} ${SFML_BUILD_DIR})
+
+
+# Copy a SFML library into the target build directory
+function(sfml_copy_library _LIB_NAME _TARGET_NAME)
+
+if(SYSTEM_IS_WINDOWS)
+  if(BUILD_IS_DEBUG)
+    get_target_property(TARGET_POSTFIX ${_LIB_NAME} DEBUG_POSTFIX)
+  else()
+    get_target_property(TARGET_POSTFIX ${_LIB_NAME} RELWITHDEBINFO_POSTFIX)
+  endif(BUILD_IS_DEBUG)
+  set(FULL_LIB_NAME "${_LIB_NAME}${TARGET_POSTFIX}")
+
+  if(SYSTEM_IS_WINDOWS)
+    get_target_property(TARGET_SUFFIX ${_LIB_NAME} SUFFIX)
+    set(FULL_LIB_NAME "${FULL_LIB_NAME}${TARGET_SUFFIX}")
+  endif(SYSTEM_IS_WINDOWS)
+
+  add_custom_command(
+          TARGET ${_TARGET_NAME} POST_BUILD
+          COMMAND ${CMAKE_COMMAND} -E copy
+                  ${SFML_LIB_DIR}/${FULL_LIB_NAME}
+                  ${CMAKE_CURRENT_BINARY_DIR}/)
+endif(SYSTEM_IS_WINDOWS)
+
+endfunction(sfml_copy_library)
+
 add_subdirectory(sandbox)

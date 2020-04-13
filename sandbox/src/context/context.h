@@ -1,7 +1,7 @@
-/// @file dummyclass.cc
-/// @brief Dummy class definition
+/// @file context.h
+/// @brief Base context object to spawn windows
 /// @author gm
-/// @copyright gm 2019
+/// @copyright gm 2020
 ///
 /// This file is part of SandBox
 ///
@@ -18,27 +18,38 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sandbox/src/dummygroup/dummyclass.h"
+#ifndef SANDBOX_CONTEXT_H_
+#define SANDBOX_CONTEXT_H_
+
+#include <memory>
+
 #include "sandbox/src/common.h"
 
+namespace sf {
+  class Window;
+}
+
 namespace sandbox {
-namespace dummygroup {
+namespace context {
 
-const char DummyClass::data_[] = "Hello, World!";
+/// @brief Context object, where everything lives at the moment
+class Context {
+ public:
+  Context();
+  ~Context();
 
-DummyClass::DummyClass() {
-  // Nothing to do here for now
-}
+  bool Initialize();
+  void Terminate();
 
-DummyClass::~DummyClass() {
-  // Nothing to do here for now
-}
+  void Update();
+  bool ShouldClose();
 
+ private:
+  std::unique_ptr<sf::Window> window_;
+  bool should_close_;
+};
 
-const char* DummyClass::DoSomething(void) {
-  SANDBOX_ASSERT(data_ != nullptr);
-  return &data_[0];
-}
-
-}  // namespace dummygroup
+}  // namespace context
 }  // namespace sandbox
+
+#endif  // SANDBOX_CONTEXT_H_

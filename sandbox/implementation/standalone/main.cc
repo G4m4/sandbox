@@ -21,13 +21,17 @@
 #include <cstdio>
 
 #include "sandbox/src/common.h"
-#include "sandbox/src/dummygroup/dummyclass.h"
+#include "sandbox/src/context/context.h"
 
 /// @brief Main function, of course.
 int main(int /*argc*/, char ** /*argv*/) {
-  const char* kText(sandbox::dummygroup::DummyClass().DoSomething());
+  sandbox::context::Context mainContext;
 
-  printf("Done: %s", kText);
+  mainContext.Initialize();
+  while (!mainContext.ShouldClose()) {
+    mainContext.Update();
+  }
+  mainContext.Terminate();
 
   return 0;
 }

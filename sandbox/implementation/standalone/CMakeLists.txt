@@ -31,6 +31,11 @@ add_executable(sandbox
 
 target_link_libraries(sandbox
                       sandbox_lib
+                      sfml-system
+                      sfml-window
 )
+
+sfml_copy_library(sfml-system sandbox)
+sfml_copy_library(sfml-window sandbox)
 
 set_target_mt(sandbox)

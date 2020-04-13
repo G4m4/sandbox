@@ -1,7 +1,6 @@
-/// @file dummyclass.h
-/// @brief Dummy class declaration
+/// @file context.cc
 /// @author gm
-/// @copyright gm 2019
+/// @copyright gm 2020
 ///
 /// This file is part of SandBox
 ///
@@ -18,28 +17,34 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
-#define SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
-#include "sandbox/src/common.h"
+#include "sandbox/src/context/context.h"
 
 namespace sandbox {
-namespace dummygroup {
+namespace context {
 
-/// @brief Dummy class
-class DummyClass {
- public:
-  DummyClass();
-  ~DummyClass();
+Context::Context()
+    : window_(std::make_unique<sf::Window>(sf::VideoMode(1024, 768), "Sandbox")),
+      should_close_(false) {}
 
-  /// @brief Outputs an "Hello, world!" into a C-style string
-  const char* DoSomething(void);
+Context::~Context() {}
 
- private:
-  static const char data_[14];  ///< Internal class data
-};
+bool Context::Initialize() { return true; }
 
-}  // namespace dummygroup
-}  // namespace sandbox
+void Context::Terminate() { window_->close(); }
 
-#endif  // SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
+void Context::Update() {
+  sf::Event event;
+  while (window_->pollEvent(event)) {
+    if (event.type == sf::Event::Closed) {
+      should_close_ = true;
+    }
+  }
+}
+
+bool Context::ShouldClose() { return should_close_; }
+
+} // namespace context
+} // namespace sandbox
