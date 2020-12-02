@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 2.8)
 
 project(sandbox)
 
+# Yes, there is a capital 'V'
+find_package(Vulkan REQUIRED)
+
 # Paths definitions
 set(SANDBOX_INCLUDE_DIR
   ${CMAKE_CURRENT_SOURCE_DIR}
@@ -184,40 +187,6 @@ if (SYSTEM_IS_LINUX)
   find_package(Threads REQUIRED)
   find_package(X11 REQUIRED)
 endif (SYSTEM_IS_LINUX)
-
-# Vulkan
-set(VULKAN_DIR
-  ${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan
-)
-set(VULKAN_BUILD_DIR
-  ${CMAKE_CURRENT_BINARY_DIR}/vulkan
-)
-set(VULKAN_DIR_INCLUDE_DIRS
-  ${VULKAN_DIR}/include
-)
-
-if(EXISTS ${VULKAN_DIR})
-  set(EXTERNAL_SOURCE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/externals/vulkan/external")
-  add_subdirectory(${VULKAN_DIR} ${VULKAN_BUILD_DIR})
-if(COMPILER_IS_MSVC)
-  add_compiler_flags(asm_offset "/w")
-  add_compiler_flags(loader-norm-st "/w")
-  add_compiler_flags(loader-opt-st "/w")
-  add_compiler_flags(loader-norm-dy "/w")
-  add_compiler_flags(loader-opt-dy "/w")
-  add_compiler_flags(cube "/w")
-  add_compiler_flags(cubepp "/w")
-  add_compiler_flags(smoketest "/w")
-else()
-  add_compiler_flags(asm_offset "-w")
-  add_compiler_flags(cube "-w")
-  add_compiler_flags(cubepp "-w")
-  add_compiler_flags(smoketest "-w")
-endif(COMPILER_IS_MSVC)
-else(EXISTS ${VULKAN_DIR})
-  message("Vulkan directory not found")
-endif(EXISTS ${VULKAN_DIR})
-
 
 # Project-wide options (SIMD, if enabled)
 if (SANDBOX_ENABLE_SIMD)

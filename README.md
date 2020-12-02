@@ -37,11 +37,15 @@ The few lines of code there strictly follows [Google Style](http://google-styleg
 You are on the OpenGL branch
 -----
 
+You will need the [Vulkan SDK](https://vulkan.lunarg.com/sdk/home) as it's being referenced through CMake package.
+
 A few helper libraries - [GLFW](http://www.glfw.org/) and [GLM](http://glm.g-truc.net/0.9.7/index.html) - are already set up as submodule:
+
     git submodule init
     git submodule update
 
 This implementation is using GLEW, whose CMake find script requires variables to be set - the easiest way to do it is probably to set them as environment variables:
+
     export GLEW_INCLUDE_DIR=PATH_TO_GLEW/include
     export GLEW_LIBRARY=PATH_TO_GLEW/lib
 
