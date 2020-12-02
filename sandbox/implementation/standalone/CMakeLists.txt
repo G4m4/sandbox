@@ -32,3 +32,11 @@ add_executable(sandbox
 target_link_libraries(sandbox
                       sandbox_lib
 )
+
+add_custom_command(
+    TARGET sandbox
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        $<TARGET_FILE:sandbox_lib>
+        $<TARGET_FILE_DIR:sandbox>/$<TARGET_FILE_NAME:sandbox_lib>
+)
