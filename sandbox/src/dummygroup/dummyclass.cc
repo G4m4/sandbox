@@ -1,7 +1,7 @@
 /// @file dummyclass.cc
 /// @brief Dummy class definition
 /// @author gm
-/// @copyright gm 2019
+/// @copyright gm
 ///
 /// This file is part of SandBox
 ///
