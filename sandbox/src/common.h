@@ -1,7 +1,7 @@
 /// @file common.h
 /// @brief SandBox common utilities header
 /// @author gm
-/// @copyright gm 2019
+/// @copyright gm
 ///
 /// This file is part of SandBox
 ///

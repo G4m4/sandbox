@@ -1,7 +1,7 @@
 /// @file implementation/main.cc
 /// @brief Implementation main entry point
 /// @author gm
-/// @copyright gm 2019
+/// @copyright gm
 ///
 /// This file is part of SandBox
 ///
