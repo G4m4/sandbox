@@ -1,10 +1,10 @@
 # @brief Required for building SandBox
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.8)
 
 project(sandbox)
 
-set(CMAKE_CXX_STANDARD  11)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Paths definitions
@@ -174,25 +174,11 @@ function(set_target_mt _TARGET_NAME)
   endif(COMPILER_IS_MSVC)
 endfunction(set_target_mt)
 
-option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
-message(STATUS "Simd instructions use: ${SANDBOX_ENABLE_SIMD}")
-
 # Project-wide various options
 if (COMPILER_IS_MSVC)
   # Multithreaded build
   add_definitions("/MP")
 endif (COMPILER_IS_MSVC)
-
-# Project-wide options (SIMD, if enabled)
-if (SANDBOX_ENABLE_SIMD)
-  if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
-    add_definitions("-msse2")
-  else()
-    add_release_flags("/arch:SSE2")
-  endif (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
-else()
-  add_definitions(-D_DISABLE_SIMD)
-endif (SANDBOX_ENABLE_SIMD)
 
 # Project-wide warning options
 if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
@@ -202,7 +188,8 @@ if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_definitions(-Wpointer-arith)
   add_definitions(-Wcast-qual)
 elseif(COMPILER_IS_MSVC)
-  add_definitions(-W4)
+  add_definitions(/W4)
+  add_definitions(/WX)
   # This disable useless msvc warnings about checked iterators
   add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
@@ -217,16 +204,9 @@ endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_release_flags("-Ofast")
   add_release_flags("-march=native")
-  add_release_flags("-mfpmath=sse")
-  add_release_flags("-Ofast")
-  # More informations about vectorization
-  add_release_flags("-ftree-vectorizer-verbose=10")
 elseif(COMPILER_IS_MSVC)
   add_release_linker_flags("/LTCG")
-  add_release_flags("/Ox")
-  add_release_flags("/Ob2")
-  add_release_flags("/Oi")
-  add_release_flags("/Ot")
+  add_release_flags("/O2")
   add_release_flags("/GL")
   add_release_flags("/fp:fast")
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
