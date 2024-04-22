@@ -1,8 +1,11 @@
 # @brief Required for building SandBox
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.8)
 
 project(sandbox)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Paths definitions
 set(SANDBOX_INCLUDE_DIR
@@ -125,10 +128,10 @@ function(add_release_linker_flags _FLAGS)
       PARENT_SCOPE)
 endfunction(add_release_linker_flags)
 
-# @brief For the given list of targets, disable all warnings
+# @brief For the given list of files, disable all warnings
 #
-# @param _TARGETS      List of targets
-function(disable_warnings_list _TARGETS)
+# @param _TARGETS      List of files
+function(disable_warnings_files _TARGETS)
  if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
    set(FLAG
        "-w")
@@ -137,9 +140,23 @@ function(disable_warnings_list _TARGETS)
        "/W0")
  endif()
  SET_SOURCE_FILES_PROPERTIES(${_TARGETS}
-                             PROPERTIES COMPILE_FLAGS " ${_FLAG}"
+                             PROPERTIES COMPILE_FLAGS " ${FLAG}"
                              )
-endfunction(disable_warnings_list)
+endfunction(disable_warnings_files)
+
+# @brief For the given target, disable all warnings
+#
+# @param _TARGET      target name
+function(disable_warnings_target _TARGET)
+ if (COMPILER_IS_CLANG)
+   set(FLAG
+       "-Wno-everything")
+ elseif(COMPILER_IS_GCC OR COMPILER_IS_MSVC)
+   set(FLAG
+       "-w")
+ endif()
+ add_compiler_flags(${_TARGET} ${FLAG})
+endfunction(disable_warnings_target)
 
 # @brief (MSVC only) Set one specific target to use MT runtime library,
 # or MTd in debug configuration
@@ -157,28 +174,14 @@ function(set_target_mt _TARGET_NAME)
   endif(COMPILER_IS_MSVC)
 endfunction(set_target_mt)
 
-option(SANDBOX_HAS_GTEST "Allowing to use GTest framework (GTest submodule should have been initialised and updated)." ON)
-message(STATUS "GTest framework: ${SANDBOX_HAS_GTEST}")
-
-option(SANDBOX_ENABLE_SIMD "Allowing to use SIMD instructions: SSE on x86, etc." OFF)
-message(STATUS "Simd instructions use: ${SANDBOX_ENABLE_SIMD}")
+option(SANDBOX_HAS_TEST "Allowing to use the test framework (the test framework submodule should have been initialised and updated)." ON)
+message(STATUS "Test framework: ${SANDBOX_HAS_TEST}")
 
 # Project-wide various options
 if (COMPILER_IS_MSVC)
   # Multithreaded build
   add_definitions("/MP")
 endif (COMPILER_IS_MSVC)
-
-# Project-wide options (SIMD, if enabled)
-if (SANDBOX_ENABLE_SIMD)
-  if (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
-    add_definitions("-msse2")
-  else()
-    add_release_flags("/arch:SSE2")
-  endif (COMPILER_IS_GCC OR COMPILER_IS_CLANG)
-else()
-  add_definitions(-D_DISABLE_SIMD)
-endif (SANDBOX_ENABLE_SIMD)
 
 # Project-wide warning options
 if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
@@ -188,7 +191,8 @@ if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_definitions(-Wpointer-arith)
   add_definitions(-Wcast-qual)
 elseif(COMPILER_IS_MSVC)
-  add_definitions(-W4)
+  add_definitions(/W4)
+  add_definitions(/WX)
   # This disable useless msvc warnings about checked iterators
   add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
@@ -203,70 +207,18 @@ endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_release_flags("-Ofast")
   add_release_flags("-march=native")
-  add_release_flags("-mfpmath=sse")
-  add_release_flags("-Ofast")
-  # More informations about vectorization
-  add_release_flags("-ftree-vectorizer-verbose=10")
 elseif(COMPILER_IS_MSVC)
   add_release_linker_flags("/LTCG")
-  add_release_flags("/Ox")
-  add_release_flags("/Ob2")
-  add_release_flags("/Oi")
-  add_release_flags("/Ot")
+  add_release_flags("/O2")
   add_release_flags("/GL")
   add_release_flags("/fp:fast")
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 
-# C++11 related options:
-# If using Clang we have to add the flag "std=c++11"
-# if using gcc, the c++11 flag change depending on the version
-# Nothing special with msvc
-if (COMPILER_IS_CLANG)
-  add_definitions(-std=c++11)
-elseif (COMPILER_IS_GCC)
-  execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion
-                  OUTPUT_VARIABLE GCC_VERSION)
-  if ((GCC_VERSION VERSION_LESS 4.6) OR (GCC_VERSION VERSION_EQUAL 4.6))
-    add_definitions(-std=c++0x)
-  else()
-    add_definitions(-std=c++11)
-  endif()
-endif()
-
-# C++11 on Mac: we have to use libc++ as well, because the libstdc++ provided
-# with Macs is based on 4.2, with no C++11 support.
-if (SYSTEM_IS_MACOSX)
-  add_definitions(-stdlib=libc++)
-endif (SYSTEM_IS_MACOSX)
 
 # Various includes
 
 
-# Google Test framework
-if (SANDBOX_HAS_GTEST)
-  # GTest path may be defined from an outside CMake file,
-  # if this is used as an external library
-  if(NOT EXISTS ${GTEST_DIR})
-    set(GTEST_DIR
-      ${CMAKE_CURRENT_SOURCE_DIR}/externals/gtest
     )
-    set(GTEST_BUILD_DIR
-      ${CMAKE_CURRENT_BINARY_DIR}/gtest
     )
-    set(GTEST_INCLUDE_DIRS
-      ${GTEST_DIR}/include
-    )
-  endif(NOT EXISTS ${GTEST_DIR})
-  # MSVC-specific issues
-  if(MSVC)
-    # Known GTest/MSVC 2011 issue: VS2012 doesn't support correctly the tuples yet
-    add_definitions(-D _VARIADIC_MAX=10)
-  endif(MSVC)
-
-  # Not displaying gtest warnings
-  add_subdirectory(${GTEST_DIR} ${GTEST_BUILD_DIR})
-  add_compiler_flags(gtest " -w")
-endif (SANDBOX_HAS_GTEST)
-
 
 add_subdirectory(sandbox)

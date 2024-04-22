@@ -25,11 +25,11 @@ import os
 import shutil
 import string
 
-kIgnoredDirectories = ('build',
-                       '.git',
-                       'scripts',
-                       'gtest',
+kIgnoredDirectories = ('.git',
+                       'build',
+                       'externals',
                        'juce'
+                       'scripts',
                        )
 
 def CopyRequiredFolders(sandbox_root, dest, name_lower):
