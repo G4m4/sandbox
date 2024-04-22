@@ -1,7 +1,7 @@
 /// @filename tests/main.cc
 /// @brief Tests main entry point
 /// @author gm
-/// @copyright gm 2019
+/// @copyright gm
 ///
 /// This file is part of SandBox
 ///
@@ -18,10 +18,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "gtest/gtest.h"
+#include "doctest.h"
 
 /// @brief Main function, of course.
-int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN

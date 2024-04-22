@@ -1,0 +1,3 @@
+[submodule "externals/doctest"]
+	path = externals/doctest
+	url = git://github.com/doctest/doctest.git

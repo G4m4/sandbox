@@ -28,6 +28,7 @@ import string
 kIgnoredDirectories = ('.git',
                        'build',
                        'externals',
+                       'doctest',
                        'juce'
                        'scripts',
                        )

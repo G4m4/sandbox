@@ -3,7 +3,7 @@
 # preventing warnings from external source files
 include_directories(
   SYSTEM
-  ${GTEST_INCLUDE_DIRS}
+  ${TEST_FRAMEWORK_INCLUDE_DIRS}
 )
 
 include_directories(
@@ -30,9 +30,7 @@ add_executable(sandbox_tests
   ${SANDBOX_TESTS_SRC}
 )
 
-set_target_mt(sandbox_tests)
-
 target_link_libraries(sandbox_tests
   sandbox_lib
-  gtest_main
+  ${TEST_FRAMEWORK_LIB_NAME}_with_main
 )

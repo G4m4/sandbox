@@ -29,5 +29,3 @@ add_library(sandbox_lib
   ${SANDBOX_SRC}
   ${SANDBOX_HDR}
 )
-
-set_target_mt(sandbox_lib)

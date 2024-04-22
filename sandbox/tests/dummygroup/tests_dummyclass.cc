@@ -1,7 +1,7 @@
 /// @file tests_dummyclass.cc
 /// @brief SandBox Dummy Class
 /// @author gm
-/// @copyright gm 2019
+/// @copyright gm
 ///
 /// This file is part of SandBox
 ///
@@ -20,7 +20,7 @@
 
 #include <string>
 
-#include "gtest/gtest.h"
+#include "doctest.h"
 
 #include "sandbox/src/dummygroup/dummyclass.h"
 
@@ -28,9 +28,9 @@
 using sandbox::dummygroup::DummyClass;
 
 /// @brief Dummy test
-TEST(DummyGroup, DummyClass) {
+TEST_CASE("DummyGroup_DummyClass") {
   const std::string kExpected("Hello, World!");
   const std::string kOutput(DummyClass().DoSomething());
 
-  EXPECT_EQ(kExpected, kOutput);
+  CHECK_EQ(kExpected, kOutput);
 }

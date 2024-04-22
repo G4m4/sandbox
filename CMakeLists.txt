@@ -218,7 +218,20 @@ endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
 # Various includes
 
 
+# Test framework
+if (SANDBOX_HAS_TEST)
+  if(NOT EXISTS ${TEST_FRAMEWORK_DIR})
+    set(TEST_FRAMEWORK_DIR
+      ${CMAKE_CURRENT_SOURCE_DIR}/externals/doctest
     )
+    set(TEST_FRAMEWORK_INCLUDE_DIRS
+      ${TEST_FRAMEWORK_DIR}/doctest
     )
+    set(TEST_FRAMEWORK_LIB_NAME
+      doctest
+    )
+  endif(NOT EXISTS ${TEST_FRAMEWORK_DIR})
+  add_subdirectory(${TEST_FRAMEWORK_DIR})
+endif (SANDBOX_HAS_TEST)
 
 add_subdirectory(sandbox)

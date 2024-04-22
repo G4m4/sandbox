@@ -3,6 +3,6 @@
 add_subdirectory(implementation)
 add_subdirectory(src)
 
-if (SANDBOX_HAS_GTEST)
+if (SANDBOX_HAS_TEST)
   add_subdirectory(tests)
-endif (SANDBOX_HAS_GTEST)
+endif (SANDBOX_HAS_TEST)
