@@ -26,9 +26,11 @@
 #define SANDBOX_SRC_CONFIGURATION_H_
 
 /// @brief Compiler detection
-#if(defined(__GNUC__))
+#if (defined(__GNUC__)) && !defined(__clang__) && !defined(__INTEL_COMPILER)
   #define _COMPILER_GCC 1
-#elif(defined(_MSC_VER))
+#elif (defined(__clang__))
+  #define _COMPILER_CLANG 1
+#elif (defined(_MSC_VER))
   #define _COMPILER_MSVC 1
 #else
   #error "Compiler could not be detected"
