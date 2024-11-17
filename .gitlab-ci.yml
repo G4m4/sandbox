@@ -9,8 +9,8 @@ stages:
 
 build:linux:
   stage: build
-  tags:
-    - linux
+  # tags:
+  #   - linux
   before_script:
     - apt update && apt -y install make autoconf cmake doxygen
   script:
@@ -23,20 +23,20 @@ build:linux:
     paths:
       - build/
 
-build:windows:
-  stage: build
-  tags:
-    - windows
-  script:
-    - mkdir build
-    - cd build
-    - '"C:\Program Files\CMake\bin\cmake.exe" -G "Visual Studio 15 2017 Win64" -DBUILD_LIBTIFF=ON ..'
-    - '"C:\Program Files\CMake\bin\cmake.exe" ..'
-    - '"C:\Program Files\CMake\bin\cmake.exe" --build . --config Release --target ALL_BUILD'
-  artifacts:
-    expire_in: 2 hrs
-    paths:
-      - build/
+# build:windows:
+#   stage: build
+#   tags:
+#     - windows
+#   script:
+#     - mkdir build
+#     - cd build
+#     - '"C:\Program Files\CMake\bin\cmake.exe" -G "Visual Studio 15 2017 Win64" -DBUILD_LIBTIFF=ON ..'
+#     - '"C:\Program Files\CMake\bin\cmake.exe" ..'
+#     - '"C:\Program Files\CMake\bin\cmake.exe" --build . --config Release --target ALL_BUILD'
+#   artifacts:
+#     expire_in: 2 hrs
+#     paths:
+#       - build/
 
 # # Run unit test
 # test:linux:
