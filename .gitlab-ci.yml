@@ -1,18 +1,36 @@
 # As seen on https://gitlab.com/gitlab-examples/cpp-example/-/blob/master/.gitlab-ci.yml
 
-image: gcc
-
 stages:
+  - lint
   - build
   - test
   # - deploy
 
+lint:linux:
+  stage: lint
+  image: xianpengshen/clang-tools:18
+  script:
+    - find ./sandbox -type f -name '*.cpp' -o -name '*.cc' -exec clang-tidy --config-file=.clang-tidy {} -- -I. \; | tee clang-tidy.log
+    # Fail the job if errors were found:
+    - ! grep "warning" clang-tidy.log
+  rules:
+    # Executing for every commit on the main branch where C++ files were modified:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "master"
+      # changes:
+      #   - "*.cpp"
+      #   - "**/*.cpp"
+  artifacts:
+    expire_in: 2 days
+    paths:
+      - clang-tidy.log
+
 build:linux:
   stage: build
+  image: gcc
   # tags:
   #   - linux
   before_script:
-    - apt update && apt -y install make autoconf cmake doxygen
+    - apt update && apt -y install make autoconf cmake
   script:
     - mkdir build
     - cd build
@@ -41,6 +59,7 @@ build:linux:
 # Run unit test
 test:linux:
   stage: test
+  image: gcc
   # tags:
   #   - linux
   script:
