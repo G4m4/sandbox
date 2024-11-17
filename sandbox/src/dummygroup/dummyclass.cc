@@ -19,26 +19,34 @@
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "sandbox/src/dummygroup/dummyclass.h"
+
+#include <cstring>
+#include <memory>
+
 #include "sandbox/src/common.h"
 
-namespace sandbox {
-namespace dummygroup {
+namespace sandbox
+{
+namespace dummygroup
+{
 
-const char DummyClass::data_[] = "Hello, World!";
+static const char static_data[] = "Hello, World!";
 
-DummyClass::DummyClass() {
+DummyClass::DummyClass() : data_(new char[sizeof(static_data)])
+{
+  std::memcpy(data_.get(), &static_data[0], sizeof(static_data));
+}
+
+DummyClass::~DummyClass()
+{
   // Nothing to do here for now
 }
 
-DummyClass::~DummyClass() {
-  // Nothing to do here for now
+const char* DummyClass::GetSomething(void)
+{
+  SANDBOX_ASSERT(data_);
+  return data_.get();
 }
 
-
-const char* DummyClass::DoSomething(void) {
-  SANDBOX_ASSERT(data_ != nullptr);
-  return &data_[0];
-}
-
-}  // namespace dummygroup
-}  // namespace sandbox
+} // namespace dummygroup
+} // namespace sandbox

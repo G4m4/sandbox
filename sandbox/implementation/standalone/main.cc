@@ -20,14 +20,14 @@
 
 #include <cstdio>
 
-#include "sandbox/src/common.h"
 #include "sandbox/src/dummygroup/dummyclass.h"
 
 /// @brief Main function, of course.
 int main(int /*argc*/, char ** /*argv*/) {
-  const char* kText(sandbox::dummygroup::DummyClass().DoSomething());
+  sandbox::dummygroup::DummyClass test;
+  const char* kText(test.GetSomething());
 
-  printf("Done: %s", kText);
+  printf("Done: %s\n", kText);
 
   return 0;
 }
