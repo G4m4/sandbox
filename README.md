@@ -1,7 +1,7 @@
 SandBox
 ==================================
 
-[![Build Status](https://travis-ci.org/G4m4/sandbox.svg?branch=master)](https://travis-ci.org/G4m4/sandbox)
+[![pipeline status](https://lab.frogg.it/machinmachines/sandbox/badges/master/pipeline.svg)](https://lab.frogg.it/machinmachines/sandbox/-/commits/master) 
 
 SandBox is an empty structure for fast projects setup - supported so far:
 - Basic (lib + executable)
