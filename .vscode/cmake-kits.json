@@ -1,9 +1,9 @@
 [
     {
-        "name" : "Clang 17",
+        "name" : "Clang 18",
         "compilers" : {
-            "CC" : "/usr/bin/clang++-17",
-            "CXX" : "/usr/bin/clang++-17"
+            "CC" : "/usr/bin/clang++-18",
+            "CXX" : "/usr/bin/clang++-18"
         }
     }
 ]

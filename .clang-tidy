@@ -1,0 +1,20 @@
+Checks:'bugprone-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  google-*,
+  llvm-*,
+  misc-*,
+  -modernize-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -clang-diagnostic-pragma-once-outside-header,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-avoid-c-arrays,
+  -llvmlibc-restrict-system-libc-headers,
+  -llvmlibc-implementation-in-namespace,
+  -llvmlibc-callee-namespace,
+  -misc-non-private-member-variables-in-classes,
+  -readability-magic-numbers'
+CheckOptions:
+  - { key: cppcoreguidelines-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic, value: '1' }

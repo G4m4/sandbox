@@ -1,42 +1,35 @@
 {
-	"folders": [
-		{
-			"path": "../"
-		}
-	],
-	"git.openRepositoryInParentFolders": "never",
-	"clangd.checkUpdates": true,
-	"clangd.path": "/usr/bin/clangd",
-	"clangd.arguments": ["-log=verbose",
-						"-pretty",
-						"--background-index",
-						"--compile-commands-dir=../build/"],
-	"cmake.configureOnEdit": true,
-	"cmake.debugConfig": {
-
-	},
-	"cmake.configureOnOpen": false,
-	"cmake.automaticReconfigure": false,
-	"cmake.autoSelectActiveFolder": false,
-	"cmake.buildDirectory": "${workspaceFolder}/build",
-	"cmake.options.statusBarVisibility": "compact",
-	"cmake.showSystemKits": true,
-	"clang-tidy.executable": "/usr/bin/clang-tidy",
-	"clang-tidy.checks": ["bugprone",
-						"cppcoreguidelines",
-						"clang-analyzer",
-						"modernize",
-						"readability",
-						"misc"],
-	"clang-tidy.buildPath": "./build/",
-	//clang-tidy.compilerArgsBefore: List of arguments to prepend to the compiler command line
-	"clang-tidy.lintOnSave": true,
 	"clang-format.executable": "/usr/bin/clang-format",
 	"clang-format.style": "file",
 	"clang-format.fallbackStyle": "Google",
 	"clang-format.formatOnSave": true,
 	"clang-format.formatOnType": true,
 	"clang-format.arguments": [
-		"-assume-filename=${workspaceFolder}/.clang-format"
-	]
+	  "-assume-filename=${workspaceFolder}/.clang-format"
+	],
+	"clangd.checkUpdates": true,
+	"clangd.path": "/usr/bin/clangd",
+	"clangd.arguments": [
+	  "-log=verbose",
+	  "-pretty",
+	  "--background-index",
+	  "--compile-commands-dir=../build/"
+	],
+	"cmake.configureOnEdit": true,
+	"cmake.debugConfig": {},
+	"cmake.configureOnOpen": false,
+	"cmake.automaticReconfigure": false,
+	"cmake.autoSelectActiveFolder": false,
+	"cmake.buildDirectory": "${workspaceFolder}/build",
+	"cmake.options.statusBarVisibility": "compact",
+	"cmake.showSystemKits": true,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": true,
+	"editor.tabSize": 2,
+	"folders": [
+	  {
+		"path": "../"
+	  }
+	],
+	"git.openRepositoryInParentFolders": "never"
 }
