@@ -27,11 +27,11 @@
 
 /// @brief Compiler detection
 #if (defined(__GNUC__)) && !defined(__clang__) && !defined(__INTEL_COMPILER)
-  #define _COMPILER_GCC 1
+  #define COMPILER_GCC 1
 #elif (defined(__clang__))
-  #define _COMPILER_CLANG 1
+  #define COMPILER_CLANG 1
 #elif (defined(_MSC_VER))
-  #define _COMPILER_MSVC 1
+  #define COMPILER_MSVC 1
 #else
   #error "Compiler could not be detected"
 #endif
@@ -40,29 +40,36 @@
 /// Since there are no easy cross-platform way to do this,
 /// we assume that "no asserts" means release
 #if(defined(_NDEBUG) || defined(NDEBUG))
-  #define _BUILD_CONFIGURATION_DEBUG 0
+  #define BUILD_CONFIGURATION_DEBUG 0
 #else  // defined(NDEBUG) ?
-  #define _BUILD_CONFIGURATION_DEBUG 1
+  #define BUILD_CONFIGURATION_DEBUG 1
 #endif  // defined(NDEBUG) ?
 
 /// @brief Architecture detection - compiler specific preprocessor macros
-#if _COMPILER_MSVC
-  #if defined(_M_IX86)
-    #define _ARCH_X86 1
+#if COMPILER_MSVC
+  #if  defined(_M_X64)
+    #define ARCH_X86_64 1
+  #elif defined(_M_IX86)
+    #define ARCH_X86_32 1
   #endif
-#elif _COMPILER_GCC
-  #if (defined(__i386__))
-    #define _ARCH_X86 1
+#elif COMPILER_GCC || COMPILER_CLANG
+  #if defined(__x86_64__)
+    #define ARCH_X86_64 1
+  #elif (defined(__i386__))
+    #define ARCH_X86_32 1
   #endif
 #endif
 
 /// @brief SIMD enabling, based on platform
-#if defined(_DISABLE_SIMD)
-  #define _USE_SSE 0
+#if defined(DISABLE_SIMD)
+  #define USE_SSE 0
 #else
-  #if (_ARCH_X86)
-    #define _USE_SSE 1
+  #if (ARCH_X86_32)
+    #define USE_SSE 1
   #endif
+#endif
+#if (ARCH_X86_64)
+  #define USE_SSE 1
 #endif
 
 #endif  // SANDBOX_SRC_CONFIGURATION_H_
