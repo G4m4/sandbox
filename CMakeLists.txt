@@ -191,8 +191,13 @@ if(COMPILER_IS_GCC OR COMPILER_IS_CLANG)
   add_definitions(-Wpointer-arith)
   add_definitions(-Wcast-qual)
 elseif(COMPILER_IS_MSVC)
+  # Warnings configuration
   add_definitions(/W4)
   add_definitions(/WX)
+  # Disable Run-Time Type Information
+  add_definitions(/GR-)
+  # Strict conformance mode
+  add_definitions(/permissive-)
   # This disable useless msvc warnings about checked iterators
   add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 endif(COMPILER_IS_GCC OR COMPILER_IS_CLANG)

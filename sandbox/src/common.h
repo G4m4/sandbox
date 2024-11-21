@@ -29,33 +29,26 @@ namespace sandbox {
 
 /// @brief Assume that the following condition is always true
 /// (on some compilers, allows optimization)
-#if(_COMPILER_MSVC)
-  static inline void ASSUME(const bool condition) {_assume(condition);}
-#elif(_COMPILER_GCC)
-  static inline void ASSUME(const bool condition) {if (!(condition)) __builtin_unreachable();}
+#if (_COMPILER_MSVC)
+static inline void ASSUME(const bool condition) { __assume(condition); }
+#elif (_COMPILER_GCC)
+static inline void ASSUME(const bool condition) {
+  if (!(condition))
+    __builtin_unreachable();
+}
 #else
-  #define ASSUME(_condition_)
-#endif  // _COMPILER_ ?
+#define ASSUME(_condition_)
+#endif // _COMPILER_ ?
 
 /// @brief Asserts condition == true
-#if(_BUILD_CONFIGURATION_DEBUG)
-  #define SANDBOX_ASSERT(_condition_) (assert((_condition_)))
+#if (_BUILD_CONFIGURATION_DEBUG)
+#define SANDBOX_ASSERT(_condition_) (assert((_condition_)))
 #else
-  // Maps to "assume" in release configuration for better optimization
-  #define SANDBOX_ASSERT(_condition_) {::sandbox::ASSUME((_condition_));}
+// Maps to "assume" in release configuration for better optimization
+#define SANDBOX_ASSERT(_condition_)                                            \
+  { ::sandbox::ASSUME((_condition_)); }
 #endif
 
-/// @brief Attribute for structures alignment
-#if (_USE_SSE)
-  #if (_COMPILER_MSVC)
-    #define ALIGN __declspec(align(16))
-  #else
-    #define ALIGN __attribute__((aligned(16)))
-  #endif
-#else
-  #define ALIGN
-#endif  // (_USE_SSE)
+} // namespace sandbox
 
-}  // namespace sandbox
-
-#endif  // SANDBOX_SRC_COMMON_H_
+#endif // SANDBOX_SRC_COMMON_H_

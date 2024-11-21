@@ -34,11 +34,7 @@ DummyClass::~DummyClass() {
   // Nothing to do here for now
 }
 
+const char *DummyClass::DoSomething(void) { return &data_[0]; }
 
-const char* DummyClass::DoSomething(void) {
-  SANDBOX_ASSERT(data_ != nullptr);
-  return &data_[0];
-}
-
-}  // namespace dummygroup
-}  // namespace sandbox
+} // namespace dummygroup
+} // namespace sandbox
