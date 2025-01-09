@@ -1,5 +1,5 @@
-/// @file implementation/main.cc
-/// @brief Implementation main entry point
+/// @file dummygroup.cc
+/// @brief Dummy class definition
 /// @author gm
 /// @copyright gm
 ///
@@ -18,16 +18,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <cstdio>
+#include "sandbox/dummygroup/dummygroup.h"
 
-#include "sandbox/src/dummygroup/dummyclass.h"
+#include <memory>
 
-/// @brief Main function, of course.
-int main(int /*argc*/, char ** /*argv*/) {
-  sandbox::dummygroup::DummyClass test;
-  const char* kText(test.GetSomething());
+#include "dummygroup/dummyclass.h"
 
-  printf("Done: %s\n", kText);
+namespace sandbox
+{
+namespace dummygroup
+{
 
-  return 0;
+std::unique_ptr<DummyClassBase> DummyGroup::Make()
+{
+    return std::make_unique<DummyClass>();
 }
+
+} // namespace dummygroup
+} // namespace sandbox

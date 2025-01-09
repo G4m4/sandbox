@@ -22,8 +22,7 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SANDBOX_SRC_CONFIGURATION_H_
-#define SANDBOX_SRC_CONFIGURATION_H_
+#pragma once
 
 /// @brief Compiler detection
 #if (defined(__GNUC__)) && !defined(__clang__) && !defined(__INTEL_COMPILER)
@@ -71,5 +70,3 @@
 #if (ARCH_X86_64)
   #define USE_SSE 1
 #endif
-
-#endif  // SANDBOX_SRC_CONFIGURATION_H_

@@ -42,17 +42,6 @@ Building is done with:
     cmake ..
     cmake --build .
 
-The directory hierarchy is as follows:
-- sandbox
-  - implementation
-    - main.cc
-  - src
-    - common.h
-    - configuration.h
-    - dummygroup
-      - dummyclass.cc
-      - dummyclass.h
-
 The few lines of code there strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
 
 Branch: GoogleTest

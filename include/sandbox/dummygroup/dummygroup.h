@@ -1,5 +1,4 @@
-/// @file dummyclass.cc
-/// @brief Dummy class definition
+/// @file dummygroup.h
 /// @author gm
 /// @copyright gm
 ///
@@ -18,35 +17,36 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sandbox/src/dummygroup/dummyclass.h"
+#pragma once
 
-#include <cstring>
 #include <memory>
-
-#include "sandbox/src/common.h"
 
 namespace sandbox
 {
 namespace dummygroup
 {
 
-static const char static_data[] = "Hello, World!";
-
-DummyClass::DummyClass() : data_(new char[sizeof(static_data)])
+/// @brief Base class for dummies
+class DummyClassBase
 {
-  std::memcpy(data_.get(), &static_data[0], sizeof(static_data));
-}
+public:
+    DummyClassBase() = default;
+    virtual ~DummyClassBase() = default;
+    DummyClassBase(const DummyClassBase&) = delete;
+    DummyClassBase(DummyClassBase&&) = delete;
+    DummyClassBase& operator=(const DummyClassBase&) = delete;
+    DummyClassBase& operator=(DummyClassBase&&) = delete;
 
-DummyClass::~DummyClass()
-{
-  // Nothing to do here for now
-}
+    /// @brief Outputs a C-style string
+    virtual const char* GetSomething(void) = 0;
+};
 
-const char* DummyClass::GetSomething(void)
+/// @brief Dummy group module, main entry point
+class DummyGroup
 {
-  SANDBOX_ASSERT(data_);
-  return data_.get();
-}
+public:
+    static std::unique_ptr<DummyClassBase> Make();
+};
 
 } // namespace dummygroup
 } // namespace sandbox

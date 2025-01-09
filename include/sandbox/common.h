@@ -18,12 +18,11 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SANDBOX_SRC_COMMON_H_
-#define SANDBOX_SRC_COMMON_H_
+#pragma once
 
 #include <cassert>
 
-#include "sandbox/src/configuration.h"
+#include "sandbox/configuration.h"
 
 namespace sandbox {
 
@@ -46,5 +45,3 @@ namespace sandbox {
 #endif
 
 }  // namespace sandbox
-
-#endif  // SANDBOX_SRC_COMMON_H_
