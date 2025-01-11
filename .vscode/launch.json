@@ -4,10 +4,26 @@
       {
           "type": "lldb",
           "request": "launch",
-          "name": "Debug",
-          "program": "${workspaceFolder}/build/sandbox/implementation/standalone/sandbox",
+          "name": "cmd",
+          "program": "${workspaceFolder}/out/build/x64-linux-asan/cmd/sandbox_cmd",
           "args": [],
-          "cwd": "${workspaceFolder}"
+          "cwd": "${workspaceFolder}",
+          "env": {
+            // LSAN not supported with debugger
+            "ASAN_OPTIONS" : "detect_leaks=0"
+          }
+      },
+      {
+          "type": "lldb",
+          "request": "launch",
+          "name": "test",
+          "program": "${workspaceFolder}/out/build/x64-linux-asan/test/sandbox_test",
+          "args": [],
+          "cwd": "${workspaceFolder}",
+          "env": {
+            // LSAN not supported with debugger
+            "ASAN_OPTIONS" : "detect_leaks=0"
+          }
       }
   ]
 }

@@ -18,5 +18,9 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 include(cmake/static_analysis.cmake)
 include(GNUInstallDirs)
 
+include(cmake/dependencies.cmake)
+setup_dependencies()
+
 add_subdirectory(cmd)
 add_subdirectory(lib)
+add_subdirectory(test)
