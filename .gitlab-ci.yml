@@ -19,13 +19,12 @@ lint:linux:
     CPM_SOURCE_CACHE: "cpm_cache"
   script:
     - cmake --preset x64-linux-debug
-    - cmake --build --preset x64-linux-debug --target sandbox_lib_analysis | tee analysis.log
-    # Fail the job if errors were found:
-    - ! grep "warning" analysis.log
+    - cmake --build --preset x64-linux-debug --target sandbox_lib_analysis | tee build.log
+    - chmod +x ./ci/analyse_log.sh && /bin/sh ./ci/analyse_log.sh
   artifacts:
     expire_in: 2 days
     paths:
-      - analysis.log
+      - warnings.log
 
 build:linux:
   stage: build

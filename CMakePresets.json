@@ -184,7 +184,6 @@
         {
             "name": "x64-linux-ci",
             "inherits": [ "x64", "linux-gcc", "linux-asan" ],
-            "binaryDir": "${sourceDir}/build/",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
