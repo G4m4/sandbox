@@ -70,7 +70,7 @@ test:linux:
   # tags:
   #   - linux
   script:
-    - ./out/install/x64-linux-ci/bin/sandbox_cmd
+    - ./out/install/x64-linux-ci/bin/sandbox_test
   dependencies:
     - build:linux
 
