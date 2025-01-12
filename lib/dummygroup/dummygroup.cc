@@ -26,7 +26,7 @@ namespace dummygroup
 
 std::unique_ptr<DummyClassBase> DummyGroup::Make()
 {
-    return std::make_unique<DummyClass>();
+  return std::make_unique<DummyClass>();
 }
 
 } // namespace dummygroup

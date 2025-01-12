@@ -32,15 +32,15 @@
 /// @brief Build configuration detection
 /// Since there are no easy cross-platform way to do this,
 /// we assume that "no asserts" means release
-#if(defined(_NDEBUG) || defined(NDEBUG))
+#if (defined(_NDEBUG) || defined(NDEBUG))
   #define BUILD_CONFIGURATION_DEBUG 0
-#else  // defined(NDEBUG) ?
+#else // defined(NDEBUG) ?
   #define BUILD_CONFIGURATION_DEBUG 1
-#endif  // defined(NDEBUG) ?
+#endif // defined(NDEBUG) ?
 
 /// @brief Architecture detection - compiler specific preprocessor macros
 #if COMPILER_MSVC
-  #if  defined(_M_X64)
+  #if defined(_M_X64)
     #define ARCH_X86_64 1
   #elif defined(_M_IX86)
     #define ARCH_X86_32 1

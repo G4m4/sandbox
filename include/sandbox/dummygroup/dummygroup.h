@@ -25,23 +25,23 @@ namespace dummygroup
 /// @brief Base class for dummies
 class DummyClassBase
 {
-public:
-    DummyClassBase() = default;
-    virtual ~DummyClassBase() = default;
-    DummyClassBase(const DummyClassBase&) = delete;
-    DummyClassBase(DummyClassBase&&) = delete;
-    DummyClassBase& operator=(const DummyClassBase&) = delete;
-    DummyClassBase& operator=(DummyClassBase&&) = delete;
+  public:
+  DummyClassBase() = default;
+  virtual ~DummyClassBase() = default;
+  DummyClassBase(const DummyClassBase&) = delete;
+  DummyClassBase(DummyClassBase&&) = delete;
+  DummyClassBase& operator=(const DummyClassBase&) = delete;
+  DummyClassBase& operator=(DummyClassBase&&) = delete;
 
-    /// @brief Outputs a C-style string
-    virtual const char* GetSomething(void) = 0;
+  /// @brief Outputs a C-style string
+  virtual const char* GetSomething(void) = 0;
 };
 
 /// @brief Dummy group module, main entry point
 class DummyGroup
 {
-public:
-    static std::unique_ptr<DummyClassBase> Make();
+  public:
+  static std::unique_ptr<DummyClassBase> Make();
 };
 
 } // namespace dummygroup

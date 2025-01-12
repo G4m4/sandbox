@@ -29,13 +29,13 @@ static const char static_data[] = "Hello, World!";
 
 DummyClass::DummyClass() : data_(new char[sizeof(static_data)])
 {
-    std::memcpy(data_.get(), &static_data[0], sizeof(static_data));
+  std::memcpy(data_.get(), &static_data[0], sizeof(static_data));
 }
 
 const char* DummyClass::GetSomething(void)
 {
-    SANDBOX_ASSERT(data_);
-    return data_.get();
+  SANDBOX_ASSERT(data_);
+  return data_.get();
 }
 
 } // namespace dummygroup
