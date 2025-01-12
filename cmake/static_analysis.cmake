@@ -9,7 +9,7 @@ function(create_analysis_target target_name)
     COMMAND
       ${Python_EXECUTABLE} "${CMAKE_SOURCE_DIR}/scripts/run-clang-tidy.py"
       "-p${CMAKE_BINARY_DIR}" "-config-file=${CMAKE_SOURCE_DIR}/.clang-tidy"
-      "-header-filter=.*sandbox(?!.*_deps).*"
-      "-source-filter=.*sandbox(?!.*_deps).*"
+      "-header-filter=.*sandbox(?!.*_deps|.*cpm_cache).*"
+      "-source-filter=.*sandbox(?!.*_deps|.*cpm_cache).*"
     VERBATIM USES_TERMINAL)
 endfunction()
