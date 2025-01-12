@@ -19,9 +19,9 @@
 
 #include "sandbox/dummygroup/dummygroup.h"
 
-TEST_CASE("dummy test")
+TEST_CASE("dummy test") // NOLINT
 {
   auto test = sandbox::dummygroup::DummyGroup::Make();
   const char* kText(test->GetSomething());
-  CHECK(kText != nullptr);
+  CHECK(kText != nullptr); // NOLINT
 }
