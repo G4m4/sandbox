@@ -1,8 +1,3 @@
-/// @file implementation/main.cc
-/// @brief Implementation main entry point
-/// @author gm
-/// @copyright gm
-///
 /// This file is part of SandBox
 ///
 /// SandBox is free software: you can redistribute it and/or modify

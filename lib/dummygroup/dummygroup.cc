@@ -1,8 +1,3 @@
-/// @file dummygroup.cc
-/// @brief Dummy class definition
-/// @author gm
-/// @copyright gm
-///
 /// This file is part of SandBox
 ///
 /// SandBox is free software: you can redistribute it and/or modify

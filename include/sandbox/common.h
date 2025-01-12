@@ -1,8 +1,3 @@
-/// @file common.h
-/// @brief SandBox common utilities header
-/// @author gm
-/// @copyright gm
-///
 /// This file is part of SandBox
 ///
 /// SandBox is free software: you can redistribute it and/or modify

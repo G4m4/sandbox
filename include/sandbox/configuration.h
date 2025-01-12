@@ -1,11 +1,5 @@
-/// @file configuration.h
-/// @brief SandBox configuration file
-///
 /// Provides basic preprocessor macros in order to detect
 /// user variables/hardware/OS/compiler...
-///
-/// @author gm
-/// @copyright gm
 ///
 /// This file is part of SandBox
 ///
