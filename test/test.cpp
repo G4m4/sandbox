@@ -15,6 +15,8 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
+#include <memory>
+
 #include <doctest/doctest.h>
 
 #include "sandbox/dummygroup/dummygroup.h"

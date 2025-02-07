@@ -14,6 +14,7 @@
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstdio>
+#include <memory>
 
 #include "sandbox/dummygroup/dummygroup.h"
 
