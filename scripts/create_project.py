@@ -30,7 +30,8 @@ kIgnoredDirectories = ('.git',
                        'build',
                        'externals',
                        'gtest',
-                       'juce'
+                       'juce',
+                       'out',
                        'scripts',
                        )
 
