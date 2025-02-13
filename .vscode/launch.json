@@ -24,6 +24,16 @@
             // LSAN not supported with debugger
             "ASAN_OPTIONS" : "detect_leaks=0"
           }
+      },
+      {
+          "type": "python",
+          "request": "launch",
+          "name": "creation_script",
+          "program": "${workspaceFolder}/scripts/create_project.py",
+          "args": ["../", "../../", "HeapTracker"],
+          "cwd": "${workspaceFolder}/scripts",
+          "env": {
+          }
       }
   ]
 }
