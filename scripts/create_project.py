@@ -26,6 +26,7 @@ import shutil
 import string
 
 kIgnoredDirectories = ('.git',
+                       '.vs',
                        'build',
                        'externals',
                        'gtest',
