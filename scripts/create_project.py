@@ -102,10 +102,16 @@ def RenameDirectories(root_dir, name_lower):
     @param    root_dir        Root directory to walk into
     @param    name_lower        Name to replace folders with
     '''
-    # This is hardcoded for now
-    # TODO(gm): find something better
-    shutil.move(os.path.join(root_dir, "sandbox"),
-                os.path.join(root_dir, name_lower))
+    dirs_list = []
+    for root, dirs, files in os.walk(root_dir):
+      for dir in dirs:
+        if(dir == "sandbox"):
+          dirs_list.append(os.path.join(os.path.relpath(root,root_dir),dir))
+          break
+    for dir in dirs_list:
+      src = os.path.join(root_dir, dir)
+      dest = src.replace("sandbox", name_lower)
+      shutil.move(src, dest)
 
 def SetupProject(sandbox_root, dest_dir, name):
     '''
