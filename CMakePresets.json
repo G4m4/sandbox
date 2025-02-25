@@ -1,4 +1,4 @@
-﻿{
+{
     "version": 3,
     "configurePresets": [
         {
@@ -113,11 +113,6 @@
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Darwin"
-            },
-            "vendor": {
-                "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-                    "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-                }
             }
         },
         {
@@ -141,6 +136,11 @@
             "inherits": [ "linux", "clang" ]
         },
         {
+            "name": "macos-clang",
+            "hidden": true,
+            "inherits": [ "macos", "clang" ]
+        },
+        {
             "name": "x64-windows-debug",
             "inherits": [ "x64", "windows-cl" ],
             "cacheVariables": {
@@ -160,6 +160,13 @@
             "inherits": "x64-windows-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+            }
+        },
+        {
+            "name": "x64-macos-debug",
+            "inherits": [ "x64", "macos-clang" ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
@@ -201,6 +208,10 @@
         {
             "name": "x64-windows-release",
             "configurePreset": "x64-windows-release"
+        },
+        {
+            "name": "x64-macos-debug",
+            "configurePreset": "x64-macos-debug"
         },
         {
             "name": "x64-linux-debug",
