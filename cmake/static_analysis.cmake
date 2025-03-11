@@ -33,8 +33,8 @@ function(create_analysis_target target_name)
   add_custom_target(
     ${target_name}_clang_tidy
     COMMAND
-      ${Python_EXECUTABLE} "${CMAKE_SOURCE_DIR}/scripts/run-clang-tidy.py"
-      "-p${CMAKE_BINARY_DIR}" "-config-file=${CMAKE_SOURCE_DIR}/.clang-tidy"
+      ${Python_EXECUTABLE} "${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py"
+      "-p${PROJECT_BINARY_DIR}" "-config-file=${PROJECT_SOURCE_DIR}/.clang-tidy"
       "-header-filter=.*sandbox(?!.*_deps|.*cpm_cache).*"
       "-source-filter=.*sandbox(?!.*_deps|.*cpm_cache).*"
     VERBATIM USES_TERMINAL)
@@ -58,7 +58,7 @@ function(create_analysis_target target_name)
   # (as other passes will rather emit warnings)
   add_custom_target(
     ${target_name}_iwyu
-    COMMAND ${Python_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/iwyu_tool.py
-            -p${CMAKE_BINARY_DIR} ${${target_name}_sources} -o clang-warning
+    COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/scripts/iwyu_tool.py
+            -p${PROJECT_BINARY_DIR} ${${target_name}_sources} -o clang-warning
     VERBATIM USES_TERMINAL)
 endfunction()
