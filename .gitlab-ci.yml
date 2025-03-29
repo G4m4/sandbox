@@ -48,7 +48,7 @@ build:linux:
   artifacts:
     expire_in: 2 hrs
     paths:
-      - out/ci/install/
+      - out/install/x64-linux-ci/
 
 # build:windows:
 #   stage: build
@@ -72,7 +72,7 @@ test:linux:
   # tags:
   #   - linux
   script:
-    - ./out/ci/install/bin/sandbox_test
+    - ./out/install/x64-linux-ci/bin/sandbox_test
   dependencies:
     - build:linux
 
