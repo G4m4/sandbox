@@ -153,6 +153,9 @@
             "environment": {
                 "CFLAGS": "/fsanitize=address",
                 "CXXFLAGS": "/fsanitize=address"
+            },
+            "cacheVariables": {
+                "CMAKE_VERBOSE_MAKEFILE": "ON"
             }
         },
         {
