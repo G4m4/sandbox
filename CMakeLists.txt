@@ -10,7 +10,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# Paths definitions
+option(SANDBOX_ENABLE_CLI "Build CLI executables" ON)
+option(SANDBOX_ENABLE_TESTS "Build tests" ON)
+option(SANDBOX_ENABLE_UI "Build UI executables" ON)
+
 set(SANDBOX_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
@@ -21,7 +24,17 @@ include(GNUInstallDirs)
 include(cmake/dependencies.cmake)
 setup_dependencies()
 
-add_subdirectory(cmd)
+if(${SANDBOX_ENABLE_CLI})
+  add_subdirectory(cmd)
+endif()
+
 add_subdirectory(lib)
-add_subdirectory(test)
-add_subdirectory(ui)
+
+if(${SANDBOX_ENABLE_TESTS})
+  add_subdirectory(test)
+endif()
+
+if(${SANDBOX_ENABLE_UI})
+  add_subdirectory(ui)
+endif()
+
