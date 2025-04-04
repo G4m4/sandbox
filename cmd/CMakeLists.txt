@@ -1,10 +1,11 @@
 # @brief SandBox standalone root cmake file
 
 add_executable(sandbox_cmd)
+add_executable(sandbox::cmd ALIAS sandbox_cmd)
 
 target_sources(sandbox_cmd PRIVATE "main.cc")
 
-target_link_libraries(sandbox_cmd PUBLIC sandbox_lib)
+target_link_libraries(sandbox_cmd PUBLIC sandbox::lib)
 
 add_custom_command(
   TARGET sandbox_cmd
