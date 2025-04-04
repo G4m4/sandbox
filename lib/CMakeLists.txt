@@ -1,6 +1,7 @@
 # @brief SandBox main source folder cmake file
 
 add_library(sandbox_lib)
+add_library(sandbox::lib ALIAS sandbox_lib)
 
 target_include_directories(
   sandbox_lib
