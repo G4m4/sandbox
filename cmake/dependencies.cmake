@@ -3,9 +3,11 @@ include(cmake/cpm.cmake)
 # Done as a function so that updates to variables like CMAKE_CXX_FLAGS don't
 # propagate out to other targets
 function(setup_dependencies)
-
+  
   # doctest
-  cpmaddpackage(GITHUB_REPOSITORY doctest/doctest GIT_TAG v2.4.11)
+  if(${SANDBOX_ENABLE_TESTS})
+    cpmaddpackage(GITHUB_REPOSITORY doctest/doctest GIT_TAG v2.4.11)
+  endif()
 
 endfunction()
 
