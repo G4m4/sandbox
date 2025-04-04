@@ -1,8 +1,3 @@
-/// @file implementation/main.cc
-/// @brief Implementation main entry point
-/// @author gm
-/// @copyright gm 2019
-///
 /// This file is part of SandBox
 ///
 /// SandBox is free software: you can redistribute it and/or modify
@@ -18,16 +13,21 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <cstdio>
+#include "sandbox/dummygroup/dummygroup.h"
 
-#include "sandbox/src/common.h"
-#include "sandbox/src/dummygroup/dummyclass.h"
+#include <memory>
 
-/// @brief Main function, of course.
-int main(int /*argc*/, char ** /*argv*/) {
-  const char* kText(sandbox::dummygroup::DummyClass().DoSomething());
+#include "dummygroup/dummyclass.h"
 
-  printf("Done: %s", kText);
+namespace sandbox
+{
+namespace dummygroup
+{
 
-  return 0;
+std::unique_ptr<DummyClassBase> DummyGroup::Make()
+{
+  return std::make_unique<DummyClass>();
 }
+
+} // namespace dummygroup
+} // namespace sandbox

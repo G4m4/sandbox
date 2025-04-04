@@ -1,8 +1,3 @@
-/// @file dummyclass.cc
-/// @brief Dummy class definition
-/// @author gm
-/// @copyright gm 2019
-///
 /// This file is part of SandBox
 ///
 /// SandBox is free software: you can redistribute it and/or modify
@@ -18,27 +13,18 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "sandbox/src/dummygroup/dummyclass.h"
-#include "sandbox/src/common.h"
+#include <cstdio>
+#include <memory>
 
-namespace sandbox {
-namespace dummygroup {
+#include "sandbox/dummygroup/dummygroup.h"
 
-const char DummyClass::data_[] = "Hello, World!";
+/// @brief Main function, of course.
+int main(int /*argc*/, char** /*argv*/)
+{
+  auto test = sandbox::dummygroup::DummyGroup::Make();
+  const char* kText(test->GetSomething());
 
-DummyClass::DummyClass() {
-  // Nothing to do here for now
+  std::printf("Done: %s\n", kText);
+
+  return 0;
 }
-
-DummyClass::~DummyClass() {
-  // Nothing to do here for now
-}
-
-
-const char* DummyClass::DoSomething(void) {
-  SANDBOX_ASSERT(data_ != nullptr);
-  return &data_[0];
-}
-
-}  // namespace dummygroup
-}  // namespace sandbox

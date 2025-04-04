@@ -25,11 +25,14 @@ import os
 import shutil
 import string
 
-kIgnoredDirectories = ('build',
-                       '.git',
-                       'scripts',
+kIgnoredDirectories = ('.git',
+                       '.vs',
+                       'build',
+                       'externals',
                        'gtest',
-                       'juce'
+                       'juce',
+                       'out',
+                       'scripts',
                        )
 
 def CopyRequiredFolders(sandbox_root, dest, name_lower):
@@ -64,8 +67,7 @@ def ScanFileAndRename(filepath, name, name_lower, name_upper):
     '''
     name_short = name_upper[:4]
     current_file = open(filepath, 'r+')
-    temp_renamed = string.replace(current_file.read(),
-                                  "SandBox", name).replace("sandbox", name_lower).replace("SANDBOX", name_upper).replace("SAND", name_short)
+    temp_renamed = current_file.read().replace("SandBox", name).replace("sandbox", name_lower).replace("SANDBOX", name_upper).replace("SAND", name_short)
     # Empty current file content and replace it
     current_file.seek(0)
     current_file.truncate()
@@ -101,10 +103,16 @@ def RenameDirectories(root_dir, name_lower):
     @param    root_dir        Root directory to walk into
     @param    name_lower        Name to replace folders with
     '''
-    # This is hardcoded for now
-    # TODO(gm): find something better
-    shutil.move(os.path.join(root_dir, "sandbox"),
-                os.path.join(root_dir, name_lower))
+    dirs_list = []
+    for root, dirs, files in os.walk(root_dir):
+      for dir in dirs:
+        if(dir == "sandbox"):
+          dirs_list.append(os.path.join(os.path.relpath(root,root_dir),dir))
+          break
+    for dir in dirs_list:
+      src = os.path.join(root_dir, dir)
+      dest = src.replace("sandbox", name_lower)
+      shutil.move(src, dest)
 
 def SetupProject(sandbox_root, dest_dir, name):
     '''

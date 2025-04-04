@@ -1,8 +1,3 @@
-/// @file dummyclass.h
-/// @brief Dummy class declaration
-/// @author gm
-/// @copyright gm 2019
-///
 /// This file is part of SandBox
 ///
 /// SandBox is free software: you can redistribute it and/or modify
@@ -18,28 +13,34 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
-#define SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
+#pragma once
 
-#include "sandbox/src/common.h"
+#include <memory>
 
-namespace sandbox {
-namespace dummygroup {
+#include "sandbox/dummygroup/dummygroup.h"
+
+namespace sandbox
+{
+namespace dummygroup
+{
 
 /// @brief Dummy class
-class DummyClass {
- public:
+class DummyClass : public DummyClassBase
+{
+  public:
   DummyClass();
-  ~DummyClass();
+  ~DummyClass() override = default;
+  DummyClass(const DummyClass&) = delete;
+  DummyClass(DummyClass&&) = delete;
+  DummyClass& operator=(const DummyClass&) = delete;
+  DummyClass& operator=(DummyClass&&) = delete;
 
   /// @brief Outputs an "Hello, world!" into a C-style string
-  const char* DoSomething(void);
+  const char* GetSomething(void) override;
 
- private:
-  static const char data_[14];  ///< Internal class data
+  private:
+  const std::unique_ptr<char[]> data_; ///< Internal class data
 };
 
-}  // namespace dummygroup
-}  // namespace sandbox
-
-#endif  // SANDBOX_SRC_DUMMYGROUP_DUMMYCLASS_H_
+} // namespace dummygroup
+} // namespace sandbox

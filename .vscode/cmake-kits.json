@@ -1,0 +1,9 @@
+[
+    {
+        "name" : "Clang 19",
+        "compilers" : {
+            "CC" : "/usr/bin/clang++-19",
+            "CXX" : "/usr/bin/clang++-19"
+        }
+    }
+]
