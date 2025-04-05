@@ -5,12 +5,8 @@ SandBox
 
 SandBox is an empty structure for fast projects setup - supported so far:
 - Basic (lib + executable)
-- GoogleTest
-- VST plugin
-- OpenGL
-- Qt5
+- DocTest
 - Imgui
-- SFML
 
 It includes a basic directory structure, simple ready-mix Cmake files as well as basic git and Travis configurations.
 Different configurations are available for different frameworks; each one of them resides in a different branch of this depot.
@@ -33,7 +29,7 @@ Creating a project based on SandBox template is done through a Python script:
 
 Where YOUR_PROJET_LOCATION may be by instance "c:/dev" and YOUR_PROJECT_NAME something like "MyAwesomeProject"
 
-A Travis configuration file is provided in order to be used with [Travis CI](https://travis-ci.org/).
+A GitLab configuration file is provided.
 
 The build system is based on Cmake.
 Building is done with:
@@ -47,41 +43,8 @@ The few lines of code there strictly follows [Google Style](http://google-styleg
 You are on the Imgui branch
 -----
 
-You will need [Qt] (https://www.qt.io/download-open-source) installed on your dev machine, including QML module.
-On Debian-based distros:
+We use the GLFW Vulkan implementation. You will need the [Vulkan SDK] (https://vulkan.lunarg.com/sdk/home) installed on your dev machine
 
-    sudo dnf install qt5-qtbase-devel.x86_64 qt5-qtdeclarative-devel.x86_64
-
-On Ubuntu-based distros:
-
-    sudo apt-get install qt5-default qtquick1-5-dev qtdeclarative5-dev
-
-On some systems - typically Windows - in order to keep the build system agnostic regarding Qt libraries you will need to make Cmake aware of their location:
-
-    cmake -DCMAKE_PREFIX_PATH="C:/Qt/5.9.1/msvc2015_64/lib/cmake" ../
-
-Where "C:/Qt/5.9.1/msvc2015_64/lib/cmake" gets to be replaced by your own.
-
-Imgui is already set up as a submodule;
-
-    git submodule init
-    git submodule update
-
-Branch: SFML
-------
-
-You will need [SFML](https://www.sfml-dev.org) dependencies installed on your dev machine. On Debian-based distros:
-
-  sudo dnf install systemd-devel.x86_64 openal-soft-devel.x86_64 libvorbis-devel.x86_64 flac-devel.x86_64
-
-On Ubuntu-based distros:
-
-  sudo apt-get install libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev
-
-SFML is already set up as a submodule:
-
-    git submodule init
-    git submodule update
 
 License
 ==================================
