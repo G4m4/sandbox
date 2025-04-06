@@ -28,6 +28,13 @@
             }
         },
         {
+            "name": "universal",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64"
+            }
+        },
+        {
             "name": "cl-flags",
             "hidden": true,
             "cacheVariables": {
@@ -163,8 +170,8 @@
             }
         },
         {
-            "name": "x64-macos-debug",
-            "inherits": [ "x64", "macos-clang" ],
+            "name": "universal-macos-debug",
+            "inherits": [ "universal", "macos-clang" ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
@@ -210,8 +217,8 @@
             "configurePreset": "x64-windows-release"
         },
         {
-            "name": "x64-macos-debug",
-            "configurePreset": "x64-macos-debug"
+            "name": "universal-macos-debug",
+            "configurePreset": "universal-macos-debug"
         },
         {
             "name": "x64-linux-debug",
