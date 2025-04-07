@@ -35,7 +35,7 @@ build:linux:
   # tags:
   #   - linux
   before_script:
-    - apt update && apt -y install make autoconf ninja-build cmake
+    - apt update && apt -y install make autoconf ninja-build cmake libwayland-dev libxkbcommon-dev xorg-dev
   cache:
     - key: cpm_cache
       paths:
