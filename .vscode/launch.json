@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+
       {
           "type": "lldb",
           "request": "launch",
@@ -18,6 +19,18 @@
           "request": "launch",
           "name": "test",
           "program": "${workspaceFolder}/out/build/x64-linux-asan/test/sandbox_test",
+          "args": [],
+          "cwd": "${workspaceFolder}",
+          "env": {
+            // LSAN not supported with debugger
+            "ASAN_OPTIONS" : "detect_leaks=0"
+          }
+      },
+      {
+          "type": "lldb",
+          "request": "launch",
+          "name": "ui",
+          "program": "${workspaceFolder}/out/build/local/ui/sandbox_ui",
           "args": [],
           "cwd": "${workspaceFolder}",
           "env": {
