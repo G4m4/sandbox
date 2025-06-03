@@ -1,0 +1,1 @@
+clang-format --files="../../out/build/x64-windows-debug/sandbox_testsource_files.txt" -style="file:../.clang-format" -i > log.txt

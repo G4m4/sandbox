@@ -1,0 +1,1 @@
+python "./run-clang-tidy.py" "-p../out/build/x64-windows-debug" "-config-file=../identifiernaming.clang-tidy" "-header-filter=.*include[\\/\\\\](sandbox).*" "-source-filter=.*lib[\\/\\\\].*" -fix > log.txt

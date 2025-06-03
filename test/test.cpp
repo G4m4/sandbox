@@ -24,6 +24,6 @@
 TEST_CASE("dummy test") // NOLINT
 {
   auto test = sandbox::dummygroup::DummyGroup::Make();
-  const char* kText(test->GetSomething());
-  CHECK(kText != nullptr); // NOLINT
+  const char* k_text(test->GetSomething());
+  CHECK(k_text != nullptr); // NOLINT
 }
