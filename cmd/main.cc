@@ -22,9 +22,9 @@
 int main(int /*argc*/, char** /*argv*/)
 {
   auto test = sandbox::dummygroup::DummyGroup::Make();
-  const char* kText(test->GetSomething());
+  const char* k_text(test->GetSomething());
 
-  std::printf("Done: %s\n", kText);
+  std::printf("Done: %s\n", k_text);
 
   return 0;
 }

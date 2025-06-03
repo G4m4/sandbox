@@ -25,11 +25,11 @@ namespace sandbox
 namespace dummygroup
 {
 
-static const char static_data[] = "Hello, World!";
+static const char kStaticData[] = "Hello, World!";
 
-DummyClass::DummyClass() : data_(new char[sizeof(static_data)])
+DummyClass::DummyClass() : data_(new char[sizeof(kStaticData)])
 {
-  std::memcpy(data_.get(), &static_data[0], sizeof(static_data));
+  std::memcpy(data_.get(), &kStaticData[0], sizeof(kStaticData));
 }
 
 const char* DummyClass::GetSomething(void)
