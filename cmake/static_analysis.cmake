@@ -32,7 +32,7 @@ endfunction()
 function(get_target_files target_name out_files)
   list(APPEND ${target_name}_sources)
   get_target_property(${target_name}_libs ${target_name}
-                      INTERFACE_LINK_LIBRARIES)
+                      LINK_LIBRARIES)
   foreach(library IN ITEMS ${${target_name}_libs})
     set(library_sources "")
     get_source_files(${library} library_sources)
