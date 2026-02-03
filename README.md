@@ -1,9 +1,10 @@
 SandBox
 ==================================
 
-[![pipeline status](https://lab.frogg.it/machinmachines/sandbox/badges/master/pipeline.svg)](https://lab.frogg.it/machinmachines/sandbox/-/commits/master) 
+[![pipeline status](https://lab.frogg.it/machinmachines/sandbox/badges/master/pipeline.svg)](https://lab.frogg.it/machinmachines/sandbox/-/commits/master)
 
 SandBox is an empty structure for fast projects setup - supported so far:
+
 - Basic (lib + executable)
 - DocTest
 - Imgui
@@ -12,6 +13,7 @@ It includes a basic directory structure, simple ready-mix Cmake files as well as
 Different configurations are available for different frameworks; each one of them resides in a different branch of this depot.
 
 The basic configuration on the master branch creates 2 targets:
+
 - sandbox_implementation (executable)
 - sandbox_lib (static lib)
 
@@ -45,8 +47,31 @@ You are on the Imgui branch
 
 We use the GLFW Vulkan implementation. You will need the [Vulkan SDK] (https://vulkan.lunarg.com/sdk/home) installed on your dev machine
 
+### Android build
+
+```json,
+    {
+      "name": "local-android",
+      "inherits": [
+        "local",
+        "android"
+      ],
+      "cacheVariables": {
+        "ANDROID_PLATFORM": "android-35",
+        "ANDROID_SDK": "PATH_TO_ANDROID_SDK",
+        "CMAKE_FIND_ROOT_PATH_MODE_PACKAGE": "BOTH",
+        "CMAKE_TOOLCHAIN_FILE": "PATH_TO_ANDROID_NDK/NDK_VERSION/build/cmake/android.toolchain.cmake"
+      },
+      "environment": {
+        "JAVA_HOME": "PATH_TO_JAVA_RUNTIME",
+        "ANDROID_SDK_ROOT": "PATH_TO_ANDROID_SDK",
+        "ANDROID_NDK_ROOT": "PATH_TO_ANDROID_NDK"
+      }
+    }
+```
 
 License
+
 ==================================
 SandBox is under GPLv3.
 

@@ -11,6 +11,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 option(SANDBOX_ENABLE_CLI "Build CLI executables" ON)
 option(SANDBOX_ENABLE_TESTS "Build tests" ON)
 option(SANDBOX_ENABLE_UI "Build UI executables" ON)
+option(SANDBOX_BUILD_ANDROID "Build Android targets" OFF)
 
 set(SANDBOX_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 

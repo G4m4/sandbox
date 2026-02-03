@@ -1,0 +1,37 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "local",
+      "cacheVariables": {
+        "CMAKE_VERBOSE_MAKEFILE": "ON"
+      }
+    },
+    {
+      "name": "local-android",
+      "inherits": [
+        "local",
+        "android"
+      ],
+      "cacheVariables": {
+        "SANDBOX_BUILD_ANDROID": "ON",
+        "ANDROID_PLATFORM": "ANDROID_VERSION", // e.g android-35
+        "CMAKE_FIND_ROOT_PATH_MODE_PACKAGE": "BOTH",
+        "CMAKE_TOOLCHAIN_FILE": "PATH_TO_ANDROID_NDK/NDK_VERSION/build/cmake/android.toolchain.cmake" // e.g. "C:/Users/USERNAME/AppData/Local/Android/Sdk/ndk/29.0.14206865/build/cmake/android.toolchain.cmake"
+      },
+      "environment": {
+        "JAVA_HOME": "JAVA_RUNTIME_PATH" // e.g. C:/Program Files/Android/Android Studio/jbr
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "local",
+      "configurePreset": "local"
+    },
+    {
+      "name": "local-android",
+      "configurePreset": "local-android"
+    }
+  ]
+}

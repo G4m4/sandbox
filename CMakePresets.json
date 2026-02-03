@@ -28,6 +28,30 @@
       }
     },
     {
+      "name": "android",
+      "hidden": true,
+      "inherits": "base",
+      "cacheVariables": {
+        "SANDBOX_BUILD_ANDROID": "ON"
+      }
+    },
+    {
+      "name": "android-armeabi-v7a",
+      "hidden": true,
+      "inherits": "android",
+      "cacheVariables": {
+        "ANDROID_ABI": "armeabi-v7a"
+      }
+    },
+    {
+      "name": "android-arm64-v8a",
+      "hidden": true,
+      "inherits": "android",
+      "cacheVariables": {
+        "ANDROID_ABI": "arm64-v8a"
+      }
+    },
+    {
       "name": "cl-flags",
       "hidden": true,
       "cacheVariables": {
@@ -189,9 +213,6 @@
       "cacheVariables": {
         "CFLAGS": "/fsanitize=address",
         "CXXFLAGS": "/fsanitize=address"
-            },
-            "cacheVariables": {
-                "CMAKE_VERBOSE_MAKEFILE": "ON"
       }
     },
     {
@@ -226,6 +247,34 @@
       ],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "android-armeabi-v7a-debug",
+      "inherits": [ "android-armeabi-v7a" ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "android-armeabi-v7a-shipping",
+      "inherits": "android-armeabi-v7a-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "android-arm64-v8a-debug",
+      "inherits": [ "android-arm64-v8a" ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "android-arm64-v8a-shipping",
+      "inherits": "android-arm64-v8a-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
@@ -355,6 +404,22 @@
     {
       "name": "x64-linux-debug",
       "configurePreset": "x64-linux-debug"
+    },
+    {
+      "name": "android-armeabi-v7a-debug",
+      "configurePreset": "android-armeabi-v7a-debug"
+    },
+    {
+      "name": "android-armeabi-v7a-shipping",
+      "configurePreset": "android-armeabi-v7a-shipping"
+    },
+    {
+      "name": "android-arm64-v8a-debug",
+      "configurePreset": "android-arm64-v8a-debug"
+    },
+    {
+      "name": "android-arm64-v8a-shipping",
+      "configurePreset": "android-arm64-v8a-shipping"
     },
     {
       "name": "x64-linux-sanitizers",
