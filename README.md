@@ -45,9 +45,15 @@ The few lines of code there strictly follows [Google Style](http://google-styleg
 You are on the Imgui branch
 -----
 
-We use the GLFW Vulkan implementation. You will need the [Vulkan SDK] (https://vulkan.lunarg.com/sdk/home) installed on your dev machine
+### Desktop build
+
+We use the GLFW Vulkan implementation.
+You will need the [Vulkan SDK](https://vulkan.lunarg.com/sdk/home) installed on your dev machine.
 
 ### Android build
+
+We use the OpenGL 3 (ES) implementation.
+You will need the [Android SDK](https://developer.android.com/tools) installed on your machine, and feed it to Cmake, for instance through the CMakeUserPresets.json file:
 
 ```json,
     {
@@ -58,14 +64,11 @@ We use the GLFW Vulkan implementation. You will need the [Vulkan SDK] (https://v
       ],
       "cacheVariables": {
         "ANDROID_PLATFORM": "android-35",
-        "ANDROID_SDK": "PATH_TO_ANDROID_SDK",
         "CMAKE_FIND_ROOT_PATH_MODE_PACKAGE": "BOTH",
         "CMAKE_TOOLCHAIN_FILE": "PATH_TO_ANDROID_NDK/NDK_VERSION/build/cmake/android.toolchain.cmake"
       },
       "environment": {
-        "JAVA_HOME": "PATH_TO_JAVA_RUNTIME",
-        "ANDROID_SDK_ROOT": "PATH_TO_ANDROID_SDK",
-        "ANDROID_NDK_ROOT": "PATH_TO_ANDROID_NDK"
+        "JAVA_HOME": "PATH_TO_JAVA_RUNTIME"
       }
     }
 ```
