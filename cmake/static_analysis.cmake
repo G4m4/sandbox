@@ -27,8 +27,8 @@ function(get_source_files target_name out_files)
       PARENT_SCOPE)
 endfunction()
 
-# Retrieving all sources absolute file path for the given target, including
-# libraries it directly depends on (no recursion: one level of inspection only)
+# Retrieving all sources absolute file path for the given target,
+# including libraries it directly depends on (no recursion: one level of inspection only)
 function(get_target_files target_name out_files)
   list(APPEND ${target_name}_sources)
   get_target_property(${target_name}_libs ${target_name}
@@ -54,21 +54,36 @@ function(dump_target_files target_name)
   file(WRITE "${CMAKE_BINARY_DIR}/${target_name}source_files.txt" ${temp})
 endfunction()
 
-function(create_analysis_target target_name)
-  add_custom_target(${target_name}_codeanalysis
-                    DEPENDS ${target_name}_clang_tidy)
+function(create_analysis_target target_name filter_pattern)
+  if (${ARGC} LESS 2)
+   MESSAGE(SEND_ERROR "Missing arguments in create_analysis_target for ${target_name}")
+  endif()
+
+  add_custom_target(
+    ${target_name}_codeanalysis DEPENDS ${target_name}_clang_tidy)
 
   # clang-tidy
   find_program(CLANG_TIDY_COMMAND NAMES clang-tidy)
   find_package(Python COMPONENTS Interpreter)
-  add_custom_target(
-    ${target_name}_clang_tidy
-    COMMAND
-      ${Python_EXECUTABLE} "${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py"
-      "-p${CMAKE_BINARY_DIR}" "-config-file=${PROJECT_SOURCE_DIR}/.clang-tidy"
-      "-header-filter=.*sandbox(?!.*_deps|.*cpm_cache).*"
-      "-source-filter=.*sandbox(?!.*_deps|.*cpm_cache).*"
-    VERBATIM USES_TERMINAL)
+  if (WIN32)
+    add_custom_target(
+      ${target_name}_clang_tidy
+      COMMAND
+        ${Python_EXECUTABLE} "${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py"
+        "-p${CMAKE_BINARY_DIR}" "-config-file=${PROJECT_SOURCE_DIR}/.clang-tidy"
+      "-header-filter=.*${filter_pattern}[\\/\\\\](include|lib)[\\/\\\\]"
+      "-source-filter=.*${filter_pattern}[\\/\\\\](include|lib)[\\/\\\\]"
+      VERBATIM USES_TERMINAL)
+  else()
+    add_custom_target(
+      ${target_name}_clang_tidy
+      COMMAND
+        ${Python_EXECUTABLE} "${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py"
+        "-p${CMAKE_BINARY_DIR}" "-config-file=${PROJECT_SOURCE_DIR}/.clang-tidy"
+        "-header-filter=.*/${filter_pattern}/(include|lib)/"
+        "-source-filter=.*/${filter_pattern}/(include|lib)/"
+      VERBATIM USES_TERMINAL)
+  endif()  # WIN32
 
   # Include what you use
   find_program(IWYU_COMMAND NAMES iwyu)
@@ -79,6 +94,6 @@ function(create_analysis_target target_name)
   add_custom_target(
     ${target_name}_iwyu
     COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/scripts/iwyu_tool.py
-            -p${CMAKE_BINARY_DIR} ${${target_name}_sources} -o clang
+            -p${PROJECT_SOURCE_DIR} ${${target_name}_sources} -o clang
     VERBATIM USES_TERMINAL)
 endfunction()
