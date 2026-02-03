@@ -1,5 +1,4 @@
-SandBox
-==================================
+# SandBox
 
 [![pipeline status](https://lab.frogg.it/machinmachines/sandbox/badges/master/pipeline.svg)](https://lab.frogg.it/machinmachines/sandbox/-/commits/master)
 
@@ -14,36 +13,39 @@ Different configurations are available for different frameworks; each one of the
 
 The basic configuration on the master branch creates 2 targets:
 
-- sandbox_implementation (executable)
-- sandbox_lib (static lib)
+- `sandbox_cmd` (executable)
+- `sandbox_lib` (static lib)
 
 At runtime, the executable instantiates a dummy class from sandbox_lib and prints stuff in the standard output.
 
 Please note that all this is not an attempt to waste a few kwatts in a dumb manner but hopefully a way to speed up new projects beginning.
 
-Fast project setup
-------------------
+## Fast project setup
 
 Creating a project based on SandBox template is done through a Python script:
 
-    cd scripts
-    python create_project.py ../ YOUR_PROJECT_LOCATION YOUR_PROJECT_NAME
+```bash
+cd scripts
+python create_project.py ../ YOUR_PROJECT_LOCATION YOUR_PROJECT_NAME
+```
 
 Where YOUR_PROJET_LOCATION may be by instance "c:/dev" and YOUR_PROJECT_NAME something like "MyAwesomeProject"
 
 A GitLab configuration file is provided.
 
-The build system is based on Cmake.
+The build system is based on Cmake. Code dependencies are pulled through [Cmake Package Manager](https://github.com/cpm-cmake/CPM.cmake).
+
 Building is done with:
 
-    mkdir build && cd build
-    cmake ..
-    cmake --build .
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
 
 The few lines of code there strictly follows [Google Style](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml).
 
-You are on the Imgui branch
------
+## You are on the Imgui branch
 
 ### Desktop build
 
@@ -73,9 +75,8 @@ You will need the [Android SDK](https://developer.android.com/tools) installed o
     }
 ```
 
-License
+## License
 
-==================================
 SandBox is under GPLv3.
 
 See the COPYING file for the full license text.
