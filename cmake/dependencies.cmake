@@ -66,6 +66,14 @@ function(setup_dependencies)
   endif()
 endfunction()
 
+setup_dependencies()
+
 # CPM licenses target here
+CPMAddPackage(
+  NAME CPMLicenses.cmake
+  GITHUB_REPOSITORY cpm-cmake/CPMLicenses.cmake
+  VERSION 0.0.7
+)
+
 cpm_licenses_create_disclaimer_target(
-  write-licenses "${CMAKE_BINARY_SOURCE_DIR}/third_party.txt" "${CPM_PACKAGES}")
+  write-licenses "${PROJECT_SOURCE_DIR}/third_party.txt" "${CPM_PACKAGES}")

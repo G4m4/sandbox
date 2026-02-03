@@ -1,8 +1,6 @@
 add_executable(sandbox_test)
 add_executable(sandbox::test ALIAS sandbox_test)
 
-set_target_properties(sandbox_test PROPERTIES CXX_STANDARD 11)
-
 target_sources(sandbox_test PRIVATE "test.cpp")
 
 target_link_libraries(sandbox_test PRIVATE doctest sandbox::lib)

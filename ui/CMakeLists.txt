@@ -6,6 +6,10 @@ add_executable(sandbox::ui ALIAS sandbox_ui)
 target_sources(sandbox_ui PRIVATE "main.cc")
 
 target_link_libraries(sandbox_ui PUBLIC imgui sandbox::lib)
+target_link_libraries(sandbox_ui
+                      PRIVATE sandbox::private_compile_options)
+target_link_libraries(sandbox_ui
+                      INTERFACE sandbox::public_compile_options)
 
 add_custom_command(
   TARGET sandbox_ui

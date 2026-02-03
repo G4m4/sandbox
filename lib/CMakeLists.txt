@@ -15,6 +15,10 @@ set(dummygroup "dummygroup/dummyclass.cc" "dummygroup/dummygroup.cc")
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${dummygroup})
 
 target_sources(sandbox_lib PRIVATE ${dummygroup})
+target_link_libraries(sandbox_lib
+                      PRIVATE sandbox::private_compile_options)
+target_link_libraries(sandbox_lib
+                      INTERFACE sandbox::public_compile_options)
 
 # Public headers
 set(sandbox_headers
@@ -22,7 +26,7 @@ set(sandbox_headers
     ${SANDBOX_INCLUDE_DIR}/include/sandbox/common.h
     ${SANDBOX_INCLUDE_DIR}/include/sandbox/configuration.h)
 
-create_analysis_target(sandbox_lib)
+create_analysis_target(sandbox_lib "sandbox")
 
 install(
   TARGETS sandbox_lib

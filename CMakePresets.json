@@ -1,240 +1,384 @@
 {
-    "version": 3,
-    "configurePresets": [
-        {
-            "name": "base",
-            "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
-            "installDir": "${sourceDir}/out/install/${presetName}",
-            "cacheVariables": {
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-                "CPM_SOURCE_CACHE": "${sourceDir}/out/build/${presetName}/cpm_cache"
-            }
-        },
-        {
-            "name": "clang-tidy",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_CXX_CLANG_TIDY": "clang-tidy;--config-file=${sourceDir}/.clang-tidy"
-            }
-        },
-        {
-            "name": "x64",
-            "hidden": true,
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            }
-        },
-        {
-            "name": "universal",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_OSX_ARCHITECTURES": "x86_64;arm64"
-            }
-        },
-        {
-            "name": "cl-flags",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_CXX_FLAGS_INIT": "/W4 -D_SCL_SECURE_NO_WARNINGS",
-                "CMAKE_CXX_FLAGS_RELEASE_INIT": "-O2 /GL /fp:fast",
-                "CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT": "-O2 /GL /fp:fast",
-                "CMAKE_EXE_LINKER_FLAGS_RELEASE_INIT": "/LTCG"
-            }
-        },
-        {
-            "name": "clang-gcc-flags",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_CXX_FLAGS_INIT": "-pedantic -Wall -Wextra -Wpointer-arith -Wcast-qual",
-                "CMAKE_CXX_FLAGS_DEBUG_INIT": "-ggdb",
-                "CMAKE_CXX_FLAGS_RELEASE_INIT": "-Ofast -march=native"
-            }
-        },
-        {
-            "name": "cl",
-            "hidden": true,
-            "inherits": "cl-flags",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe"
-            }
-        },
-        {
-            "name": "gcc",
-            "hidden": true,
-            "inherits": "clang-gcc-flags",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++"
-            }
-        },
-        {
-            "name": "clang",
-            "hidden": true,
-            "inherits": "clang-gcc-flags",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "clang",
-                "CMAKE_CXX_COMPILER": "clang++"
-            }
-        },
-        {
-            "name": "windows",
-            "hidden": true,
-            "inherits": "base",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "clangTidyChecks": "--config-file=${sourceDir}/.clang-tidy",
-                    "enableMicrosoftCodeAnalysis": true,
-                    "enableClangTidyCodeAnalysis": true
-                }
-            },
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "linux",
-            "hidden": true,
-            "inherits": "base",
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Linux"
-            },
-            "vendor": {
-                "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
-                    "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-                }
-            }
-        },
-        {
-            "name": "macos",
-            "hidden": true,
-            "inherits": "base",
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Darwin"
-            }
-        },
-        {
-            "name": "windows-cl",
-            "hidden": true,
-            "inherits": [ "windows", "cl" ]
-        },
-        {
-            "name": "windows-clang",
-            "hidden": true,
-            "inherits": [ "windows", "clang" ]
-        },
-        {
-            "name": "linux-gcc",
-            "hidden": true,
-            "inherits": [ "linux", "gcc" ]
-        },
-        {
-            "name": "linux-clang",
-            "hidden": true,
-            "inherits": [ "linux", "clang" ]
-        },
-        {
-            "name": "macos-clang",
-            "hidden": true,
-            "inherits": [ "macos", "clang" ]
-        },
-        {
-            "name": "x64-windows-debug",
-            "inherits": [ "x64", "windows-cl" ],
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "x64-windows-asan",
-            "inherits": "x64-windows-debug",
-            "environment": {
-                "CFLAGS": "/fsanitize=address",
-                "CXXFLAGS": "/fsanitize=address"
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "x64",
+      "hidden": true,
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "universal",
+      "hidden": true,
+      "architecture": {
+        "value": "universal",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "cl-flags",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS_INIT": "/W4 -D_SCL_SECURE_NO_WARNINGS",
+        "CMAKE_CXX_FLAGS_RELEASE_INIT": "-O2 /GL /fp:fast",
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT": "-O2 /GL /fp:fast",
+        "CMAKE_EXE_LINKER_FLAGS_RELEASE_INIT": "/LTCG"
+      }
+    },
+    {
+      "name": "clang-gcc-flags",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS_INIT": "-pedantic -Wall -Wextra -Wpointer-arith -Wcast-qual",
+        "CMAKE_CXX_FLAGS_DEBUG_INIT": "-ggdb",
+        "CMAKE_CXX_FLAGS_RELEASE_INIT": "-Ofast -march=native"
+      }
+    },
+    {
+      "name": "cl",
+      "hidden": true,
+      "inherits": "cl-flags",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      }
+    },
+    {
+      "name": "gcc",
+      "hidden": true,
+      "inherits": "clang-gcc-flags",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "clang",
+      "hidden": true,
+      "inherits": "clang-gcc-flags",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "clang-cl",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl",
+        "CMAKE_CXX_COMPILER": "clang-cl"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64"
+        }
+      }
+    },
+    {
+      "name": "windows",
+      "hidden": true,
+      "inherits": "base",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "clangTidyChecks": "-* \"\"--config-file=${sourceDir}/.clang-tidy",
+          "enableMicrosoftCodeAnalysis": false,
+          "enableClangTidyCodeAnalysis": true
+        }
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "linux",
+      "hidden": true,
+      "inherits": "base",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+        }
+      }
+    },
+    {
+      "name": "macos",
+      "hidden": true,
+      "inherits": "base",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+        }
+      }
+    },
+    {
+      "name": "windows-cl",
+      "hidden": true,
+      "inherits": [
+        "windows",
+        "cl"
+      ]
+    },
+    {
+      "name": "windows-clang",
+      "hidden": true,
+      "inherits": [
+        "windows",
+        "clang-cl"
+      ]
+    },
+    {
+      "name": "linux-gcc",
+      "hidden": true,
+      "inherits": [
+        "linux",
+        "gcc"
+      ]
+    },
+    {
+      "name": "linux-clang",
+      "hidden": true,
+      "inherits": [
+        "linux",
+        "clang"
+      ]
+    },
+    {
+      "name": "macos-clang",
+      "hidden": true,
+      "inherits": [
+        "macos",
+        "clang"
+      ]
+    },
+    {
+      "name": "x64-windows-debug",
+      "inherits": [
+        "x64",
+        "windows-cl"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "cl-sanitizers",
+      "hidden": true,
+      "cacheVariables": {
+        "CFLAGS": "/fsanitize=address",
+        "CXXFLAGS": "/fsanitize=address"
             },
             "cacheVariables": {
                 "CMAKE_VERBOSE_MAKEFILE": "ON"
-            }
-        },
-        {
-            "name": "x64-windows-release",
-            "inherits": "x64-windows-debug",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
-            }
-        },
-        {
-            "name": "universal-macos-debug",
-            "inherits": [ "universal", "macos-clang" ],
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "x64-linux-debug",
-            "inherits": [ "x64", "linux-clang" ],
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "linux-asan",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined",
-                "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined"
-            }
-        },
-        {
-            "name": "x64-linux-asan",
-            "inherits": [ "x64-linux-debug", "linux-asan"]
-        },
-        {
-            "name": "x64-linux-ci",
-            "inherits": [ "x64", "linux-gcc", "linux-asan" ],
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        }
-    ],
-    "buildPresets": [
-        {
-            "name": "x64-windows-debug",
-            "configurePreset": "x64-windows-debug"
-        },
-        {
-            "name": "x64-windows-asan",
-            "configurePreset": "x64-windows-asan"
-        },
-        {
-            "name": "x64-windows-release",
-            "configurePreset": "x64-windows-release"
-        },
-        {
-            "name": "universal-macos-debug",
-            "configurePreset": "universal-macos-debug"
-        },
-        {
-            "name": "x64-linux-debug",
-            "configurePreset": "x64-linux-debug"
-        },
-        {
-            "name": "x64-linux-asan",
-            "configurePreset": "x64-linux-asan"
-        },
-        {
-            "name": "x64-linux-ci",
-            "configurePreset": "x64-linux-ci"
-        }
-
-    ]
+      }
+    },
+    {
+      "name": "x64-windows-sanitizers",
+      "inherits": [
+        "x64-windows-debug",
+        "cl-sanitizers"
+      ]
+    },
+    {
+      "name": "x64-windows-release",
+      "inherits": "x64-windows-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "universal-macos-debug",
+      "inherits": [
+        "universal",
+        "macos-clang"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "x64-linux-debug",
+      "inherits": [
+        "x64",
+        "linux-clang"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "clang-sanitizers",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined,leak",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined,leak"
+      }
+    },
+    {
+      "name": "clang-typesanitizer",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=type",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=type"
+      }
+    },
+    {
+      "name": "clang-memorysanitizer",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=memory",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=memory"
+      }
+    },
+    {
+      "name": "clang-safestacksanitizer",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=safe-stack",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=safe-stack"
+      }
+    },
+    {
+      "name": "appleclang-sanitizers",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined"
+      }
+    },
+    {
+      "name": "x64-linux-sanitizers",
+      "inherits": [
+        "x64-linux-debug",
+        "clang-sanitizers"
+      ]
+    },
+    {
+      "name": "x64-linux-typesanitizer",
+      "inherits": [
+        "x64-linux-debug",
+        "clang-typesanitizer"
+      ]
+    },
+    {
+      "name": "x64-linux-memorysanitizer",
+      "inherits": [
+        "x64-linux-debug",
+        "clang-memorysanitizer"
+      ]
+    },
+    {
+      "name": "x64-linux-safestacksanitizer",
+      "inherits": [
+        "x64-linux-debug",
+        "clang-safestacksanitizer"
+      ]
+    },
+    {
+      "name": "universal-macos-sanitizers",
+      "inherits": [
+        "universal-macos-debug",
+        "appleclang-sanitizers"
+      ]
+    },
+    {
+      "name": "ci",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/out/ci/build",
+      "installDir": "${sourceDir}/out/ci/install",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "MULTISONI_ENABLE_UI": "OFF"
+      }
+    },
+    {
+      "name": "x64-linux-ci-build",
+      "inherits": [
+        "x64",
+        "ci",
+        "linux-gcc",
+        "clang-sanitizers"
+      ]
+    },
+    {
+      "name": "x64-linux-ci-lint",
+      "inherits": [
+        "x64",
+        "ci",
+        "linux-clang"
+      ]
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x64-windows-debug",
+      "configurePreset": "x64-windows-debug"
+    },
+    {
+      "name": "x64-windows-sanitizers",
+      "configurePreset": "x64-windows-sanitizers"
+    },
+    {
+      "name": "x64-windows-release",
+      "configurePreset": "x64-windows-release"
+    },
+    {
+      "name": "universal-macos-debug",
+      "configurePreset": "universal-macos-debug"
+    },
+    {
+      "name": "universal-macos-sanitizers",
+      "configurePreset": "universal-macos-sanitizers"
+    },
+    {
+      "name": "x64-linux-debug",
+      "configurePreset": "x64-linux-debug"
+    },
+    {
+      "name": "x64-linux-sanitizers",
+      "configurePreset": "x64-linux-sanitizers"
+    },
+    {
+      "name": "x64-linux-typesanitizer",
+      "configurePreset": "x64-linux-typesanitizer"
+    },
+    {
+      "name": "x64-linux-memorysanitizer",
+      "configurePreset": "x64-linux-memorysanitizer"
+    },
+    {
+      "name": "x64-linux-safestacksanitizer",
+      "configurePreset": "x64-linux-safestacksanitizer"
+    },
+    {
+      "name": "x64-linux-ci-build",
+      "configurePreset": "x64-linux-ci-build"
+    },
+    {
+      "name": "x64-linux-ci-lint",
+      "configurePreset": "x64-linux-ci-lint"
+    }
+  ]
 }

@@ -1,5 +1,9 @@
-# Courtesy of https://github.com/TheLartians/ModernCppStarter/blob/master/cmake/CPM.cmake
-set(CPM_DOWNLOAD_VERSION 0.40.2)
+# SPDX-License-Identifier: MIT
+#
+# SPDX-FileCopyrightText: Copyright (c) 2019-2023 Lars Melchior and contributors
+
+set(CPM_DOWNLOAD_VERSION 0.42.1)
+set(CPM_HASH_SUM "CPM_HASH_SUM_PLACEHOLDER")
 
 if(CPM_SOURCE_CACHE)
   set(CPM_DOWNLOAD_LOCATION "${CPM_SOURCE_CACHE}/cpm/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
@@ -12,30 +16,29 @@ endif()
 # Expand relative path. This is important if the provided path contains a tilde (~)
 get_filename_component(CPM_DOWNLOAD_LOCATION ${CPM_DOWNLOAD_LOCATION} ABSOLUTE)
 
-function(download_cpm)
-  message(STATUS "Downloading CPM.cmake to ${CPM_DOWNLOAD_LOCATION}")
-  file(DOWNLOAD
-       https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
-       ${CPM_DOWNLOAD_LOCATION}
-  )
-endfunction()
+file(
+  DOWNLOAD
+  https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
+  ${CPM_DOWNLOAD_LOCATION}
+  TLS_VERIFY ON
+  STATUS DOWNLOAD_STATUS
+)
 
-if(NOT (EXISTS ${CPM_DOWNLOAD_LOCATION}))
-  download_cpm()
-else()
-  # resume download if it previously failed
-  file(READ ${CPM_DOWNLOAD_LOCATION} check)
-  if("${check}" STREQUAL "")
-    download_cpm()
-  endif()
-  unset(check)
+list(GET DOWNLOAD_STATUS 0 DOWNLOAD_ERRCODE)
+# 35 is "SSL connect error"
+if(DOWNLOAD_ERRCODE EQUAL 35)
+  message(
+    WARNING
+      "Could not retrieve CPM.cmake at the first tentative, retrying with TLS verification turned off."
+  )
+  # On Windows TLS issues may arise
+  file(
+    DOWNLOAD
+    https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
+    ${CPM_DOWNLOAD_LOCATION}
+    TLS_VERIFY OFF
+    STATUS DOWNLOAD_STATUS
+  )
 endif()
 
 include(${CPM_DOWNLOAD_LOCATION})
-
-# CPMLicenses
-CPMAddPackage(
-  NAME CPMLicenses.cmake
-  GITHUB_REPOSITORY cpm-cmake/CPMLicenses.cmake
-  VERSION 0.0.7
-)

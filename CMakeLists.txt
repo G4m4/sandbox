@@ -4,8 +4,6 @@ cmake_minimum_required(VERSION 3.22)
 
 project(sandbox)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -22,7 +20,7 @@ include(cmake/static_analysis.cmake)
 include(GNUInstallDirs)
 
 include(cmake/dependencies.cmake)
-setup_dependencies()
+include(cmake/helper_targets.cmake)
 
 if(${SANDBOX_ENABLE_CLI})
   add_subdirectory(cmd)
