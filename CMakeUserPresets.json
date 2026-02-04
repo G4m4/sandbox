@@ -13,7 +13,7 @@
         "local",
         "x64",
         "windows-clang"
-      ],
+      ]
     },
     {
       "name": "local-android",
