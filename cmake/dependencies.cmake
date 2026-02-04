@@ -55,7 +55,11 @@ function(setup_dependencies)
             ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
             ${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c
         )
-        target_link_libraries(imgui PUBLIC android EGL GLESv3 log)
+        target_include_directories(imgui PUBLIC ${ANDROID_NDK}/sources/android/native_app_glue)
+        target_compile_definitions(imgui PUBLIC IMGUI_IMPL_OPENGL_ES3)
+        # 16KB page size required on Android
+        target_link_options(imgui PUBLIC -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384)
+        target_link_libraries(imgui PRIVATE android EGL GLESv3 log)
       else()
         # Vulkan everywhere else than on Android
         target_sources(
