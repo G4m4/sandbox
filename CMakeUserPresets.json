@@ -8,6 +8,14 @@
       }
     },
     {
+      "name": "local-clang-cl",
+      "inherits": [
+        "local",
+        "x64",
+        "windows-clang"
+      ],
+    },
+    {
       "name": "local-android",
       "inherits": [
         "local",
@@ -26,8 +34,8 @@
   ],
   "buildPresets": [
     {
-      "name": "local",
-      "configurePreset": "local"
+      "name": "local-clang-cl",
+      "configurePreset": "local-clang-cl"
     },
     {
       "name": "local-android",
