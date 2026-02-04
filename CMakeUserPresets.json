@@ -23,12 +23,15 @@
       ],
       "cacheVariables": {
         "SANDBOX_BUILD_ANDROID": "ON",
-        "ANDROID_PLATFORM": "ANDROID_VERSION", // e.g android-35
+        // e.g android-35
+        "ANDROID_PLATFORM": "ANDROID_VERSION",
         "CMAKE_FIND_ROOT_PATH_MODE_PACKAGE": "BOTH",
-        "CMAKE_TOOLCHAIN_FILE": "PATH_TO_ANDROID_NDK/NDK_VERSION/build/cmake/android.toolchain.cmake" // e.g. "C:/Users/USERNAME/AppData/Local/Android/Sdk/ndk/29.0.14206865/build/cmake/android.toolchain.cmake"
+        // e.g. "C:/Users/USERNAME/AppData/Local/Android/Sdk/ndk/29.0.14206865/build/cmake/android.toolchain.cmake"
+        "CMAKE_TOOLCHAIN_FILE": "PATH_TO_ANDROID_NDK/NDK_VERSION/build/cmake/android.toolchain.cmake"
       },
       "environment": {
-        "JAVA_HOME": "JAVA_RUNTIME_PATH" // e.g. C:/Program Files/Android/Android Studio/jbr
+        // e.g. C:/Program Files/Android/Android Studio/jbr
+        "JAVA_HOME": "JAVA_RUNTIME_PATH"
       }
     }
   ],
