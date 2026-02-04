@@ -30,17 +30,15 @@
 #include <volk.h>
 #endif
 
-// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of
-// testing and compatibility with old VS compilers. To link with VS2010-era libraries, VS2015+
-// requires linking with legacy_stdio_definitions.lib, which we do using this pragma. Your own
-// project should not be affected, as you are likely to link with a newer binary of GLFW that is
-// adequate for your version of Visual Studio.
+// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
+// To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
+// Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) \
     && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
-// #define APP_USE_UNLIMITED_FRAME_RATE
+//#define APP_USE_UNLIMITED_FRAME_RATE
 #ifdef _DEBUG
 #define APP_USE_VULKAN_DEBUG_REPORT
 #endif
@@ -273,13 +271,13 @@ void SetupVulkanWindow(ImGui_ImplVulkanH_Window* wd, VkSurfaceKHR surface,
   wd->PresentMode = ImGui_ImplVulkanH_SelectPresentMode(
       g_PhysicalDevice, wd->Surface, &present_modes[0],
       IM_ARRAYSIZE(present_modes));
-  // printf("[vulkan] Selected PresentMode = %d\n", wd->PresentMode);
+  //printf("[vulkan] Selected PresentMode = %d\n", wd->PresentMode);
 
   // Create SwapChain, RenderPass, Framebuffer, etc.
   IM_ASSERT(g_MinImageCount >= 2);
   ImGui_ImplVulkanH_CreateOrResizeWindow(g_Instance, g_PhysicalDevice, g_Device,
                                          wd, g_QueueFamily, g_Allocator, width,
-                                         height, g_MinImageCount);
+                                         height, g_MinImageCount, 0);
 }
 
 void CleanupVulkan() {
@@ -399,15 +397,18 @@ void FramePresent(ImGui_ImplVulkanH_Window* wd) {
 
 // Additional loop code so we have zero boilerplate code in our main
 template <typename T>
-int UILoop(T&& callback) {
+int UIFrame(T&& callback) {
   glfwSetErrorCallback(glfw_error_callback);
   if (!glfwInit())
     return 1;
 
   // Create window with Vulkan context
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-  GLFWwindow* window = glfwCreateWindow(
-      1280, 720, "Dear ImGui GLFW+Vulkan example", nullptr, nullptr);
+  float main_scale = ImGui_ImplGlfw_GetContentScaleForMonitor(
+      glfwGetPrimaryMonitor());  // Valid on GLFW 3.3+ only
+  GLFWwindow* window =
+      glfwCreateWindow((int)(1280 * main_scale), (int)(800 * main_scale),
+                       "Dear ImGui GLFW+Vulkan example", nullptr, nullptr);
   if (!glfwVulkanSupported()) {
     printf("GLFW: Vulkan Not Supported\n");
     return 1;
@@ -445,13 +446,19 @@ int UILoop(T&& callback) {
 
   // Setup Dear ImGui style
   ImGui::StyleColorsDark();
-  // ImGui::StyleColorsLight();
+  //ImGui::StyleColorsLight();
+
+  // Setup scaling
+  ImGuiStyle& style = ImGui::GetStyle();
+  style.ScaleAllSizes(
+      main_scale);  // Bake a fixed style scale. (until we have a solution for dynamic style scaling, changing this requires resetting Style + calling this again)
+  style.FontScaleDpi =
+      main_scale;  // Set initial font scale. (using io.ConfigDpiScaleFonts=true makes this unnecessary. We leave both here for documentation purpose)
 
   // Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForVulkan(window, true);
   ImGui_ImplVulkan_InitInfo init_info = {};
-  // init_info.ApiVersion = VK_API_VERSION_1_3;              // Pass in your value of
-  // VkApplicationInfo::apiVersion, otherwise will default to header version.
+  //init_info.ApiVersion = VK_API_VERSION_1_3;              // Pass in your value of VkApplicationInfo::apiVersion, otherwise will default to header version.
   init_info.Instance = g_Instance;
   init_info.PhysicalDevice = g_PhysicalDevice;
   init_info.Device = g_Device;
@@ -459,40 +466,34 @@ int UILoop(T&& callback) {
   init_info.Queue = g_Queue;
   init_info.PipelineCache = g_PipelineCache;
   init_info.DescriptorPool = g_DescriptorPool;
-  init_info.RenderPass = wd->RenderPass;
-  init_info.Subpass = 0;
   init_info.MinImageCount = g_MinImageCount;
   init_info.ImageCount = wd->ImageCount;
-  init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
   init_info.Allocator = g_Allocator;
+  init_info.PipelineInfoMain.RenderPass = wd->RenderPass;
+  init_info.PipelineInfoMain.Subpass = 0;
+  init_info.PipelineInfoMain.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
   init_info.CheckVkResultFn = check_vk_result;
   ImGui_ImplVulkan_Init(&init_info);
 
   // Load Fonts
-  // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple
-  // fonts and use ImGui::PushFont()/PopFont() to select them.
-  // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the
-  // font among multiple.
-  // - If the file cannot be loaded, the function will return a nullptr. Please handle those
-  // errors in your application (e.g. use an assertion, or display an error and quit).
-  // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture
-  // when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below
-  // will call.
-  // - Use '#define IMGUI_ENABLE_FREETYPE' in your imconfig file to use Freetype for higher
-  // quality font rendering.
-  // - Read 'docs/FONTS.md' for more instructions and details.
-  // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to
-  // write a double backslash \\ !
-  // io.Fonts->AddFontDefault();
-  // io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
-  // io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-  // io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-  // io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-  // ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f,
-  // nullptr, io.Fonts->GetGlyphRangesJapanese()); IM_ASSERT(font != nullptr);
+  // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+  // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
+  // - If the file cannot be loaded, the function will return a nullptr. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
+  // - Use '#define IMGUI_ENABLE_FREETYPE' in your imconfig file to use Freetype for higher quality font rendering.
+  // - Read 'docs/FONTS.md' for more instructions and details. If you like the default font but want it to scale better, consider using the 'ProggyVector' from the same author!
+  // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+  //style.FontSizeBase = 20.0f;
+  //io.Fonts->AddFontDefault();
+  //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf");
+  //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf");
+  //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf");
+  //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf");
+  //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf");
+  //IM_ASSERT(font != nullptr);
 
   // Our state
   bool show_demo_window = true;
+  bool show_another_window = false;
   ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
   // Main loop
@@ -516,8 +517,8 @@ int UILoop(T&& callback) {
             || g_MainWindowData.Height != fb_height)) {
       ImGui_ImplVulkan_SetMinImageCount(g_MinImageCount);
       ImGui_ImplVulkanH_CreateOrResizeWindow(
-          g_Instance, g_PhysicalDevice, g_Device, &g_MainWindowData,
-          g_QueueFamily, g_Allocator, fb_width, fb_height, g_MinImageCount);
+          g_Instance, g_PhysicalDevice, g_Device, wd, g_QueueFamily,
+          g_Allocator, fb_width, fb_height, g_MinImageCount, 0);
       g_MainWindowData.FrameIndex = 0;
       g_SwapChainRebuild = false;
     }
