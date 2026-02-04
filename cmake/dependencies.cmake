@@ -36,16 +36,7 @@ function(setup_dependencies)
 
     if(imgui_ADDED)
       add_library(imgui)
-      target_sources(
-        imgui
-        PUBLIC FILE_SET
-               header
-               TYPE
-               HEADERS
-               BASE_DIRS
-               ${imgui_SOURCE_DIR}
-               FILES
-               ${imgui_SOURCE_DIR}/imgui.h)
+      target_sources(imgui PUBLIC ${imgui_SOURCE_DIR}/imgui.h)
 
       target_include_directories(
         imgui PUBLIC $<BUILD_INTERFACE:${imgui_SOURCE_DIR}>
