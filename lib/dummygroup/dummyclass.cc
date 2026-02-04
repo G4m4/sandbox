@@ -34,7 +34,7 @@ DummyClass::DummyClass() : data_(new char[sizeof(kStaticData)])
 
 const char* DummyClass::GetSomething(void)
 {
-  SANDBOX_ASSERT(data_);
+  SANDBOX_ASSERT(bool(data_));
   return data_.get();
 }
 
