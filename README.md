@@ -75,6 +75,18 @@ You will need the [Android SDK](https://developer.android.com/tools) installed o
     }
 ```
 
+This allows to compile the shared libray `sandbox_ui.so` so you can check that everything goes fine.
+
+The application may be built, assembled and installed like so (assuming you have connected adb to the device first):
+
+```bash
+cd SANDBOX_ROOT/ui/android
+# Make sure ANDROID_HOME is defined with e.g.:
+# set ANDROID_HOME=C:/Users/USERNAME/AppData/Local/Android/Sdk
+GRADLE_PATH build
+adb -d install app/build/outputs/apk/debug/app-debug.apk
+```
+
 ## License
 
 SandBox is under GPLv3.

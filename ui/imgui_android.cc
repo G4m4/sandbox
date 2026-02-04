@@ -34,7 +34,7 @@ EGLSurface g_EglSurface = EGL_NO_SURFACE;
 EGLContext g_EglContext = EGL_NO_CONTEXT;
 struct android_app* g_App = nullptr;
 bool g_Initialized = false;
-char g_LogTag[] = "ImGuiExample";
+char g_LogTag[] = "sandbox_ui";
 std::string g_IniFilename = "";
 
 // Forward declarations of helper functions

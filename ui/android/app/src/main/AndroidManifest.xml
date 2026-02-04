@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:label="SandboxExample"
+        android:label="sandbox_ui"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:hasCode="true">
@@ -14,7 +14,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true">
             <meta-data android:name="android.app.lib_name"
-                android:value="SandboxExample" />
+                android:value="sandbox_ui" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

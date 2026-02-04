@@ -23,8 +23,7 @@ target_link_libraries(sandbox_ui INTERFACE sandbox::public_compile_options)
 if(${SANDBOX_BUILD_ANDROID})
   target_compile_definitions(sandbox_ui PRIVATE SANDBOX_ANDROID=1
                                                 IMGUI_IMPL_OPENGL_ES3)
-  set(CMAKE_SHARED_LINKER_FLAGS
-      "${CMAKE_SHARED_LINKER_FLAGS} -u ANativeActivity_onCreate")
+  target_link_options(sandbox_ui PRIVATE -u ANativeActivity_onCreate -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384)
   target_include_directories(
     sandbox_ui PRIVATE ${ANDROID_NDK}/sources/android/native_app_glue)
 endif()
