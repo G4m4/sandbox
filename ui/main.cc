@@ -21,10 +21,24 @@
 #include "imgui_vulkan.cc"
 #endif
 
-// Main code
-void android_main(struct android_app* app) {
+// Main code, put into a lambda for ease of use below
+namespace {
+auto frameLambda = []() {
   auto base = sandbox::dummygroup::DummyGroup::Make();
 
+  // Initiate a new frame
+  UIFrame([&base]() {
+    // Create a window called "Hello, world!" and append into it.
+    ImGui::Begin("Sandbox");
+
+    ImGui::Text("%s", base->GetSomething());
+    ImGui::End();
+  });
+};
+}  // namespace
+
+#if SANDBOX_ANDROID
+void android_main(struct android_app* app) {
   app->onAppCmd = handleAppCmd;
   app->onInputEvent = handleInputEvent;
 
@@ -50,14 +64,11 @@ void android_main(struct android_app* app) {
         return;
       }
     }
-
-    // Initiate a new frame
-    UIFrame([&base]() {
-      // Create a window called "Hello, world!" and append into it.
-      ImGui::Begin("Sandbox");
-
-      ImGui::Text("%s", base->GetSomething());
-      ImGui::End();
-    });
+    frameLambda();
   }
 }
+#else   // SANDBOX_ANDROID
+int main(int /*argc*/, char** /*argv*/) {
+  frameLambda();
+}
+#endif  // SANDBOX_ANDROID
