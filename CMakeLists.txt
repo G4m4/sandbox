@@ -10,8 +10,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 option(SANDBOX_ENABLE_CLI "Build CLI executables" ON)
 option(SANDBOX_ENABLE_TESTS "Build tests" ON)
-option(SANDBOX_ENABLE_UI "Build UI executables" ON)
-option(SANDBOX_BUILD_ANDROID "Build Android targets" OFF)
+option(SANDBOX_BUILD_UI "Build UI executables" ON)
 
 set(SANDBOX_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(SANDBOX_TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
@@ -32,6 +31,10 @@ add_subdirectory(lib)
 
 if(${SANDBOX_ENABLE_TESTS})
   add_subdirectory(test)
+endif()
+
+if(${SANDBOX_ENABLE_UI})
+  add_subdirectory(ui)
 endif()
 
 # Config files, borrowed from https://github.com/schweitzer/modern-cmake-tutorial
@@ -55,7 +58,3 @@ install(
     EXPORT "${SANDBOX_TARGETS_EXPORT_NAME}"
     NAMESPACE "sandbox"
     DESTINATION "${SANDBOX_CONFIG_INSTALL_DIR}")
-
-if(${SANDBOX_ENABLE_UI})
-  add_subdirectory(ui)
-endif()

@@ -8,7 +8,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-find_package(sandbox COMPONENTS sandbox::lib)
+option(SANDBOX_BUILD_ANDROID "Build Android targets" OFF)
+
+# Parent dependency
+if(NOT TARGET sandbox::lib)
+  message("Building as a standalone")
+  find_package(sandbox REQUIRED)
+else()
+  message("Building as a  subproject of the main library")
+endif()
 
 include(cmake/dependencies.cmake)
 
