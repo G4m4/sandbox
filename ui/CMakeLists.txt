@@ -1,5 +1,17 @@
 # @brief SandBox UI executable root cmake file
 
+cmake_minimum_required(VERSION 3.22)
+
+project(SandboxUI)
+
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+find_package(sandbox COMPONENTS sandbox::lib)
+
+include(cmake/dependencies.cmake)
+
 if(${SANDBOX_BUILD_ANDROID})
   # On Android this is a shared library that gets loaded
   add_library(sandbox_ui SHARED)
