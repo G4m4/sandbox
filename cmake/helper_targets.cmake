@@ -42,3 +42,6 @@ endif()
 
 target_compile_features(sandbox_private_compile_options INTERFACE cxx_std_17)
 target_compile_features(sandbox_public_compile_options INTERFACE cxx_std_14)
+
+install(TARGETS sandbox_private_compile_options sandbox_public_compile_options
+        EXPORT "${SANDBOX_TARGETS_EXPORT_NAME}")
