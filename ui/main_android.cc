@@ -13,34 +13,20 @@
 /// You should have received a copy of the GNU General Public License
 /// along with SandBox.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "sandbox/common.h"
 #include "sandbox/dummygroup/dummygroup.h"
 
-#if SANDBOX_ANDROID
 #include "imgui_android.cc"
-#else
-#include "imgui_vulkan.cc"
+
+#if !OS_ANDROID
+static_assert(false, "main function for Android only");
 #endif
 
-// Main code, put into a lambda for ease of use below
-namespace {
-auto frameLambda = []() {
-  auto base = sandbox::dummygroup::DummyGroup::Make();
-
-  // Initiate a new frame
-  UIFrame([&base]() {
-    // Create a window called "Hello, world!" and append into it.
-    ImGui::Begin("Sandbox");
-
-    ImGui::Text("%s", base->GetSomething());
-    ImGui::End();
-  });
-};
-}  // namespace
-
-#if SANDBOX_ANDROID
 void android_main(struct android_app* app) {
   app->onAppCmd = handleAppCmd;
   app->onInputEvent = handleInputEvent;
+
+  auto base = sandbox::dummygroup::DummyGroup::Make();
 
   while (true) {
     int out_events;
@@ -64,11 +50,13 @@ void android_main(struct android_app* app) {
         return;
       }
     }
-    frameLambda();
+
+    UIFrame([&base]() {
+      // Create a window called "Hello, world!" and append into it.
+      ImGui::Begin("Sandbox");
+
+      ImGui::Text("%s", base->GetSomething());
+      ImGui::End();
+    });
   }
 }
-#else   // SANDBOX_ANDROID
-int main(int /*argc*/, char** /*argv*/) {
-  frameLambda();
-}
-#endif  // SANDBOX_ANDROID

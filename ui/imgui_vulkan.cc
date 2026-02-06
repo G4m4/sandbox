@@ -397,7 +397,7 @@ void FramePresent(ImGui_ImplVulkanH_Window* wd) {
 
 // Additional loop code so we have zero boilerplate code in our main
 template <typename T>
-int UIFrame(T&& callback) {
+int UILoop(T&& callback) {
   glfwSetErrorCallback(glfw_error_callback);
   if (!glfwInit())
     return 1;
