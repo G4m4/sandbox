@@ -34,22 +34,50 @@
 /// we assume that "no asserts" means release
 #if (defined(_NDEBUG) || defined(NDEBUG))
   #define BUILD_CONFIGURATION_DEBUG 0
-#else // defined(NDEBUG) ?
+#else  // defined(NDEBUG) ?
   #define BUILD_CONFIGURATION_DEBUG 1
-#endif // defined(NDEBUG) ?
+#endif  // defined(NDEBUG) ?
 
-/// @brief Architecture detection - compiler specific preprocessor macros
-#if COMPILER_MSVC
-  #if defined(_M_X64)
-    #define ARCH_X86_64 1
-  #elif defined(_M_IX86)
-    #define ARCH_X86_32 1
+/// @brief OS detection
+#if __ANDROID__
+  #define OS_ANDROID 1
+#elif defined(_WIN64) || defined(_WIN32)
+  #define OS_WINDOWS 1
+#elif defined(__APPLE__)
+  #include "TargetConditionals.h"
+  #if TARGET_OS_IPHONE && TARGET_IPHONE_SIMULATOR
+    #define OS_IOS_SIMULATOR 1
+  #elif TARGET_OS_IPHONE
+    #define OS_IOS 1
+  #else
+    #define OS_OSX 1
   #endif
-#elif COMPILER_GCC || COMPILER_CLANG
-  #if defined(__x86_64__)
-    #define ARCH_X86_64 1
-  #elif (defined(__i386__))
-    #define ARCH_X86_32 1
+#elif __linux__
+  #define OS_LINUX 1
+#else
+  #error "OS could not be detected"
+#endif
+
+/// @brief Architecture detection
+#if OS_ANDROID
+  #if defined(__arm__)
+    #define ARCH_ARM_32 1
+  #elif (defined(__aarch64__))
+    #define ARCH_ARM_64 1
+  #endif
+#else
+  #if COMPILER_MSVC
+    #if defined(_M_X64)
+      #define ARCH_X86_64 1
+    #elif defined(_M_IX86)
+      #define ARCH_X86_32 1
+    #endif
+  #elif COMPILER_GCC || COMPILER_CLANG
+    #if defined(__x86_64__)
+      #define ARCH_X86_64 1
+    #elif (defined(__i386__))
+      #define ARCH_X86_32 1
+    #endif
   #endif
 #endif
 
